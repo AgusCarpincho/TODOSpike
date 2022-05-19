@@ -2,8 +2,6 @@
 
 ![Logo](assets/logo.svg)
 
-What is this thing? “the motto”, the goals, the vision.
-
 [![Unit Tests](https://github.com/AgusCarpincho/TODOSpike/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/AgusCarpincho/TODOSpike/actions/workflows/unit-tests.yml/badge.svg)
 [![Coverage Status](https://codecov.io/github/AgusCarpincho/TODOSpike/coverage.svg?branch=release-candidate)](https://codecov.io/gh/AgusCarpincho/TODOSpike/branch/release-candidate)
 [![Baseline Groups](https://github.com/AgusCarpincho/TODOSpike/actions/workflows/loading-groups.yml/badge.svg)](https://github.com/AgusCarpincho/TODOSpike/actions/workflows/loading-groups.yml)
@@ -13,8 +11,6 @@ What is this thing? “the motto”, the goals, the vision.
 [![Pharo 9.0](https://img.shields.io/badge/Pharo-9.0-informational)](https://pharo.org)
 [![Pharo 10](https://img.shields.io/badge/Pharo-10-informational)](https://pharo.org)
 
-Why would I care about this thing? When to use it? For whom is it designed?
-When not to use it?
 
 ## Quick links
 
