@@ -42,10 +42,10 @@ ToDoNoteCreationTests >> test3AToDoNoteHasAFinishDateAndADescription [
 
 	| aToDoNote |
 	
-	aToDoNote := ToDoNote with: 'Some description' endingDate: '5/6/2022'.
+	aToDoNote := ToDoNote with: 'Some description' and: '5/6/2022'.
 	
 	self assert: ( aToDoNote description ) equals: 'Some description'.
-	self assert: ( aToDoNote finishDate ) equals: '5/6/2022'.
+	self assert: ( aToDoNote completionDate ) equals: '5/6/2022'.
 ]
 
 { #category : #tests }
@@ -53,29 +53,29 @@ ToDoNoteCreationTests >> test4AToDoNoteHasAFinishDateAndADescriptionAndACategory
 
 	| aToDoNote |
 	
-	aToDoNote := ToDoNote with: 'Some description' categorized: 'AGoodCategory' endingDate: '5/6/2022'.
+	aToDoNote := ToDoNote with: 'Some description' categorized: 'AGoodCategory' and: '5/6/2022'.
 	
 	self assert: ( aToDoNote description ) equals: 'Some description'.
-	self assert: ( aToDoNote finishDate ) equals: '5/6/2022'.
+	self assert: ( aToDoNote completionDate ) equals: '5/6/2022'.
 	self assert: ( aToDoNote category ) equals: 'AGoodCategory'.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test5AToDoNoteRaiseAnExceptionIfTheDescriptionIsEmpty [
 
-	self should: [ ToDoNote with: '' categorized: 'AGoodCategory' endingDate: '5/6/2022' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote with: '' categorized: 'AGoodCategory' and: '5/6/2022' ] raise: ToDoNoteFailure.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test6AToDoNoteRaiseAnExceptionIfTheDescriptionIsNil [
 
-	self should: [ ToDoNote with: nil categorized: 'AGoodCategory' endingDate: '5/6/2022' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote with: nil categorized: 'AGoodCategory' and: '5/6/2022' ] raise: ToDoNoteFailure.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test7AToDoNoteRaiseAnExceptionIfTheDescriptionIsNotAString [
 
-	self should: [ ToDoNote with: 10 categorized: 'AGoodCategory' endingDate: '5/6/2022' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote with: 10 categorized: 'AGoodCategory' and: '5/6/2022' ] raise: ToDoNoteFailure.
 ]
 
 { #category : #tests }

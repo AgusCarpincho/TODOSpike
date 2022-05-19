@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'description',
 		'category',
-		'finishDate',
 		'completionStatus',
-		'employeeName'
+		'employeeName',
+		'completionDate'
 	],
 	#category : #'TODOSpike-Model'
 }
@@ -30,7 +30,31 @@ ToDoNote class >> with: aDescription [
 	^ self new
 		  initializeWith: aDescription
 		  categorized: ''
-		  andFinishIn: ''
+		  and: ''
+]
+
+{ #category : #'instance creation' }
+ToDoNote class >> with: aDescription and: aCompletionDate [
+
+	AssertionChecker
+		enforce: aDescription isNil not
+		because:
+		'No puede pasarse por argumento un objeto nulo como descripcion'
+		raising: ToDoNoteFailure.
+	AssertionChecker
+		enforce: aDescription isString
+		because:
+		'No puede pasarse por argumento un objeto que no sea un string'
+		raising: ToDoNoteFailure.
+	AssertionChecker
+		enforce: (aDescription sameAs: '') not
+		because: 'No puede haber una nota ToDo sin descripcion'
+		raising: ToDoNoteFailure.
+
+	^ self new
+		  initializeWith: aDescription
+		  categorized: ''
+		  and: aCompletionDate
 ]
 
 { #category : #'instance creation' }
@@ -52,11 +76,11 @@ ToDoNote class >> with: aDescription categorized: aCategory [
 	^ self new
 		  initializeWith: aDescription
 		  categorized: aCategory
-		  andFinishIn: ''
+		  and: ''
 ]
 
 { #category : #'instance creation' }
-ToDoNote class >> with: aDescription categorized: aCategory endingDate: anEndDate [
+ToDoNote class >> with: aDescription categorized: aCategory and: aCompletionDate [
 
 	AssertionChecker
 		enforce: aDescription isNil not
@@ -76,42 +100,36 @@ ToDoNote class >> with: aDescription categorized: aCategory endingDate: anEndDat
 	^ self new
 		  initializeWith: aDescription
 		  categorized: aCategory
-		  andFinishIn: anEndDate
+		  and: aCompletionDate
 ]
 
-{ #category : #'instance creation' }
-ToDoNote class >> with: aDescription endingDate: anEndDate [
-
-	AssertionChecker
-		enforce: aDescription isNil not
-		because:
-		'No puede pasarse por argumento un objeto nulo como descripcion'
-		raising: ToDoNoteFailure.
-	AssertionChecker
-		enforce: aDescription isString
-		because:
-		'No puede pasarse por argumento un objeto que no sea un string'
-		raising: ToDoNoteFailure.
-	AssertionChecker
-		enforce: (aDescription sameAs: '') not
-		because: 'No puede haber una nota ToDo sin descripcion'
-		raising: ToDoNoteFailure.
-
-	^ self new
-		  initializeWith: aDescription
-		  categorized: ''
-		  andFinishIn: anEndDate
+{ #category : #settings }
+ToDoNote >> assignCompletionDate: aCompletionDate [
+	
+	(aCompletionDate allSatisfy: [ :character | character sameAs: '' ]) ifTrue: [ ToDoNoteFailure signal: 'The completion date cant be deleted' ] .
+	completionDate := aCompletionDate
 ]
 
 { #category : #settings }
 ToDoNote >> assignedTo: anEmployeeName [
-	AssertionChecker enforce: (completionStatus sameAs: 'Abierto') because: 'No puede asignarse este ToDo a un nuevo empleado cuando el ToDo esta en progreso' raising: ToDoNoteFailure .
+
+	AssertionChecker
+		enforce: (completionStatus sameAs: 'Abierto')
+		because:
+		'A ToDo cant be assigned to a new employee when the ToDo is in progress'
+		raising: ToDoNoteFailure.
 	employeeName := anEmployeeName
 ]
 
 { #category : #accessing }
 ToDoNote >> category [
 	^ category
+]
+
+{ #category : #accessing }
+ToDoNote >> completionDate [
+
+	^ completionDate
 ]
 
 { #category : #accessing }
@@ -131,17 +149,12 @@ ToDoNote >> designatedEmployee [
 	^ employeeName
 ]
 
-{ #category : #accessing }
-ToDoNote >> finishDate [
-	^ finishDate
-]
-
 { #category : #'initialization - private' }
-ToDoNote >> initializeWith: aDescription categorized: aCategory andFinishIn: aFinishDate [
+ToDoNote >> initializeWith: aDescription categorized: aCategory and: aCompletionDate [
 
-	description := aDescription .
-	category := aCategory .
-	finishDate := aFinishDate .
+	description := aDescription.
+	category := aCategory.
+	completionDate := aCompletionDate.
 	completionStatus := 'Abierto'
 ]
 
