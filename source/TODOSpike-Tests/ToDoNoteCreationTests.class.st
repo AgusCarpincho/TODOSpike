@@ -7,13 +7,13 @@ Class {
 { #category : #tests }
 ToDoNoteCreationTests >> test10AToDoNoteWithoutCategoryAndFinishDateWithADescriptionThatIsNotAStringRaiseAFailure [
 
-	self should: [ ToDoNote with: 10 ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote enumerated: 1 with: 10 ] raise: ToDoNoteFailure.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test11AToDoNoteWithoutFinishDateWithADescriptionThatIsNotAStringRaiseAFailure [
 
-	self should: [ ToDoNote with: 10 categorized: 'AGoodCategory' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote enumerated: 1 with: 10 categorized: 'AGoodCategory' ] raise: ToDoNoteFailure.
 ]
 
 { #category : #tests }
@@ -22,7 +22,7 @@ ToDoNoteCreationTests >> test1AToDoNoteHasADescription [
 	| aToDoNote aDescription |
 	
 	aDescription := 'Make some tests for the ToDoApp'.
-	aToDoNote := ToDoNote with: aDescription.
+	aToDoNote := ToDoNote enumerated: 1 with: aDescription.
 	
 	self assert: ( aToDoNote description ) equals: aDescription
 ]
@@ -32,7 +32,7 @@ ToDoNoteCreationTests >> test2AToDoNoteHasACategoryAndADescription [
 
 	| aToDoNote |
 	
-	aToDoNote := ToDoNote with: 'Some description' categorized: 'ANiceCategory'.
+	aToDoNote := ToDoNote enumerated: 1 with: 'Some description' categorized: 'ANiceCategory'.
 	
 	self assert: ( aToDoNote category ) equals: 'ANiceCategory'
 ]
@@ -42,7 +42,7 @@ ToDoNoteCreationTests >> test3AToDoNoteHasAFinishDateAndADescription [
 
 	| aToDoNote |
 	
-	aToDoNote := ToDoNote with: 'Some description' and: '5/6/2022'.
+	aToDoNote := ToDoNote enumerated: 1 with: 'Some description' and: '5/6/2022'.
 	
 	self assert: ( aToDoNote description ) equals: 'Some description'.
 	self assert: ( aToDoNote completionDate ) equals: '5/6/2022'.
@@ -53,7 +53,7 @@ ToDoNoteCreationTests >> test4AToDoNoteHasAFinishDateAndADescriptionAndACategory
 
 	| aToDoNote |
 	
-	aToDoNote := ToDoNote with: 'Some description' categorized: 'AGoodCategory' and: '5/6/2022'.
+	aToDoNote := ToDoNote enumerated: 1 with: 'Some description' categorized: 'AGoodCategory' and: '5/6/2022'.
 	
 	self assert: ( aToDoNote description ) equals: 'Some description'.
 	self assert: ( aToDoNote completionDate ) equals: '5/6/2022'.
@@ -63,29 +63,29 @@ ToDoNoteCreationTests >> test4AToDoNoteHasAFinishDateAndADescriptionAndACategory
 { #category : #tests }
 ToDoNoteCreationTests >> test5AToDoNoteRaiseAnExceptionIfTheDescriptionIsEmpty [
 
-	self should: [ ToDoNote with: '' categorized: 'AGoodCategory' and: '5/6/2022' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote enumerated: 1 with: '' categorized: 'AGoodCategory' and: '5/6/2022' ] raise: ToDoNoteFailure.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test6AToDoNoteRaiseAnExceptionIfTheDescriptionIsNil [
 
-	self should: [ ToDoNote with: nil categorized: 'AGoodCategory' and: '5/6/2022' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote enumerated: 1 with: nil categorized: 'AGoodCategory' and: '5/6/2022' ] raise: ToDoNoteFailure.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test7AToDoNoteRaiseAnExceptionIfTheDescriptionIsNotAString [
 
-	self should: [ ToDoNote with: 10 categorized: 'AGoodCategory' and: '5/6/2022' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote enumerated: 1 with: 10 categorized: 'AGoodCategory' and: '5/6/2022' ] raise: ToDoNoteFailure.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test8AToDoNoteWithoutCategoryAndFinishDateWithANilDescriptionRaiseAFailure [
 
-	self should: [ ToDoNote with: nil ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote enumerated: 1 with: nil ] raise: ToDoNoteFailure.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test9AToDoNoteWithoutFinishDateWithANilDescriptionRaiseAFailure [
 
-	self should: [ ToDoNote with: nil categorized: 'AGoodCategory' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote enumerated: 1 with: nil categorized: 'AGoodCategory' ] raise: ToDoNoteFailure.
 ]

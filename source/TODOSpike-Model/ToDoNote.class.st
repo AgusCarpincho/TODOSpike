@@ -6,13 +6,14 @@ Class {
 		'category',
 		'completionStatus',
 		'employeeName',
-		'completionDate'
+		'completionDate',
+		'toDoNumber'
 	],
 	#category : #'TODOSpike-Model'
 }
 
 { #category : #'instance creation' }
-ToDoNote class >> with: aDescription [
+ToDoNote class >> enumerated: aToDoNumber with: aDescription [
 
 	AssertionChecker
 		enforce: (aDescription isNil) not
@@ -28,13 +29,13 @@ ToDoNote class >> with: aDescription [
 		raising: ToDoNoteFailure.
 		
 	^ self new
-		  initializeWith: aDescription
+		  initializeEnumerated: aToDoNumber with: aDescription
 		  categorized: ''
 		  and: ''
 ]
 
 { #category : #'instance creation' }
-ToDoNote class >> with: aDescription and: aCompletionDate [
+ToDoNote class >> enumerated: aToDoNumber with: aDescription and: aCompletionDate [
 
 	AssertionChecker
 		enforce: aDescription isNil not
@@ -52,13 +53,13 @@ ToDoNote class >> with: aDescription and: aCompletionDate [
 		raising: ToDoNoteFailure.
 
 	^ self new
-		  initializeWith: aDescription
+		  initializeEnumerated: aToDoNumber with: aDescription
 		  categorized: ''
 		  and: aCompletionDate
 ]
 
 { #category : #'instance creation' }
-ToDoNote class >> with: aDescription categorized: aCategory [
+ToDoNote class >> enumerated: aToDoNumber with: aDescription categorized: aCategory [
 	
 	AssertionChecker
 		enforce: (aDescription isNil) not
@@ -74,13 +75,13 @@ ToDoNote class >> with: aDescription categorized: aCategory [
 		raising: ToDoNoteFailure.
 	
 	^ self new
-		  initializeWith: aDescription
+		  initializeEnumerated: aToDoNumber with: aDescription
 		  categorized: aCategory
 		  and: ''
 ]
 
 { #category : #'instance creation' }
-ToDoNote class >> with: aDescription categorized: aCategory and: aCompletionDate [
+ToDoNote class >> enumerated: aToDoNumber with: aDescription categorized: aCategory and: aCompletionDate [
 
 	AssertionChecker
 		enforce: aDescription isNil not
@@ -98,7 +99,7 @@ ToDoNote class >> with: aDescription categorized: aCategory and: aCompletionDate
 		raising: ToDoNoteFailure.
 
 	^ self new
-		  initializeWith: aDescription
+		  initializeEnumerated: aToDoNumber with: aDescription
 		  categorized: aCategory
 		  and: aCompletionDate
 ]
@@ -150,21 +151,22 @@ ToDoNote >> designatedEmployee [
 ]
 
 { #category : #'initialization - private' }
-ToDoNote >> initializeWith: aDescription categorized: aCategory and: aCompletionDate [
-
+ToDoNote >> initializeEnumerated: aToDoNumber with: aDescription categorized: aCategory and: aCompletionDate [
+	
 	description := aDescription.
 	category := aCategory.
 	completionDate := aCompletionDate.
-	completionStatus := 'Abierto'
+	completionStatus := 'Abierto'.
+	toDoNumber := aToDoNumber
 ]
 
-{ #category : #setting }
+{ #category : #settings }
 ToDoNote >> setCompletionStatusToFinished [
 	
 	completionStatus := 'Terminada'
 ]
 
-{ #category : #accessing }
+{ #category : #settings }
 ToDoNote >> setCompletionStatusToInProgress [
 
 	completionStatus := 'En progreso'
