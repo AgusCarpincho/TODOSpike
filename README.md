@@ -3,7 +3,7 @@
 ![Logo](assets/logo.svg)
 
 [![Unit Tests](https://github.com/AgusCarpincho/TODOSpike/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/AgusCarpincho/TODOSpike/actions/workflows/unit-tests.yml/badge.svg)
-[![Coverage Status](https://codecov.io/github/AgusCarpincho/TODOSpike/coverage.svg?branch=release-candidate)](https://codecov.io/gh/AgusCarpincho/TODOSpike/branch/release-candidate)
+[![Coverage Status](https://codecov.io/github/AgusCarpincho/TODOSpike/coverage.svg?branch=main)](https://codecov.io/gh/AgusCarpincho/TODOSpike/branch/main)
 [![Baseline Groups](https://github.com/AgusCarpincho/TODOSpike/actions/workflows/loading-groups.yml/badge.svg)](https://github.com/AgusCarpincho/TODOSpike/actions/workflows/loading-groups.yml)
 [![Markdown Lint](https://github.com/AgusCarpincho/TODOSpike/actions/workflows/markdown-lint.yml/badge.svg)](https://github.com/AgusCarpincho/TODOSpike/actions/workflows/markdown-lint.yml)
 
