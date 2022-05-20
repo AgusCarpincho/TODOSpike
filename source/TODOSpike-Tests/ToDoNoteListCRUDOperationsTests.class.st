@@ -18,7 +18,8 @@ ToDoNoteListCRUDOperationsTests >> setUp [
 	super setUp.
 	aToDoNoteInProgress := ToDoNote
 		                       enumerated: 1
-		                       with: 'A good description'.
+		                       with: 'A good description'
+		                       categorized: 'Fixes'.
 	aToDoNoteInProgress setCompletionStatusToInProgress.
 
 	aToDoNoteList := ToDoNoteList named: 'Development ToDos'.
@@ -31,11 +32,14 @@ ToDoNoteListCRUDOperationsTests >> setUp [
 	aToDoNoteListWithASingleToDoInProgress := ToDoNoteList named:
 		                                          'Development ToDos'.
 	aToDoNoteListWithASingleToDoInProgress add: aToDoNoteInProgress.
-	
-	aToDoNoteListWithASingleToDoFinished := ToDoNoteList named: 'Development ToDos'.
-	aToDoNoteFinished := ToDoNote enumerated: 1 with: 'A good description' .
+
+	aToDoNoteListWithASingleToDoFinished := ToDoNoteList named:
+		                                        'Development ToDos'.
+	aToDoNoteFinished := ToDoNote
+		                     enumerated: 1
+		                     with: 'A good description' categorized: 'Fixes'.
 	aToDoNoteFinished setCompletionStatusToFinished.
-	aToDoNoteListWithASingleToDoFinished add: aToDoNoteFinished.
+	aToDoNoteListWithASingleToDoFinished add: aToDoNoteFinished
 ]
 
 { #category : #tests }
@@ -102,4 +106,97 @@ ToDoNoteListCRUDOperationsTests >> test08CantBePossibleToAddAToDoNoteEnumeratedW
 	aToDoNoteList add: (ToDoNote enumerated: 1 with: 'A good description').
 	
 	self should: [aToDoNoteList add: (ToDoNote enumerated: 1 with: 'A good description')] raise: ToDoNoteFailure .
+]
+
+{ #category : #tests }
+ToDoNoteListCRUDOperationsTests >> test09ToDoNoteCompletionDateCanBeUpdatedIfItHasNotCompletionDate [
+
+	| aToDoNoteSelected |
+	aToDoNoteListWithASingleToDo modifyCompletionStatusToOpenTheToDoWithNumber: 1.
+	aToDoNoteSelected := aToDoNoteListWithASingleToDo 
+		                     selectTheToDoWithNumber: 1.
+	self assert: (aToDoNoteSelected completionDate sameAs:
+			 'No completion date assigned yet').
+	aToDoNoteListWithASingleToDo
+		modifyTheToDoNumber: 1
+		withTheNewCompletionDate: '01/02/2023'.
+	self assert: (aToDoNoteSelected completionDate sameAs: '01/02/2023')
+]
+
+{ #category : #tests }
+ToDoNoteListCRUDOperationsTests >> test10AToDoNoteCompletionDateCantBeModifyIfCompletionStatusIsInProgressOrFinished [
+
+	aToDoNoteListWithASingleToDo 
+		modifyCompletionStatusToInProgressTheToDoWithNumber: 1.
+
+	self
+		should:
+			[(aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1)
+				setCompletionDateTo: '31/12/2022']
+		raise: ToDoNoteFailure.
+
+	aToDoNoteListWithASingleToDoFinished 
+		modifyCompletionStatusToFinishedTheToDoWithNumber: 1.
+
+	self
+		should:
+			[(aToDoNoteListWithASingleToDoFinished selectTheToDoWithNumber: 1)
+				setCompletionDateTo: '31/12/2022']
+		raise: ToDoNoteFailure
+]
+
+{ #category : #tests }
+ToDoNoteListCRUDOperationsTests >> test11AToDoNoteCanBeAssignedIfOnlyItIsInOpenCompletionStatus [
+
+	aToDoNoteListWithASingleToDo assignEmployee: 'Agustin' toTheToDoWithNumber: 1.
+	self
+		assert:
+		(aToDoNoteListWithASingleToDo selectTheToDoWithNumber: 1) designatedEmployee
+		equals: 'Agustin'
+]
+
+{ #category : #tests }
+ToDoNoteListCRUDOperationsTests >> test12AToDoNoteAssignedWhenTheCompletionStatusIsNotOpenRaiseAnError [
+
+	self
+		should:
+			[aToDoNoteListWithASingleToDoInProgress
+		assignEmployee: 'Agustin'
+		toTheToDoWithNumber: 1]
+		raise: ToDoNoteFailure.
+]
+
+{ #category : #tests }
+ToDoNoteListCRUDOperationsTests >> test13AToDoNoteCompletionStatusCanBeSettedToOpenCompletionStatus [
+
+	aToDoNoteListWithASingleToDoInProgress 
+		modifyCompletionStatusToOpenTheToDoWithNumber: 1.
+		
+	self assert: ((aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1) completionStatus) equals: 'Abierto'
+]
+
+{ #category : #tests }
+ToDoNoteListCRUDOperationsTests >> test14AToDoNoteCompletionStatusCanBeSettedToInProgressCompletionStatus [
+
+	aToDoNoteListWithASingleToDoInProgress 
+		modifyCompletionStatusToInProgressTheToDoWithNumber: 1.
+		
+	self
+		assert:
+			(aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1)
+				completionStatus
+		equals: 'En progreso'
+]
+
+{ #category : #tests }
+ToDoNoteListCRUDOperationsTests >> test15AToDoNoteCompletionStatusCanBeSettedToFinishedCompletionStatus [
+
+	aToDoNoteListWithASingleToDoInProgress 
+		modifyCompletionStatusToFinishedTheToDoWithNumber: 1.
+
+	self
+		assert:
+			(aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1)
+				completionStatus
+		equals: 'Terminada'
 ]
