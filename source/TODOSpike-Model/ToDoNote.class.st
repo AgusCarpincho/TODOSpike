@@ -1,3 +1,6 @@
+"
+ToDoNote reify the concept of PostIt notes or something similar with the meaning to serve the user with the cotidiane labors
+"
 Class {
 	#name : #ToDoNote,
 	#superclass : #Object,
@@ -31,7 +34,7 @@ ToDoNote class >> enumerated: aToDoNumber with: aDescription [
 	^ self new
 		  initializeEnumerated: aToDoNumber with: aDescription
 		  categorized: ''
-		  and: ''
+		  and: 'No completion date assigned yet'
 ]
 
 { #category : #'instance creation' }
@@ -77,7 +80,7 @@ ToDoNote class >> enumerated: aToDoNumber with: aDescription categorized: aCateg
 	^ self new
 		  initializeEnumerated: aToDoNumber with: aDescription
 		  categorized: aCategory
-		  and: ''
+		  and: 'No completion date assigned yet'
 ]
 
 { #category : #'instance creation' }
@@ -161,6 +164,12 @@ ToDoNote >> initializeEnumerated: aToDoNumber with: aDescription categorized: aC
 ]
 
 { #category : #settings }
+ToDoNote >> setCompletionDateTo: aCompletionDate [ 
+	
+	(completionStatus sameAs: 'Abierto') ifTrue: [completionDate := aCompletionDate] ifFalse: [ToDoNoteFailure signal: 'The completion date of the ToDo cant be modified if the completion status is not open']
+]
+
+{ #category : #settings }
 ToDoNote >> setCompletionStatusToFinished [
 	
 	completionStatus := 'Terminada'
@@ -170,6 +179,12 @@ ToDoNote >> setCompletionStatusToFinished [
 ToDoNote >> setCompletionStatusToInProgress [
 
 	completionStatus := 'En progreso'
+]
+
+{ #category : #settings }
+ToDoNote >> setCompletionStatusToOpen [
+	
+	completionStatus := 'Abierto'
 ]
 
 { #category : #accessing }

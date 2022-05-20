@@ -1,3 +1,6 @@
+"
+ToDoNoteList is an object that fulfills the function of storing the ToDoNotes as if it were a real life list
+"
 Class {
 	#name : #ToDoNoteList,
 	#superclass : #Object,
@@ -27,6 +30,12 @@ ToDoNoteList >> add: aToDoNote [
 ]
 
 { #category : #'CRUD operations' }
+ToDoNoteList >> assignEmployee: nameEmployee toTheToDoWithNumber: aToDoNumber [ 
+	
+	(self selectTheToDoWithNumber: aToDoNumber) assignedTo: nameEmployee
+]
+
+{ #category : #'CRUD operations' }
 ToDoNoteList >> deleteToDoWithNumber: aToDoNumber [
 
 	(((toDos at: aToDoNumber) completionStatus) sameAs: 'Abierto') ifTrue: [toDos removeKey: aToDoNumber] ifFalse: [ ToDoNoteFailure signal: 'A ToDo Note with a completion status different than Open cant be deleted' ]
@@ -44,8 +53,38 @@ ToDoNoteList >> listName [
 	^ listName
 ]
 
+{ #category : #'CRUD operations' }
+ToDoNoteList >> modifyCompletionStatusToFinishedTheToDoWithNumber: aToDoNumber [
+
+	(self selectTheToDoWithNumber: aToDoNumber) setCompletionStatusToFinished
+]
+
+{ #category : #'CRUD operations' }
+ToDoNoteList >> modifyCompletionStatusToInProgressTheToDoWithNumber: aToDoNumber [
+
+	(self selectTheToDoWithNumber: aToDoNumber) setCompletionStatusToInProgress
+]
+
+{ #category : #'CRUD operations' }
+ToDoNoteList >> modifyCompletionStatusToOpenTheToDoWithNumber: aToDoNumber [
+
+	(self selectTheToDoWithNumber: aToDoNumber) setCompletionStatusToOpen
+]
+
+{ #category : #'CRUD operations' }
+ToDoNoteList >> modifyTheToDoNumber: aToDoNumber withTheNewCompletionDate: aCompletionDate [
+	
+	(toDos at: aToDoNumber) setCompletionDateTo: aCompletionDate
+]
+
 { #category : #accessing }
 ToDoNoteList >> numberOfToDos [
 	
 	^ toDos size
+]
+
+{ #category : #'CRUD operations' }
+ToDoNoteList >> selectTheToDoWithNumber: aToDoNumber [
+
+	^ toDos at: aToDoNumber
 ]
