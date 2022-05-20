@@ -17,22 +17,26 @@ ToDoNoteList class >> named: aListName [
 	^ self new initializeNamed: aListName
 ]
 
-{ #category : #operations }
-ToDoNoteList >> add: aToDoNote [ 
+{ #category : #'CRUD operations' }
+ToDoNoteList >> add: aToDoNote [
 
-	toDos add: aToDoNote.
+	[ toDos at: aToDoNote toDoNumber ]
+		on: KeyNotFound
+		do: [ toDos at: aToDoNote toDoNumber put: aToDoNote. ^ self ].
+	ToDoNoteFailure signal: 'You cannot add a ToDo with the same ToDo number as another ToDo'
 ]
 
-{ #category : #operations }
+{ #category : #'CRUD operations' }
 ToDoNoteList >> deleteToDoWithNumber: aToDoNumber [
-	toDos removeAt: aToDoNumber
+
+	(((toDos at: aToDoNumber) completionStatus) sameAs: 'Abierto') ifTrue: [toDos removeKey: aToDoNumber] ifFalse: [ ToDoNoteFailure signal: 'A ToDo Note with a completion status different than Open cant be deleted' ]
 ]
 
 { #category : #'initialization - private' }
 ToDoNoteList >> initializeNamed: aListName [
 
 	listName := aListName.
-	toDos := OrderedCollection new.
+	toDos := Dictionary new.
 ]
 
 { #category : #accessing }

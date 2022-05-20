@@ -171,3 +171,9 @@ ToDoNote >> setCompletionStatusToInProgress [
 
 	completionStatus := 'En progreso'
 ]
+
+{ #category : #accessing }
+ToDoNote >> toDoNumber [
+
+	^ toDoNumber
+]
