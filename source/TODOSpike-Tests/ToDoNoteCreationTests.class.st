@@ -17,6 +17,12 @@ ToDoNoteCreationTests >> test11AToDoNoteWithoutFinishDateWithADescriptionThatIsN
 ]
 
 { #category : #tests }
+ToDoNoteCreationTests >> test12AToDoNoteStartsWithoutAnAssignedEmployee [
+
+	self assert: (ToDoNote enumerated: 1 with: 'A good description' categorized: 'A good category') designatedEmployee equals: 'Unassigned employee'.
+]
+
+{ #category : #tests }
 ToDoNoteCreationTests >> test1AToDoNoteHasADescription [
 
 	| aToDoNote aDescription |

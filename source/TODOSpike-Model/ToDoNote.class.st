@@ -19,16 +19,16 @@ Class {
 ToDoNote class >> enumerated: aToDoNumber with: aDescription [
 
 	AssertionChecker
-		enforce: (aDescription isNil) not
-		because: 'No puede pasarse por argumento un objeto nulo como descripcion'
+		enforce: (aDescription isNil or: aToDoNumber isNil) not
+		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
 	AssertionChecker
 		enforce: (aDescription isString)
-		because: 'No puede pasarse por argumento un objeto que no sea un string'
+		because: 'Cannot be passed a non string object by argument'
 		raising: ToDoNoteFailure.	
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
-		because: 'No puede haber una nota ToDo sin descripcion'
+		because: 'The description cannot be a empty string'
 		raising: ToDoNoteFailure.
 		
 	^ self new
@@ -41,18 +41,18 @@ ToDoNote class >> enumerated: aToDoNumber with: aDescription [
 ToDoNote class >> enumerated: aToDoNumber with: aDescription and: aCompletionDate [
 
 	AssertionChecker
-		enforce: aDescription isNil not
-		because:
-		'No puede pasarse por argumento un objeto nulo como descripcion'
+		enforce: (aDescription isNil or: aToDoNumber isNil) not
+		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
+
 	AssertionChecker
 		enforce: aDescription isString
 		because:
-		'No puede pasarse por argumento un objeto que no sea un string'
+		'Cannot be passed a non string object by argument'
 		raising: ToDoNoteFailure.
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
-		because: 'No puede haber una nota ToDo sin descripcion'
+		because: 'The description cannot be a empty string'
 		raising: ToDoNoteFailure.
 
 	^ self new
@@ -65,16 +65,17 @@ ToDoNote class >> enumerated: aToDoNumber with: aDescription and: aCompletionDat
 ToDoNote class >> enumerated: aToDoNumber with: aDescription categorized: aCategory [
 	
 	AssertionChecker
-		enforce: (aDescription isNil) not
-		because: 'No puede pasarse por argumento un objeto nulo como descripcion'
+		enforce: (aDescription isNil or: aToDoNumber isNil) not
+		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
+
 	AssertionChecker
 		enforce: (aDescription isString)
-		because: 'No puede pasarse por argumento un objeto que no sea un string'
+		because: 'Cannot be passed a non string object by argument'
 		raising: ToDoNoteFailure.	
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
-		because: 'No puede haber una nota ToDo sin descripcion'
+		because: 'The description cannot be a empty string'
 		raising: ToDoNoteFailure.
 	
 	^ self new
@@ -87,18 +88,18 @@ ToDoNote class >> enumerated: aToDoNumber with: aDescription categorized: aCateg
 ToDoNote class >> enumerated: aToDoNumber with: aDescription categorized: aCategory and: aCompletionDate [
 
 	AssertionChecker
-		enforce: aDescription isNil not
-		because:
-		'No puede pasarse por argumento un objeto nulo como descripcion'
+		enforce: (aDescription isNil or: aToDoNumber isNil) not
+		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
+
 	AssertionChecker
 		enforce: aDescription isString
 		because:
-		'No puede pasarse por argumento un objeto que no sea un string'
+		'Cannot be passed a non string object by argument'
 		raising: ToDoNoteFailure.
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
-		because: 'No puede haber una nota ToDo sin descripcion'
+		because: 'The description cannot be a empty string'
 		raising: ToDoNoteFailure.
 
 	^ self new
@@ -118,7 +119,7 @@ ToDoNote >> assignCompletionDate: aCompletionDate [
 ToDoNote >> assignedTo: anEmployeeName [
 
 	AssertionChecker
-		enforce: (completionStatus sameAs: 'Abierto')
+		enforce: (completionStatus sameAs: 'Open')
 		because:
 		'A ToDo cant be assigned to a new employee when the ToDo is in progress'
 		raising: ToDoNoteFailure.
@@ -159,32 +160,33 @@ ToDoNote >> initializeEnumerated: aToDoNumber with: aDescription categorized: aC
 	description := aDescription.
 	category := aCategory.
 	completionDate := aCompletionDate.
-	completionStatus := 'Abierto'.
-	toDoNumber := aToDoNumber
+	completionStatus := 'Open'.
+	toDoNumber := aToDoNumber.
+	employeeName := 'Unassigned employee'
 ]
 
 { #category : #settings }
 ToDoNote >> setCompletionDateTo: aCompletionDate [ 
 	
-	(completionStatus sameAs: 'Abierto') ifTrue: [completionDate := aCompletionDate] ifFalse: [ToDoNoteFailure signal: 'The completion date of the ToDo cant be modified if the completion status is not open']
+	(completionStatus sameAs: 'Open') ifTrue: [completionDate := aCompletionDate] ifFalse: [ToDoNoteFailure signal: 'The completion date of the ToDo cant be modified if the completion status is not open']
 ]
 
 { #category : #settings }
 ToDoNote >> setCompletionStatusToFinished [
 	
-	completionStatus := 'Terminada'
+	completionStatus := 'Finished'
 ]
 
 { #category : #settings }
 ToDoNote >> setCompletionStatusToInProgress [
 
-	completionStatus := 'En progreso'
+	completionStatus := 'In progress'
 ]
 
 { #category : #settings }
 ToDoNote >> setCompletionStatusToOpen [
 	
-	completionStatus := 'Abierto'
+	completionStatus := 'Open'
 ]
 
 { #category : #accessing }

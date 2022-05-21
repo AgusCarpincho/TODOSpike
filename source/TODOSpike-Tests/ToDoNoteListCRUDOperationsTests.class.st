@@ -172,7 +172,7 @@ ToDoNoteListCRUDOperationsTests >> test13AToDoNoteCompletionStatusCanBeSettedToO
 	aToDoNoteListWithASingleToDoInProgress 
 		modifyCompletionStatusToOpenTheToDoWithNumber: 1.
 		
-	self assert: ((aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1) completionStatus) equals: 'Abierto'
+	self assert: ((aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1) completionStatus) equals: 'Open'
 ]
 
 { #category : #tests }
@@ -185,7 +185,7 @@ ToDoNoteListCRUDOperationsTests >> test14AToDoNoteCompletionStatusCanBeSettedToI
 		assert:
 			(aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1)
 				completionStatus
-		equals: 'En progreso'
+		equals: 'In progress'
 ]
 
 { #category : #tests }
@@ -198,5 +198,5 @@ ToDoNoteListCRUDOperationsTests >> test15AToDoNoteCompletionStatusCanBeSettedToF
 		assert:
 			(aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1)
 				completionStatus
-		equals: 'Terminada'
+		equals: 'Finished'
 ]

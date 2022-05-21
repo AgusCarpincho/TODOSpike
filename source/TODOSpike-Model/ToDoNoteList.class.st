@@ -38,7 +38,7 @@ ToDoNoteList >> assignEmployee: nameEmployee toTheToDoWithNumber: aToDoNumber [
 { #category : #'CRUD operations' }
 ToDoNoteList >> deleteToDoWithNumber: aToDoNumber [
 
-	(((toDos at: aToDoNumber) completionStatus) sameAs: 'Abierto') ifTrue: [toDos removeKey: aToDoNumber] ifFalse: [ ToDoNoteFailure signal: 'A ToDo Note with a completion status different than Open cant be deleted' ]
+	(((toDos at: aToDoNumber) completionStatus) sameAs: 'Open') ifTrue: [toDos removeKey: aToDoNumber] ifFalse: [ ToDoNoteFailure signal: 'A ToDo Note with a completion status different than Open cant be deleted' ]
 ]
 
 { #category : #'initialization - private' }
