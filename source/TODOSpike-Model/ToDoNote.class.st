@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-ToDoNote class >> enumerated: aToDoNumber with: aDescription [
+ToDoNote class >> enumerated: aToDoNumber described: aDescription [
 
 	AssertionChecker
 		enforce: (aDescription isNil or: aToDoNumber isNil) not
@@ -32,45 +32,21 @@ ToDoNote class >> enumerated: aToDoNumber with: aDescription [
 		raising: ToDoNoteFailure.
 		
 	^ self new
-		  initializeEnumerated: aToDoNumber with: aDescription
+		  initializeEnumerated: aToDoNumber described: aDescription
 		  categorized: ''
-		  and: 'No completion date assigned yet'
+		  endingOn: 'No completion date assigned yet'
 ]
 
 { #category : #'instance creation' }
-ToDoNote class >> enumerated: aToDoNumber with: aDescription and: aCompletionDate [
-
-	AssertionChecker
-		enforce: (aDescription isNil or: aToDoNumber isNil) not
-		because: 'Cannot be passed a nil object by argument'
-		raising: ToDoNoteFailure.
-
-	AssertionChecker
-		enforce: aDescription isString
-		because:
-		'Cannot be passed a non string object by argument'
-		raising: ToDoNoteFailure.
-	AssertionChecker
-		enforce: (aDescription sameAs: '') not
-		because: 'The description cannot be a empty string'
-		raising: ToDoNoteFailure.
-
-	^ self new
-		  initializeEnumerated: aToDoNumber with: aDescription
-		  categorized: ''
-		  and: aCompletionDate
-]
-
-{ #category : #'instance creation' }
-ToDoNote class >> enumerated: aToDoNumber with: aDescription categorized: aCategory [
+ToDoNote class >> enumerated: aToDoNumber described: aDescription categorized: aCategory [
 	
 	AssertionChecker
 		enforce: (aDescription isNil or: aToDoNumber isNil) not
 		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
-
+		
 	AssertionChecker
-		enforce: (aDescription isString)
+		enforce: (aDescription isString and: aCategory isString)
 		because: 'Cannot be passed a non string object by argument'
 		raising: ToDoNoteFailure.	
 	AssertionChecker
@@ -79,13 +55,13 @@ ToDoNote class >> enumerated: aToDoNumber with: aDescription categorized: aCateg
 		raising: ToDoNoteFailure.
 	
 	^ self new
-		  initializeEnumerated: aToDoNumber with: aDescription
+		  initializeEnumerated: aToDoNumber described: aDescription
 		  categorized: aCategory
-		  and: 'No completion date assigned yet'
+		  endingOn: 'No completion date assigned yet'
 ]
 
 { #category : #'instance creation' }
-ToDoNote class >> enumerated: aToDoNumber with: aDescription categorized: aCategory and: aCompletionDate [
+ToDoNote class >> enumerated: aToDoNumber described: aDescription categorized: aCategory endingOn: aCompletionDate [
 
 	AssertionChecker
 		enforce: (aDescription isNil or: aToDoNumber isNil) not
@@ -103,9 +79,33 @@ ToDoNote class >> enumerated: aToDoNumber with: aDescription categorized: aCateg
 		raising: ToDoNoteFailure.
 
 	^ self new
-		  initializeEnumerated: aToDoNumber with: aDescription
+		  initializeEnumerated: aToDoNumber described: aDescription
 		  categorized: aCategory
-		  and: aCompletionDate
+		  endingOn: aCompletionDate
+]
+
+{ #category : #'instance creation' }
+ToDoNote class >> enumerated: aToDoNumber described: aDescription endingOn: aCompletionDate [
+
+	AssertionChecker
+		enforce: (aDescription isNil or: aToDoNumber isNil) not
+		because: 'Cannot be passed a nil object by argument'
+		raising: ToDoNoteFailure.
+
+	AssertionChecker
+		enforce: aDescription isString
+		because:
+		'Cannot be passed a non string object by argument'
+		raising: ToDoNoteFailure.
+	AssertionChecker
+		enforce: (aDescription sameAs: '') not
+		because: 'The description cannot be a empty string'
+		raising: ToDoNoteFailure.
+
+	^ self new
+		  initializeEnumerated: aToDoNumber described: aDescription
+		  categorized: ''
+		  endingOn: aCompletionDate
 ]
 
 { #category : #settings }
@@ -155,7 +155,7 @@ ToDoNote >> designatedEmployee [
 ]
 
 { #category : #'initialization - private' }
-ToDoNote >> initializeEnumerated: aToDoNumber with: aDescription categorized: aCategory and: aCompletionDate [
+ToDoNote >> initializeEnumerated: aToDoNumber described: aDescription categorized: aCategory endingOn: aCompletionDate [
 	
 	description := aDescription.
 	category := aCategory.

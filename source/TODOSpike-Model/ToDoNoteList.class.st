@@ -21,7 +21,7 @@ ToDoNoteList class >> named: aListName [
 ]
 
 { #category : #'CRUD operations' }
-ToDoNoteList >> add: aToDoNote [
+ToDoNoteList >> addNewToDo: aToDoNote [
 
 	[ toDos at: aToDoNote toDoNumber ]
 		on: KeyNotFound
