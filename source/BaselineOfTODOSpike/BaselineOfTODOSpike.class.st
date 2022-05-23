@@ -29,10 +29,8 @@ BaselineOfTODOSpike >> projectClass [
 BaselineOfTODOSpike >> setUpDependenciesIn: spec [
 
 	spec
-		baseline: 'Buoy'
-		with: [ spec repository: 'github://ba-st/Buoy:v6/source' ];
-		baseline: 'WillowBootstrap'
-			with: [ spec repository: 'github://ba-st/Willow-Bootstrap:v13/source' ];
+		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v6/source' ];
+		baseline: 'WillowBootstrap' with: [ spec repository: 'github://ba-st/Willow-Bootstrap:v13/source' ];
 		baseline: 'WillowSpinKit' with: [ spec repository: 'github://ba-st/Willow-SpinKit:v9/source' ]
 ]
 
@@ -53,7 +51,6 @@ BaselineOfTODOSpike >> setUpPackagesIn: spec [
 
 	spec
 		package: 'TODOSpike-Model' with: [ spec requires: #( 'Buoy' ) ];
-		package: 'TODOSpike-Tests'
-		with: [ spec requires: 'TODOSpike-Model' ];
+		package: 'TODOSpike-Tests' with: [ spec requires: 'TODOSpike-Model' ];
 		package: 'TODOSpike-Application' with: [ spec requires: 'TODOSpike-Model' ]
 ]
