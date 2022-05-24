@@ -13,7 +13,7 @@ TODOSpikeApplication class >> applicationTitle [
 { #category : #accessing }
 TODOSpikeApplication class >> handlerName [
 
-	^ 'todo'
+	^ 'home'
 ]
 
 { #category : #accessing }
@@ -25,7 +25,8 @@ TODOSpikeApplication >> componentSupplierForApplication [
 { #category : #accessing }
 TODOSpikeApplication >> contentView [
 
-	"^ self subclassResponsibility"
+	^ 'Hello world'
+	
 ]
 
 { #category : #accessing }
