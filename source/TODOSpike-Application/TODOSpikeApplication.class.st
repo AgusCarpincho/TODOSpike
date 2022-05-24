@@ -1,3 +1,6 @@
+"
+This is the TODOSpike-Application
+"
 Class {
 	#name : #TODOSpikeApplication,
 	#superclass : #WillowApplication,
@@ -24,9 +27,9 @@ TODOSpikeApplication >> componentSupplierForApplication [
 
 { #category : #accessing }
 TODOSpikeApplication >> contentView [
-
-	^ 'Hello world'
 	
+	 ^ [ :canvas | canvas unorderedList
+                   add: ComponentExample new ]
 ]
 
 { #category : #accessing }
