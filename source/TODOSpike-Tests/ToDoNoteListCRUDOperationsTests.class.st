@@ -76,14 +76,14 @@ ToDoNoteListCRUDOperationsTests >> test03AToDoNoteListCanAddANewToDoNoteWithoutC
 { #category : #tests }
 ToDoNoteListCRUDOperationsTests >> test04AToDoNoteCanBeDeletedFromTheToDoNoteListIfItsCompletionStatusIsOpen [
 
-	aToDoNoteListWithASingleToDo deleteToDoWithNumber: 1.
+	aToDoNoteListWithASingleToDo deleteToDoIdentified: 1.
 	self assert: aToDoNoteListWithASingleToDo numberOfToDos equals: 0.
 ]
 
 { #category : #tests }
 ToDoNoteListCRUDOperationsTests >> test05AToDoNoteCantBeDeletedFromTheToDoNoteListIfItsCompletionStatusIsInProgress [
 
-	self should: [ aToDoNoteListWithASingleToDoInProgress deleteToDoWithNumber: 1 ] raise: ToDoNoteFailure .
+	self should: [ aToDoNoteListWithASingleToDoInProgress deleteToDoIdentified: 1 ] raise: ToDoNoteFailure .
 	self
 		assert: aToDoNoteListWithASingleToDoInProgress numberOfToDos
 		equals: 1.
@@ -94,7 +94,7 @@ ToDoNoteListCRUDOperationsTests >> test06AToDoNoteCantBeDeletedFromTheToDoNoteLi
 
 	self
 		should: [ 
-		aToDoNoteListWithASingleToDoInProgress deleteToDoWithNumber: 1 ]
+		aToDoNoteListWithASingleToDoInProgress deleteToDoIdentified: 1 ]
 		raise: ToDoNoteFailure.
 	self
 		assert: aToDoNoteListWithASingleToDoInProgress numberOfToDos
@@ -106,7 +106,7 @@ ToDoNoteListCRUDOperationsTests >> test07CantBePossibleToDeleteANonExistingToDoF
 
 	self
 		should: [ 
-		aToDoNoteListWithASingleToDoInProgress deleteToDoWithNumber: 1 ]
+		aToDoNoteListWithASingleToDoInProgress deleteToDoIdentified: 1 ]
 		raise: ToDoNoteFailure.
 ]
 
@@ -127,13 +127,13 @@ ToDoNoteListCRUDOperationsTests >> test08CantBePossibleToAddAToDoNoteEnumeratedW
 ToDoNoteListCRUDOperationsTests >> test09ToDoNoteCompletionDateCanBeUpdatedIfItHasNotCompletionDate [
 
 	| aToDoNoteSelected |
-	aToDoNoteListWithASingleToDo modifyCompletionStatusToOpenTheToDoWithNumber: 1.
+	aToDoNoteListWithASingleToDo modifyCompletionStatusToOpenTheToDoIdentified: 1.
 	aToDoNoteSelected := aToDoNoteListWithASingleToDo 
-		                     selectTheToDoWithNumber: 1.
+		                     selectTheToDoIdentified: 1.
 	self assert: (aToDoNoteSelected completionDate sameAs:
 			 'No completion date assigned yet').
 	aToDoNoteListWithASingleToDo
-		modifyTheToDoNumber: 1
+		modifyTheToDoIdentified: 1
 		withTheNewCompletionDate: '01/02/2023'.
 	self assert: (aToDoNoteSelected completionDate sameAs: '01/02/2023')
 ]
@@ -142,20 +142,20 @@ ToDoNoteListCRUDOperationsTests >> test09ToDoNoteCompletionDateCanBeUpdatedIfItH
 ToDoNoteListCRUDOperationsTests >> test10AToDoNoteCompletionDateCantBeModifyIfCompletionStatusIsInProgressOrFinished [
 
 	aToDoNoteListWithASingleToDo 
-		modifyCompletionStatusToInProgressTheToDoWithNumber: 1.
+		modifyCompletionStatusToInProgressTheToDoIdentified: 1.
 
 	self
 		should:
-			[(aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1)
+			[(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1)
 				setCompletionDateTo: '31/12/2022']
 		raise: ToDoNoteFailure.
 
 	aToDoNoteListWithASingleToDoFinished 
-		modifyCompletionStatusToFinishedTheToDoWithNumber: 1.
+		modifyCompletionStatusToFinishedTheToDoIdentified: 1.
 
 	self
 		should:
-			[(aToDoNoteListWithASingleToDoFinished selectTheToDoWithNumber: 1)
+			[(aToDoNoteListWithASingleToDoFinished selectTheToDoIdentified: 1)
 				setCompletionDateTo: '31/12/2022']
 		raise: ToDoNoteFailure
 ]
@@ -163,10 +163,10 @@ ToDoNoteListCRUDOperationsTests >> test10AToDoNoteCompletionDateCantBeModifyIfCo
 { #category : #tests }
 ToDoNoteListCRUDOperationsTests >> test11AToDoNoteCanBeAssignedIfOnlyItIsInOpenCompletionStatus [
 
-	aToDoNoteListWithASingleToDo assignEmployee: 'Agustin' toTheToDoWithNumber: 1.
+	aToDoNoteListWithASingleToDo assignEmployee: 'Agustin' toTheToDoIdentified: 1.
 	self
 		assert:
-		(aToDoNoteListWithASingleToDo selectTheToDoWithNumber: 1) designatedEmployee
+		(aToDoNoteListWithASingleToDo selectTheToDoIdentified: 1) designatedEmployee
 		equals: 'Agustin'
 ]
 
@@ -177,7 +177,7 @@ ToDoNoteListCRUDOperationsTests >> test12AToDoNoteAssignedWhenTheCompletionStatu
 		should:
 			[aToDoNoteListWithASingleToDoInProgress
 		assignEmployee: 'Agustin'
-		toTheToDoWithNumber: 1]
+		toTheToDoIdentified: 1]
 		raise: ToDoNoteFailure.
 ]
 
@@ -185,20 +185,20 @@ ToDoNoteListCRUDOperationsTests >> test12AToDoNoteAssignedWhenTheCompletionStatu
 ToDoNoteListCRUDOperationsTests >> test13AToDoNoteCompletionStatusCanBeSettedToOpenCompletionStatus [
 
 	aToDoNoteListWithASingleToDoInProgress 
-		modifyCompletionStatusToOpenTheToDoWithNumber: 1.
+		modifyCompletionStatusToOpenTheToDoIdentified: 1.
 		
-	self assert: ((aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1) completionStatus) equals: 'Open'
+	self assert: ((aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1) completionStatus) equals: 'Open'
 ]
 
 { #category : #tests }
 ToDoNoteListCRUDOperationsTests >> test14AToDoNoteCompletionStatusCanBeSettedToInProgressCompletionStatus [
 
 	aToDoNoteListWithASingleToDoInProgress 
-		modifyCompletionStatusToInProgressTheToDoWithNumber: 1.
+		modifyCompletionStatusToInProgressTheToDoIdentified: 1.
 		
 	self
 		assert:
-			(aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1)
+			(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1)
 				completionStatus
 		equals: 'In progress'
 ]
@@ -207,11 +207,11 @@ ToDoNoteListCRUDOperationsTests >> test14AToDoNoteCompletionStatusCanBeSettedToI
 ToDoNoteListCRUDOperationsTests >> test15AToDoNoteCompletionStatusCanBeSettedToFinishedCompletionStatus [
 
 	aToDoNoteListWithASingleToDoInProgress 
-		modifyCompletionStatusToFinishedTheToDoWithNumber: 1.
+		modifyCompletionStatusToFinishedTheToDoIdentified: 1.
 
 	self
 		assert:
-			(aToDoNoteListWithASingleToDoInProgress selectTheToDoWithNumber: 1)
+			(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1)
 				completionStatus
 		equals: 'Finished'
 ]

@@ -16,10 +16,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-ToDoNote class >> identifiedBy: aToDoIdentifier described: aDescription [
+ToDoNote class >> identifiedBy: anIdentifier described: aDescription [
 
 	AssertionChecker
-		enforce: (aDescription isNil or: aToDoIdentifier isNil) not
+		enforce: (aDescription isNil or: anIdentifier isNil) not
 		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
 	AssertionChecker
@@ -32,17 +32,17 @@ ToDoNote class >> identifiedBy: aToDoIdentifier described: aDescription [
 		raising: ToDoNoteFailure.
 
 	^ self new
-		  initializeIdentifiedBy: aToDoIdentifier
+		  initializeIdentifiedBy: anIdentifier
 		  described: aDescription
 		  categorized: ''
 		  endingOn: 'No completion date assigned yet'
 ]
 
 { #category : #'instance creation' }
-ToDoNote class >> identifiedBy: aToDoIdentifier described: aDescription categorized: aCategory [
+ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized: aCategory [
 
 	AssertionChecker
-		enforce: (aDescription isNil or: aToDoIdentifier isNil) not
+		enforce: (aDescription isNil or: anIdentifier isNil) not
 		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
 
@@ -56,7 +56,7 @@ ToDoNote class >> identifiedBy: aToDoIdentifier described: aDescription categori
 		raising: ToDoNoteFailure.
 
 	^ self new
-		  initializeIdentifiedBy: aToDoIdentifier
+		  initializeIdentifiedBy: anIdentifier
 		  described: aDescription
 		  categorized: aCategory
 		  endingOn: 'No completion date assigned yet'
@@ -87,10 +87,10 @@ ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized
 ]
 
 { #category : #'instance creation' }
-ToDoNote class >> identifiedBy: aToDoIdentifier described: aDescription endingOn: aCompletionDate [
+ToDoNote class >> identifiedBy: anIdentifier described: aDescription endingOn: aCompletionDate [
 
 	AssertionChecker
-		enforce: (aDescription isNil or: aToDoIdentifier isNil) not
+		enforce: (aDescription isNil or: anIdentifier isNil) not
 		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
 
@@ -104,7 +104,7 @@ ToDoNote class >> identifiedBy: aToDoIdentifier described: aDescription endingOn
 		raising: ToDoNoteFailure.
 
 	^ self new
-		  initializeIdentifiedBy: aToDoIdentifier
+		  initializeIdentifiedBy: anIdentifier
 		  described: aDescription
 		  categorized: ''
 		  endingOn: aCompletionDate

@@ -30,15 +30,19 @@ ToDoNoteList >> addNewToDo: aToDoNote [
 ]
 
 { #category : #'CRUD operations' }
-ToDoNoteList >> assignEmployee: nameEmployee toTheToDoWithNumber: aToDoNumber [ 
-	
-	(self selectTheToDoWithNumber: aToDoNumber) assignedTo: nameEmployee
+ToDoNoteList >> assignEmployee: nameEmployee toTheToDoIdentified: anIdentifier [
+
+	(self selectTheToDoIdentified: anIdentifier) assignedTo: nameEmployee
 ]
 
 { #category : #'CRUD operations' }
-ToDoNoteList >> deleteToDoWithNumber: aToDoNumber [
+ToDoNoteList >> deleteToDoIdentified: anIdentifier [
 
-	(((toDos at: aToDoNumber) completionStatus) sameAs: 'Open') ifTrue: [toDos removeKey: aToDoNumber] ifFalse: [ ToDoNoteFailure signal: 'A ToDo Note with a completion status different than Open cant be deleted' ]
+	((toDos at: anIdentifier) completionStatus sameAs: 'Open')
+		ifTrue: [ toDos removeKey: anIdentifier ]
+		ifFalse: [ 
+			ToDoNoteFailure signal:
+				'A ToDo Note with a completion status different than Open cant be deleted' ]
 ]
 
 { #category : #'initialization - private' }
@@ -55,27 +59,30 @@ ToDoNoteList >> listName [
 ]
 
 { #category : #'CRUD operations' }
-ToDoNoteList >> modifyCompletionStatusToFinishedTheToDoWithNumber: aToDoNumber [
+ToDoNoteList >> modifyCompletionStatusToFinishedTheToDoIdentified: anIdentifier [
 
-	(self selectTheToDoWithNumber: aToDoNumber) setCompletionStatusToFinished
+	(self selectTheToDoIdentified: anIdentifier)
+		setCompletionStatusToFinished
 ]
 
 { #category : #'CRUD operations' }
-ToDoNoteList >> modifyCompletionStatusToInProgressTheToDoWithNumber: aToDoNumber [
+ToDoNoteList >> modifyCompletionStatusToInProgressTheToDoIdentified: anIdentifier [
 
-	(self selectTheToDoWithNumber: aToDoNumber) setCompletionStatusToInProgress
+	(self selectTheToDoIdentified: anIdentifier)
+		setCompletionStatusToInProgress
 ]
 
 { #category : #'CRUD operations' }
-ToDoNoteList >> modifyCompletionStatusToOpenTheToDoWithNumber: aToDoNumber [
+ToDoNoteList >> modifyCompletionStatusToOpenTheToDoIdentified: anIdentifier [
 
-	(self selectTheToDoWithNumber: aToDoNumber) setCompletionStatusToOpen
+	(self selectTheToDoIdentified: anIdentifier)
+		setCompletionStatusToOpen
 ]
 
 { #category : #'CRUD operations' }
-ToDoNoteList >> modifyTheToDoNumber: aToDoNumber withTheNewCompletionDate: aCompletionDate [
-	
-	(toDos at: aToDoNumber) setCompletionDateTo: aCompletionDate
+ToDoNoteList >> modifyTheToDoIdentified: anIdentifier withTheNewCompletionDate: aCompletionDate [
+
+	(toDos at: anIdentifier) setCompletionDateTo: aCompletionDate
 ]
 
 { #category : #accessing }
@@ -85,7 +92,7 @@ ToDoNoteList >> numberOfToDos [
 ]
 
 { #category : #'CRUD operations' }
-ToDoNoteList >> selectTheToDoWithNumber: aToDoNumber [
+ToDoNoteList >> selectTheToDoIdentified: anIdentifier [
 
-	^ toDos at: aToDoNumber
+	^ toDos at: anIdentifier
 ]
