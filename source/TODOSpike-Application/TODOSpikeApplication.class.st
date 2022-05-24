@@ -25,8 +25,8 @@ TODOSpikeApplication >> componentSupplierForApplication [
 { #category : #accessing }
 TODOSpikeApplication >> contentView [
 
-	^ 'Hello world'
-	
+	 ^ [ :canvas | canvas unorderedList
+                   add: ComponentExample new ]	
 ]
 
 { #category : #accessing }
