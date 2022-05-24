@@ -121,7 +121,7 @@ ToDoNote >> assignedTo: anEmployeeName [
 	AssertionChecker
 		enforce: (completionStatus sameAs: 'Open')
 		because:
-		'A ToDo cant be assigned to a new employee when the ToDo is in progress'
+		'A ToDo cant be assigned to a new employee when the ToDo is in progress or finished'
 		raising: ToDoNoteFailure.
 	employeeName := anEmployeeName
 ]

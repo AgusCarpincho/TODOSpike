@@ -50,6 +50,7 @@ ToDoNoteList >> initializeNamed: aListName [
 
 { #category : #accessing }
 ToDoNoteList >> listName [
+	
 	^ listName
 ]
 
