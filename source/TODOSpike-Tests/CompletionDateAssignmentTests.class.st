@@ -9,7 +9,7 @@ CompletionDateAssignmentTests >> test01AToDoNoteWithoutACompletionDateCanBeAssig
 
 	|aToDoNote|
 	
-	aToDoNote := ToDoNote enumerated: 1 described: 'A good description' categorized: 'Development'.
+	aToDoNote := ToDoNote identifiedBy: 1 described: 'A good description' categorized: 'Development'.
 	aToDoNote assignCompletionDate: '25/12/2022'.
 	self assert: aToDoNote completionDate equals: '25/12/2022'.
 ]
@@ -19,7 +19,7 @@ CompletionDateAssignmentTests >> test02AToDoNoteWithACompletionDateCanBeReassign
 
 	| aToDoNote |
 	aToDoNote := ToDoNote
-		             enumerated: 1 described: 'A good description'
+		             identifiedBy: 1 described: 'A good description'
 		             categorized: 'Development'.
 	aToDoNote assignCompletionDate: '25/12/2022'.
 	self assert: aToDoNote completionDate equals: '25/12/2022'.
@@ -32,7 +32,7 @@ CompletionDateAssignmentTests >> test03ACompletionDateCantBeDeleted [
 
 	| aToDoNote |
 	aToDoNote := ToDoNote
-		             enumerated: 1 described: 'A good description'
+		             identifiedBy: 1 described: 'A good description'
 		             categorized: 'Development'.
 	aToDoNote assignCompletionDate: '25/12/2022'.
 	self assert: aToDoNote completionDate equals: '25/12/2022'.
