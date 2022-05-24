@@ -10,68 +10,69 @@ Class {
 		'completionStatus',
 		'employeeName',
 		'completionDate',
-		'toDoNumber'
+		'toDoIdentifier'
 	],
 	#category : #'TODOSpike-Model'
 }
 
 { #category : #'instance creation' }
-ToDoNote class >> enumerated: aToDoNumber described: aDescription [
+ToDoNote class >> identifiedBy: aToDoIdentifier described: aDescription [
 
 	AssertionChecker
-		enforce: (aDescription isNil or: aToDoNumber isNil) not
+		enforce: (aDescription isNil or: aToDoIdentifier isNil) not
 		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
 	AssertionChecker
-		enforce: (aDescription isString)
+		enforce: aDescription isString
 		because: 'Cannot be passed a non string object by argument'
-		raising: ToDoNoteFailure.	
+		raising: ToDoNoteFailure.
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
 		because: 'The description cannot be a empty string'
 		raising: ToDoNoteFailure.
-		
+
 	^ self new
-		  initializeEnumerated: aToDoNumber described: aDescription
+		  initializeIdentifiedBy: aToDoIdentifier
+		  described: aDescription
 		  categorized: ''
 		  endingOn: 'No completion date assigned yet'
 ]
 
 { #category : #'instance creation' }
-ToDoNote class >> enumerated: aToDoNumber described: aDescription categorized: aCategory [
-	
+ToDoNote class >> identifiedBy: aToDoIdentifier described: aDescription categorized: aCategory [
+
 	AssertionChecker
-		enforce: (aDescription isNil or: aToDoNumber isNil) not
+		enforce: (aDescription isNil or: aToDoIdentifier isNil) not
 		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
-		
+
 	AssertionChecker
 		enforce: (aDescription isString and: aCategory isString)
 		because: 'Cannot be passed a non string object by argument'
-		raising: ToDoNoteFailure.	
+		raising: ToDoNoteFailure.
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
 		because: 'The description cannot be a empty string'
 		raising: ToDoNoteFailure.
-	
+
 	^ self new
-		  initializeEnumerated: aToDoNumber described: aDescription
+		  initializeIdentifiedBy: aToDoIdentifier
+		  described: aDescription
 		  categorized: aCategory
 		  endingOn: 'No completion date assigned yet'
 ]
 
 { #category : #'instance creation' }
-ToDoNote class >> enumerated: aToDoNumber described: aDescription categorized: aCategory endingOn: aCompletionDate [
+ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized: aCategory endingOn: aCompletionDate [
 
 	AssertionChecker
-		enforce: (aDescription isNil or: aToDoNumber isNil) not
+		enforce: (aDescription isNil or: anIdentifier isNil) not
 		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
 
 	AssertionChecker
 		enforce: aDescription isString
-		because:
-		'Cannot be passed a non string object by argument'
+		because: 'Cannot be passed a non string object by argument'
 		raising: ToDoNoteFailure.
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
@@ -79,23 +80,23 @@ ToDoNote class >> enumerated: aToDoNumber described: aDescription categorized: a
 		raising: ToDoNoteFailure.
 
 	^ self new
-		  initializeEnumerated: aToDoNumber described: aDescription
+		  initializeIdentifiedBy: anIdentifier
+		  described: aDescription
 		  categorized: aCategory
 		  endingOn: aCompletionDate
 ]
 
 { #category : #'instance creation' }
-ToDoNote class >> enumerated: aToDoNumber described: aDescription endingOn: aCompletionDate [
+ToDoNote class >> identifiedBy: aToDoIdentifier described: aDescription endingOn: aCompletionDate [
 
 	AssertionChecker
-		enforce: (aDescription isNil or: aToDoNumber isNil) not
+		enforce: (aDescription isNil or: aToDoIdentifier isNil) not
 		because: 'Cannot be passed a nil object by argument'
 		raising: ToDoNoteFailure.
 
 	AssertionChecker
 		enforce: aDescription isString
-		because:
-		'Cannot be passed a non string object by argument'
+		because: 'Cannot be passed a non string object by argument'
 		raising: ToDoNoteFailure.
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
@@ -103,7 +104,8 @@ ToDoNote class >> enumerated: aToDoNumber described: aDescription endingOn: aCom
 		raising: ToDoNoteFailure.
 
 	^ self new
-		  initializeEnumerated: aToDoNumber described: aDescription
+		  initializeIdentifiedBy: aToDoIdentifier
+		  described: aDescription
 		  categorized: ''
 		  endingOn: aCompletionDate
 ]
@@ -155,13 +157,13 @@ ToDoNote >> designatedEmployee [
 ]
 
 { #category : #'initialization - private' }
-ToDoNote >> initializeEnumerated: aToDoNumber described: aDescription categorized: aCategory endingOn: aCompletionDate [
-	
+ToDoNote >> initializeIdentifiedBy: anIdentifier described: aDescription categorized: aCategory endingOn: aCompletionDate [
+
 	description := aDescription.
 	category := aCategory.
 	completionDate := aCompletionDate.
 	completionStatus := 'Open'.
-	toDoNumber := aToDoNumber.
+	toDoIdentifier := anIdentifier.
 	employeeName := 'Unassigned employee'
 ]
 
@@ -190,7 +192,7 @@ ToDoNote >> setCompletionStatusToOpen [
 ]
 
 { #category : #accessing }
-ToDoNote >> toDoNumber [
+ToDoNote >> toDoIdentifier [
 
-	^ toDoNumber
+	^ toDoIdentifier
 ]

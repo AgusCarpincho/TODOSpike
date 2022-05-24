@@ -17,7 +17,7 @@ ToDoNoteListCRUDOperationsTests >> setUp [
 
 	super setUp.
 	aToDoNoteInProgress := ToDoNote
-		                       enumerated: 1
+		                       identifiedBy: 1
 		                       described: 'A good description'
 		                       categorized: 'Fixes'.
 	aToDoNoteInProgress setCompletionStatusToInProgress.
@@ -27,7 +27,7 @@ ToDoNoteListCRUDOperationsTests >> setUp [
 	aToDoNoteListWithASingleToDo := ToDoNoteList named:
 		                                'Development ToDos'.
 	aToDoNoteListWithASingleToDo addNewToDo:
-		(ToDoNote enumerated: 1 described: 'A good description').
+		(ToDoNote identifiedBy: 1 described: 'A good description').
 
 	aToDoNoteListWithASingleToDoInProgress := ToDoNoteList named:
 		                                          'Development ToDos'.
@@ -37,7 +37,7 @@ ToDoNoteListCRUDOperationsTests >> setUp [
 	aToDoNoteListWithASingleToDoFinished := ToDoNoteList named:
 		                                        'Development ToDos'.
 	aToDoNoteFinished := ToDoNote
-		                     enumerated: 1
+		                     identifiedBy: 1
 		                     described: 'A good description'
 		                     categorized: 'Fixes'.
 	aToDoNoteFinished setCompletionStatusToFinished.
@@ -48,7 +48,7 @@ ToDoNoteListCRUDOperationsTests >> setUp [
 ToDoNoteListCRUDOperationsTests >> test01AToDoNoteListCanAddANewToDoNoteAndTheNumberOfTodosIsOneInTheToDoNoteList [
 
 	aToDoNoteList addNewToDo: (ToDoNote
-			 enumerated: 1
+			 identifiedBy: 1
 			 described: 'A good description'
 			 categorized: 'Reify ToDoNoteList'
 			 endingOn: '25/9/2022').
@@ -59,7 +59,7 @@ ToDoNoteListCRUDOperationsTests >> test01AToDoNoteListCanAddANewToDoNoteAndTheNu
 ToDoNoteListCRUDOperationsTests >> test02AToDoNoteListCanAddANewToDoNoteWithoutCompletionDateAndTheNumberOfTodosIsOneInTheToDoNoteList [
 
 	aToDoNoteList addNewToDo: (ToDoNote
-			 enumerated: 1
+			 identifiedBy: 1
 			 described: 'A good description'
 			 categorized: 'Reify ToDoNoteList').
 	self assert: aToDoNoteList numberOfToDos equals: 1
@@ -69,7 +69,7 @@ ToDoNoteListCRUDOperationsTests >> test02AToDoNoteListCanAddANewToDoNoteWithoutC
 ToDoNoteListCRUDOperationsTests >> test03AToDoNoteListCanAddANewToDoNoteWithoutCompletionDateAndCategoryAndTheNumberOfTodosIsOneInTheToDoNoteList [
 
 	aToDoNoteList addNewToDo:
-		(ToDoNote enumerated: 1 described: 'A good description').
+		(ToDoNote identifiedBy: 1 described: 'A good description').
 	self assert: aToDoNoteList numberOfToDos equals: 1
 ]
 
@@ -114,12 +114,12 @@ ToDoNoteListCRUDOperationsTests >> test07CantBePossibleToDeleteANonExistingToDoF
 ToDoNoteListCRUDOperationsTests >> test08CantBePossibleToAddAToDoNoteEnumeratedWithTheSameNumberThatAnotherToDo [
 
 	aToDoNoteList addNewToDo:
-		(ToDoNote enumerated: 1 described: 'A good description').
+		(ToDoNote identifiedBy: 1 described: 'A good description').
 
 	self
 		should: [ 
 			aToDoNoteList addNewToDo:
-				(ToDoNote enumerated: 1 described: 'A good description') ]
+				(ToDoNote identifiedBy: 1 described: 'A good description') ]
 		raise: ToDoNoteFailure
 ]
 

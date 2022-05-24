@@ -9,7 +9,7 @@ CompletionStatusTests >> test01AToDoNoteStartsWithAnOpenCompletionStatus [
 
 	| aToDoNote |
 	
-	aToDoNote := ToDoNote enumerated: 1 described: 'A good description for a good development' categorized: 'Development' endingOn: '25/9/2022' .
+	aToDoNote := ToDoNote identifiedBy: 1 described: 'A good description for a good development' categorized: 'Development' endingOn: '25/9/2022' .
 	
 	self assert: aToDoNote completionStatus equals: 'Open'
 ]
@@ -19,7 +19,7 @@ CompletionStatusTests >> test02AToDoNoteWithAnOpenCompletionStatusCanBeSettedToI
 
 	| aToDoNote |
 	
-	aToDoNote := ToDoNote enumerated: 1 described: 'A good description for a good development' categorized: 'Development' endingOn: '25/9/2022' .
+	aToDoNote := ToDoNote identifiedBy: 1 described: 'A good description for a good development' categorized: 'Development' endingOn: '25/9/2022' .
 	
 	self assert: aToDoNote completionStatus equals: 'Open'.
 	aToDoNote setCompletionStatusToInProgress.
@@ -32,7 +32,7 @@ CompletionStatusTests >> test03AToDoNoteWithAnInProgressCompletionStatusCanBeSet
 
 	| aToDoNote |
 	
-	aToDoNote := ToDoNote enumerated: 1 described: 'A good description for a good development' categorized: 'Development' endingOn: '25/9/2022' .
+	aToDoNote := ToDoNote identifiedBy: 1 described: 'A good description for a good development' categorized: 'Development' endingOn: '25/9/2022' .
 	
 	self assert: aToDoNote completionStatus equals: 'Open'.
 	

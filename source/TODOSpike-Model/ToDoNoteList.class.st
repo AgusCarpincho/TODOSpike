@@ -23,9 +23,9 @@ ToDoNoteList class >> named: aListName [
 { #category : #'CRUD operations' }
 ToDoNoteList >> addNewToDo: aToDoNote [
 
-	[ toDos at: aToDoNote toDoNumber ]
+	[ toDos at: aToDoNote toDoIdentifier ]
 		on: KeyNotFound
-		do: [ toDos at: aToDoNote toDoNumber put: aToDoNote. ^ self ].
+		do: [ toDos at: aToDoNote toDoIdentifier put: aToDoNote. ^ self ].
 	ToDoNoteFailure signal: 'You cannot add a ToDo with the same ToDo number as another ToDo'
 ]
 
