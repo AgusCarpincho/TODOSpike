@@ -83,7 +83,7 @@ ToDoNoteListCRUDOperationsTests >> test04AToDoNoteCanBeDeletedFromTheToDoNoteLis
 { #category : #tests }
 ToDoNoteListCRUDOperationsTests >> test05AToDoNoteCantBeDeletedFromTheToDoNoteListIfItsCompletionStatusIsInProgress [
 
-	self should: [ aToDoNoteListWithASingleToDoInProgress deleteToDoIdentified: 1 ] raise: ToDoNoteFailure .
+	self should: [ aToDoNoteListWithASingleToDoInProgress deleteToDoIdentified: 1 ] raise: ToDoNoteException .
 	self
 		assert: aToDoNoteListWithASingleToDoInProgress numberOfToDos
 		equals: 1.
@@ -95,7 +95,7 @@ ToDoNoteListCRUDOperationsTests >> test06AToDoNoteCantBeDeletedFromTheToDoNoteLi
 	self
 		should: [ 
 		aToDoNoteListWithASingleToDoInProgress deleteToDoIdentified: 1 ]
-		raise: ToDoNoteFailure.
+		raise: ToDoNoteException.
 	self
 		assert: aToDoNoteListWithASingleToDoInProgress numberOfToDos
 		equals: 1
@@ -107,7 +107,7 @@ ToDoNoteListCRUDOperationsTests >> test07CantBePossibleToDeleteANonExistingToDoF
 	self
 		should: [ 
 		aToDoNoteListWithASingleToDoInProgress deleteToDoIdentified: 1 ]
-		raise: ToDoNoteFailure.
+		raise: ToDoNoteException.
 ]
 
 { #category : #tests }
@@ -120,7 +120,7 @@ ToDoNoteListCRUDOperationsTests >> test08CantBePossibleToAddAToDoNoteEnumeratedW
 		should: [ 
 			aToDoNoteList addNewToDo:
 				(ToDoNote identifiedBy: 1 described: 'A good description') ]
-		raise: ToDoNoteFailure
+		raise: ToDoNoteException
 ]
 
 { #category : #tests }
@@ -148,7 +148,7 @@ ToDoNoteListCRUDOperationsTests >> test10AToDoNoteCompletionDateCantBeModifyIfCo
 		should:
 			[(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1)
 				setCompletionDateTo: '31/12/2022']
-		raise: ToDoNoteFailure.
+		raise: ToDoNoteException.
 
 	aToDoNoteListWithASingleToDoFinished 
 		modifyCompletionStatusToFinishedTheToDoIdentified: 1.
@@ -157,7 +157,7 @@ ToDoNoteListCRUDOperationsTests >> test10AToDoNoteCompletionDateCantBeModifyIfCo
 		should:
 			[(aToDoNoteListWithASingleToDoFinished selectTheToDoIdentified: 1)
 				setCompletionDateTo: '31/12/2022']
-		raise: ToDoNoteFailure
+		raise: ToDoNoteException
 ]
 
 { #category : #tests }
@@ -178,7 +178,7 @@ ToDoNoteListCRUDOperationsTests >> test12AToDoNoteAssignedWhenTheCompletionStatu
 			[aToDoNoteListWithASingleToDoInProgress
 		assignEmployee: 'Agustin'
 		toTheToDoIdentified: 1]
-		raise: ToDoNoteFailure.
+		raise: ToDoNoteException.
 ]
 
 { #category : #tests }

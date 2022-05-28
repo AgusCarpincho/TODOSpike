@@ -26,7 +26,7 @@ ToDoNoteList >> addNewToDo: aToDoNote [
 	[ toDos at: aToDoNote toDoIdentifier ]
 		on: KeyNotFound
 		do: [ toDos at: aToDoNote toDoIdentifier put: aToDoNote. ^ self ].
-	ToDoNoteFailure signal: 'You cannot add a ToDo with the same ToDo number as another ToDo'
+	ToDoNoteException signal: 'You cannot add a ToDo with the same ToDo number as another ToDo'
 ]
 
 { #category : #'CRUD operations' }
@@ -41,7 +41,7 @@ ToDoNoteList >> deleteToDoIdentified: anIdentifier [
 	((toDos at: anIdentifier) completionStatus sameAs: 'Open')
 		ifTrue: [ toDos removeKey: anIdentifier ]
 		ifFalse: [ 
-			ToDoNoteFailure signal:
+			ToDoNoteException signal:
 				'A ToDo Note with a completion status different than Open cant be deleted' ]
 ]
 

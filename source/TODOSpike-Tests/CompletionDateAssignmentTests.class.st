@@ -36,5 +36,5 @@ CompletionDateAssignmentTests >> test03ACompletionDateCantBeDeleted [
 		             categorized: 'Development'.
 	aToDoNote assignCompletionDate: '25/12/2022'.
 	self assert: aToDoNote completionDate equals: '25/12/2022'.
-	self should: [aToDoNote assignCompletionDate: ''] raise: ToDoNoteFailure .
+	self should: [aToDoNote assignCompletionDate: ''] raise: ToDoNoteException .
 ]

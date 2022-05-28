@@ -5,7 +5,7 @@ Class {
 		'subjectField',
 		'messageField'
 	],
-	#category : #'TODOSpike-Application'
+	#category : #'TODOSpike-Views'
 }
 
 { #category : #initialization }

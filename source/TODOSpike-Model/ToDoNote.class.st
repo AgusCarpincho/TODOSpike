@@ -21,15 +21,15 @@ ToDoNote class >> identifiedBy: anIdentifier described: aDescription [
 	AssertionChecker
 		enforce: (aDescription isNil or: anIdentifier isNil) not
 		because: 'Cannot be passed a nil object by argument'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 	AssertionChecker
 		enforce: aDescription isString
 		because: 'Cannot be passed a non string object by argument'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
 		because: 'The description cannot be a empty string'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 
 	^ self new
 		  initializeIdentifiedBy: anIdentifier
@@ -44,16 +44,16 @@ ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized
 	AssertionChecker
 		enforce: (aDescription isNil or: anIdentifier isNil) not
 		because: 'Cannot be passed a nil object by argument'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 
 	AssertionChecker
 		enforce: (aDescription isString and: aCategory isString)
 		because: 'Cannot be passed a non string object by argument'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
 		because: 'The description cannot be a empty string'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 
 	^ self new
 		  initializeIdentifiedBy: anIdentifier
@@ -68,16 +68,16 @@ ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized
 	AssertionChecker
 		enforce: (aDescription isNil or: anIdentifier isNil) not
 		because: 'Cannot be passed a nil object by argument'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 
 	AssertionChecker
 		enforce: aDescription isString
 		because: 'Cannot be passed a non string object by argument'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
 		because: 'The description cannot be a empty string'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 
 	^ self new
 		  initializeIdentifiedBy: anIdentifier
@@ -92,16 +92,16 @@ ToDoNote class >> identifiedBy: anIdentifier described: aDescription endingOn: a
 	AssertionChecker
 		enforce: (aDescription isNil or: anIdentifier isNil) not
 		because: 'Cannot be passed a nil object by argument'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 
 	AssertionChecker
 		enforce: aDescription isString
 		because: 'Cannot be passed a non string object by argument'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 	AssertionChecker
 		enforce: (aDescription sameAs: '') not
 		because: 'The description cannot be a empty string'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 
 	^ self new
 		  initializeIdentifiedBy: anIdentifier
@@ -113,7 +113,7 @@ ToDoNote class >> identifiedBy: anIdentifier described: aDescription endingOn: a
 { #category : #settings }
 ToDoNote >> assignCompletionDate: aCompletionDate [
 	
-	(aCompletionDate allSatisfy: [ :character | character sameAs: '' ]) ifTrue: [ ToDoNoteFailure signal: 'The completion date cant be deleted' ] .
+	(aCompletionDate allSatisfy: [ :character | character sameAs: '' ]) ifTrue: [ ToDoNoteException signal: 'The completion date cant in blank' ] .
 	completionDate := aCompletionDate
 ]
 
@@ -124,7 +124,7 @@ ToDoNote >> assignedTo: anEmployeeName [
 		enforce: (completionStatus sameAs: 'Open')
 		because:
 		'A ToDo cant be assigned to a new employee when the ToDo is in progress or finished'
-		raising: ToDoNoteFailure.
+		raising: ToDoNoteException.
 	employeeName := anEmployeeName
 ]
 
@@ -157,20 +157,20 @@ ToDoNote >> designatedEmployee [
 ]
 
 { #category : #'initialization - private' }
-ToDoNote >> initializeIdentifiedBy: anIdentifier described: aDescription categorized: aCategory endingOn: aCompletionDate [
+ToDoNote >> initializeIdentifiedBy: aNumericalIdentifier described: aDescription categorized: aCategory endingOn: aCompletionDate [
 
 	description := aDescription.
 	category := aCategory.
 	completionDate := aCompletionDate.
 	completionStatus := 'Open'.
-	toDoIdentifier := anIdentifier.
+	toDoIdentifier := aNumericalIdentifier.
 	employeeName := 'Unassigned employee'
 ]
 
 { #category : #settings }
 ToDoNote >> setCompletionDateTo: aCompletionDate [ 
 	
-	(completionStatus sameAs: 'Open') ifTrue: [completionDate := aCompletionDate] ifFalse: [ToDoNoteFailure signal: 'The completion date of the ToDo cant be modified if the completion status is not open']
+	(completionStatus sameAs: 'Open') ifTrue: [completionDate := aCompletionDate] ifFalse: [ToDoNoteException signal: 'The completion date of the ToDo cant be modified if the completion status is not open']
 ]
 
 { #category : #settings }
