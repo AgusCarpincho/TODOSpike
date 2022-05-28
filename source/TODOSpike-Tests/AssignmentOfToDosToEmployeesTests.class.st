@@ -22,7 +22,7 @@ AssignmentOfToDosToEmployeesTests >> test02AToDoNoteCantBeAssignedToAnEmployeWhe
 	aToDoNote := ToDoNote identifiedBy: 1 described: 'A good description of the ToDo' categorized: 'Production' endingOn: '25/09/2022'.
 	aToDoNote assignedTo: 'Agustin'.
 	aToDoNote setCompletionStatusToInProgress .
-	self should: [ aToDoNote assignedTo: 'Tomas' ] raise: ToDoNoteFailure .
+	self should: [ aToDoNote assignedTo: 'Tomas' ] raise: ToDoNoteException .
 ]
 
 { #category : #tests }
@@ -33,5 +33,5 @@ AssignmentOfToDosToEmployeesTests >> test03AToDoNoteCantBeAssignedToAnEmployeWhe
 	aToDoNote := ToDoNote identifiedBy: 1 described: 'A good description of the ToDo' categorized: 'Production' endingOn: '25/09/2022'.
 	aToDoNote assignedTo: 'Agustin'.
 	aToDoNote setCompletionStatusToFinished .
-	self should: [ aToDoNote assignedTo: 'Tomas' ] raise: ToDoNoteFailure .
+	self should: [ aToDoNote assignedTo: 'Tomas' ] raise: ToDoNoteException .
 ]

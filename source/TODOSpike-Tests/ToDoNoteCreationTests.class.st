@@ -51,43 +51,43 @@ ToDoNoteCreationTests >> test04AToDoNoteHasAFinishDateAndADescriptionAndACategor
 { #category : #tests }
 ToDoNoteCreationTests >> test05AToDoNoteRaiseAnExceptionIfTheDescriptionIsEmpty [
 
-	self should: [ ToDoNote identifiedBy: 1 described: '' categorized: 'AGoodCategory' endingOn: '5/6/2022' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote identifiedBy: 1 described: '' categorized: 'AGoodCategory' endingOn: '5/6/2022' ] raise: ToDoNoteException.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test06AToDoNoteRaiseAnExceptionIfTheDescriptionIsNil [
 
-	self should: [ ToDoNote identifiedBy: 1 described: nil categorized: 'AGoodCategory' endingOn: '5/6/2022' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote identifiedBy: 1 described: nil categorized: 'AGoodCategory' endingOn: '5/6/2022' ] raise: ToDoNoteException.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test07AToDoNoteRaiseAnExceptionIfTheDescriptionIsNotAString [
 
-	self should: [ ToDoNote identifiedBy: 1 described: 10 categorized: 'AGoodCategory' endingOn: '5/6/2022' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote identifiedBy: 1 described: 10 categorized: 'AGoodCategory' endingOn: '5/6/2022' ] raise: ToDoNoteException.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test08AToDoNoteWithoutCategoryAndFinishDateWithANilDescriptionRaiseAFailure [
 
-	self should: [ ToDoNote identifiedBy: 1 described: nil ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote identifiedBy: 1 described: nil ] raise: ToDoNoteException.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test09AToDoNoteWithoutFinishDateWithANilDescriptionRaiseAFailure [
 
-	self should: [ ToDoNote identifiedBy: 1 described: nil categorized: 'AGoodCategory' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote identifiedBy: 1 described: nil categorized: 'AGoodCategory' ] raise: ToDoNoteException.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test10AToDoNoteWithoutCategoryAndFinishDateWithADescriptionThatIsNotAStringRaiseAFailure [
 
-	self should: [ ToDoNote identifiedBy: 1 described: 10 ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote identifiedBy: 1 described: 10 ] raise: ToDoNoteException.
 ]
 
 { #category : #tests }
 ToDoNoteCreationTests >> test11AToDoNoteWithoutFinishDateWithADescriptionThatIsNotAStringRaiseAFailure [
 
-	self should: [ ToDoNote identifiedBy: 1 described: 10 categorized: 'AGoodCategory' ] raise: ToDoNoteFailure.
+	self should: [ ToDoNote identifiedBy: 1 described: 10 categorized: 'AGoodCategory' ] raise: ToDoNoteException.
 ]
 
 { #category : #tests }
@@ -99,7 +99,7 @@ ToDoNoteCreationTests >> test12AToDoNoteStartsWithoutAnAssignedEmployee [
 { #category : #tests }
 ToDoNoteCreationTests >> test13AToDoNoteRaiseAnExceptionIfTheCategoryArgumentIsANonStringObject [
 
-	self should: [ ToDoNote identifiedBy: 1 described: 'A good description' categorized: 1 ] raise: ToDoNoteFailure .
+	self should: [ ToDoNote identifiedBy: 1 described: 'A good description' categorized: 1 ] raise: ToDoNoteException .
 ]
 
 { #category : #tests }
