@@ -9,19 +9,19 @@ Class {
 	#category : #'TODOSpike-Views'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #creating }
 ColumnListsView >> createLeftColumnToDoList [
 
 	^ ToDoListColumnView title: 'Open'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #creating }
 ColumnListsView >> createMiddleColumnToDoList [
 
 	^ ToDoListColumnView title: 'In Progress'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #creating }
 ColumnListsView >> createRightColumnToDoList [
 
 	^ ToDoListColumnView title: 'Finished'

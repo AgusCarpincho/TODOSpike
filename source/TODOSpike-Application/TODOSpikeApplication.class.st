@@ -44,7 +44,7 @@ TODOSpikeApplication >> contentView [
 
 	^ [ :aMainView | 
 	  self
-		  renderWebAppInstructionsOn: aMainView;
+		  renderWebAppInstructionsAndAddFormOn: aMainView;
 		  renderPrincipalContentOn: aMainView;
 		  renderSendingReportBoxOn: aMainView ]
 ]
@@ -89,25 +89,31 @@ TODOSpikeApplication >> renderSendingReportBoxOn: aMainView [
 ]
 
 { #category : #rendering }
-TODOSpikeApplication >> renderWebAppInstructionsOn: aMainView [
+TODOSpikeApplication >> renderWebAppInstructionsAndAddFormOn: aMainView [
 
-	| webAppInstructions |
-	webAppInstructions := ContainerWebView
-		                      wrapping: ContentInformationWebView new
-		                      intoElementBuiltUsing: [ :canvas | canvas div ]
-		                      applying: [ :theContainer | 
-			                      theContainer addClass willow.
-			                      theContainer setStyleTo: [ :style | 
-				                      style
-					                      backgroundColor: '#	F3F3F3';
-					                      boxShadow:
-						                      '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
-					                      color: '#EE8625';
-					borderRadius: 10 px;	
-					                      padding: 20 px;
-					                      height: 300 px;
-					                      fontSize: 20 px;
-					                      width: 500 px;
-					                      margin: 20 px ] ].
-	aMainView render: webAppInstructions
+	| contentInformationWebAndAddFormView |
+	contentInformationWebAndAddFormView := ContainerWebView
+		                                       wrapping:
+		                                       ContentInformationWebAndAddFormView
+			                                       new
+		                                       intoElementBuiltUsing: [ 
+		                                       :canvas | canvas div ]
+		                                       applying: [ :theContainer | 
+			                                       theContainer addClass willow.
+			                                       theContainer setStyleTo: [ 
+				                                       :style | 
+				                                       style
+					                                       backgroundColor:
+						                                       '#	F3F3F3';
+					                                       boxShadow:
+						                                       '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
+					                                       color: '#EE8625';
+					                                       borderRadius: 10 px;
+					                                       padding: 20 px;
+					                                       display: 'inline-flex';
+					                                       height: 420 px;
+					                                       fontSize: 20 px;
+					                                       width: 1360 px;
+					                                       margin: 20 px ] ].
+	aMainView render: contentInformationWebAndAddFormView
 ]
