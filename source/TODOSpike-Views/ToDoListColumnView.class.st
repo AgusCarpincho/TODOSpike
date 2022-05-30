@@ -41,9 +41,9 @@ ToDoListColumnView >> initializeWith: aTitle [
 					                      color: '#EE8625';
 					                      borderRadius: 10 px;
 					                      padding: 20 px;
-					                      height: 300 px;
+					                      height: 600 px;
 					                      fontSize: 20 px;
-					                      width: 400 px;
+					                      width: 400 px;	
 					                      margin: 20 px ] ]
 ]
 
