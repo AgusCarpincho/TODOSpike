@@ -44,9 +44,8 @@ TODOSpikeApplication >> contentView [
 
 	^ [ :aMainView | 
 	  self
-		  renderAddToDoFormOn: aMainView;
 		  renderWebAppInstructionsOn: aMainView;
-		  renderColumnListsOn: aMainView;
+		  renderPrincipalContentOn: aMainView;
 		  renderSendingReportBoxOn: aMainView ]
 ]
 
@@ -56,17 +55,7 @@ TODOSpikeApplication >> jQueryLibrary [
 ]
 
 { #category : #rendering }
-TODOSpikeApplication >> renderAddToDoFormOn: aMainView [
-
-	| toDoAddForm |
-	
-	
-	
-	aMainView render: toDoAddForm
-]
-
-{ #category : #rendering }
-TODOSpikeApplication >> renderColumnListsOn: aMainView [
+TODOSpikeApplication >> renderPrincipalContentOn: aMainView [
 
 	| principalContent |
 	principalContent := ContainerWebView

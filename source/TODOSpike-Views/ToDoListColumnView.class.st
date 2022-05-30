@@ -2,7 +2,8 @@ Class {
 	#name : #ToDoListColumnView,
 	#superclass : #WAPainter,
 	#instVars : [
-		'title'
+		'title',
+		'toDoListColumnView'
 	],
 	#category : #'TODOSpike-Views'
 }
@@ -25,11 +26,29 @@ ToDoListColumnView >> initializeWith: aTitle [
 					         color: #black;
 					         fontFamily: #Roboto;
 					         margin: 20 px;
-					         marginTop: 30 px ] ]
+					         marginTop: 30 px ] ].
+
+	toDoListColumnView := ContainerWebView
+		                      wrapping: title
+		                      intoElementBuiltUsing: [ :canvas | canvas div ]
+		                      applying: [ :theContainer | 
+			                      theContainer addClass willow.
+			                      theContainer setStyleTo: [ :style | 
+				                      style
+					                      backgroundColor: '#	F3F3F3';
+					                      boxShadow:
+						                      '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
+					                      color: '#EE8625';
+					                      borderRadius: 10 px;
+					                      padding: 20 px;
+					                      height: 300 px;
+					                      fontSize: 20 px;
+					                      width: 400 px;
+					                      margin: 20 px ] ]
 ]
 
 { #category : #rendering }
 ToDoListColumnView >> renderContentOn: aRenderer [
 
-	aRenderer render: title
+	aRenderer render: toDoListColumnView
 ]

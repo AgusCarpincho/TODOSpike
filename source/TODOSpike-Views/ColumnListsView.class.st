@@ -12,67 +12,19 @@ Class {
 { #category : #'as yet unclassified' }
 ColumnListsView >> createLeftColumnToDoList [
 
-	^ ContainerWebView
-		  wrapping: (ToDoListColumnView title: 'Open')
-		  intoElementBuiltUsing: [ :canvas | canvas div ]
-		  applying: [ :theContainer | 
-			  theContainer addClass willow.
-			  theContainer setStyleTo: [ :style | 
-				  style
-					  backgroundColor: '#	F3F3F3';
-					  boxShadow:
-						  '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
-					  color: '#EE8625';
-					  borderRadius: 10 px;
-					  padding: 20 px;
-					  height: 300 px;
-					  fontSize: 20 px;
-					  width: 400 px;	
-					  margin: 20 px ] ]
+	^ ToDoListColumnView title: 'Open'
 ]
 
 { #category : #'as yet unclassified' }
 ColumnListsView >> createMiddleColumnToDoList [
 
-	^ ContainerWebView
-		  wrapping: (ToDoListColumnView title: 'In progress')
-		  intoElementBuiltUsing: [ :canvas | canvas div ]
-		  applying: [ :theContainer | 
-			  theContainer addClass willow.
-			  theContainer setStyleTo: [ :style | 
-				  style
-					  backgroundColor: '#	F3F3F3';
-					  boxShadow:
-						  '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
-					  color: '#EE8625';
-					  borderRadius: 10 px;
-					  padding: 20 px;
-					  height: 300 px;
-					  fontSize: 20 px;
-					  width: 400 px;
-					  margin: 20 px ] ]
+	^ ToDoListColumnView title: 'In Progress'
 ]
 
 { #category : #'as yet unclassified' }
 ColumnListsView >> createRightColumnToDoList [
 
-	^ ContainerWebView
-		  wrapping: (ToDoListColumnView title: 'Finished')
-		  intoElementBuiltUsing: [ :canvas | canvas div ]
-		  applying: [ :theContainer | 
-			  theContainer addClass willow.
-			  theContainer setStyleTo: [ :style | 
-				  style
-					  backgroundColor: '#	F3F3F3';
-					  boxShadow:
-						  '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
-					  color: '#EE8625';
-					  borderRadius: 10 px;
-					  padding: 20 px;
-					  height: 300 px;
-					  fontSize: 20 px;
-					  width: 400 px;
-					  margin: 20 px ] ]
+	^ ToDoListColumnView title: 'Finished'
 ]
 
 { #category : #rendering }
