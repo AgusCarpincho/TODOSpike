@@ -7,7 +7,9 @@ Class {
 		'aToDoNoteListWithASingleToDoInProgress',
 		'aToDoNoteInProgress',
 		'aToDoNoteListWithASingleToDoFinished',
-		'aToDoNoteFinished'
+		'aToDoNoteFinished',
+		'toDoNoteBuilder',
+		'aToDoNoteWithoutCompletionDateAndOpen'
 	],
 	#category : #'TODOSpike-Tests'
 }
@@ -16,60 +18,73 @@ Class {
 ToDoNoteListCRUDOperationsTests >> setUp [
 
 	super setUp.
-	aToDoNoteInProgress := ToDoNote
-		                       identifiedBy: 1
-		                       described: 'A good description'
-		                       categorized: 'Fixes'.
-	aToDoNoteInProgress setCompletionStatusToInProgress.
+
+	"Creation of lists"
 
 	aToDoNoteList := ToDoNoteList named: 'Development ToDos'.
-
+	
 	aToDoNoteListWithASingleToDo := ToDoNoteList named:
 		                                'Development ToDos'.
-	aToDoNoteListWithASingleToDo addNewToDo:
-		(ToDoNote identifiedBy: 1 described: 'A good description').
-
 	aToDoNoteListWithASingleToDoInProgress := ToDoNoteList named:
 		                                          'Development ToDos'.
+	aToDoNoteListWithASingleToDoFinished := ToDoNoteList named:
+		                                        'Development ToDos'.
+	"Creation of ToDoBuilder"
+		
+	toDoNoteBuilder := ToDoNoteBuilder withNumericalIdentifier:
+		                   aToDoNoteList nextNumericalIdentifier.
+
+	"Configuring the basic of ToDoBuilder"
+	toDoNoteBuilder
+		configuringDescription: 'A good description';
+		configuringCategory: 'Reify ToDoNoteList';
+		configuringCompletionDate: '25/9/2022';
+		configuringAssignedEmployee: 'Agustin'.
+	
+	"Building ToDos"
+	aToDoNoteInProgress := toDoNoteBuilder build
+		                       setCompletionStatusToInProgress.
+
+	aToDoNoteWithoutCompletionDateAndOpen := (toDoNoteBuilder configuringWithoutCompletionDate; build) setCompletionStatusToOpen.
+	
+	aToDoNoteFinished := toDoNoteBuilder build
+		                     setCompletionStatusToFinished.
+	
+	"Adding the ToDos to the Lists"	
+	aToDoNoteListWithASingleToDo addNewToDo:
+		aToDoNoteWithoutCompletionDateAndOpen.
+		
 	aToDoNoteListWithASingleToDoInProgress addNewToDo:
 		aToDoNoteInProgress.
 
-	aToDoNoteListWithASingleToDoFinished := ToDoNoteList named:
-		                                        'Development ToDos'.
-	aToDoNoteFinished := ToDoNote
-		                     identifiedBy: 1
-		                     described: 'A good description'
-		                     categorized: 'Fixes'.
-	aToDoNoteFinished setCompletionStatusToFinished.
 	aToDoNoteListWithASingleToDoFinished addNewToDo: aToDoNoteFinished
 ]
 
 { #category : #tests }
 ToDoNoteListCRUDOperationsTests >> test01AToDoNoteListCanAddANewToDoNoteAndTheNumberOfTodosIsOneInTheToDoNoteList [
 
-	aToDoNoteList addNewToDo: (ToDoNote
-			 identifiedBy: 1
-			 described: 'A good description'
-			 categorized: 'Reify ToDoNoteList'
-			 endingOn: '25/9/2022').
+	| newToDo |
+	
+	newToDo := toDoNoteBuilder build.
+	aToDoNoteList addNewToDo: newToDo.
+
 	self assert: aToDoNoteList numberOfToDos equals: 1
 ]
 
 { #category : #tests }
 ToDoNoteListCRUDOperationsTests >> test02AToDoNoteListCanAddANewToDoNoteWithoutCompletionDateAndTheNumberOfTodosIsOneInTheToDoNoteList [
 
-	aToDoNoteList addNewToDo: (ToDoNote
-			 identifiedBy: 1
-			 described: 'A good description'
-			 categorized: 'Reify ToDoNoteList').
+	toDoNoteBuilder configuringWithoutCompletionDate.
+	aToDoNoteList addNewToDo: toDoNoteBuilder build.
 	self assert: aToDoNoteList numberOfToDos equals: 1
 ]
 
 { #category : #tests }
 ToDoNoteListCRUDOperationsTests >> test03AToDoNoteListCanAddANewToDoNoteWithoutCompletionDateAndCategoryAndTheNumberOfTodosIsOneInTheToDoNoteList [
 
-	aToDoNoteList addNewToDo:
-		(ToDoNote identifiedBy: 1 described: 'A good description').
+	toDoNoteBuilder configuringWithoutCompletionDate.
+	toDoNoteBuilder configuringWithoutCategory.
+	aToDoNoteList addNewToDo: toDoNoteBuilder build.
 	self assert: aToDoNoteList numberOfToDos equals: 1
 ]
 
@@ -114,12 +129,12 @@ ToDoNoteListCRUDOperationsTests >> test07CantBePossibleToDeleteANonExistingToDoF
 ToDoNoteListCRUDOperationsTests >> test08CantBePossibleToAddAToDoNoteEnumeratedWithTheSameNumberThatAnotherToDo [
 
 	aToDoNoteList addNewToDo:
-		(ToDoNote identifiedBy: 1 described: 'A good description').
+		toDoNoteBuilder build.
 
 	self
 		should: [ 
 			aToDoNoteList addNewToDo:
-				(ToDoNote identifiedBy: 1 described: 'A good description') ]
+				(toDoNoteBuilder build) ]
 		raise: ToDoNoteException
 ]
 
@@ -131,11 +146,12 @@ ToDoNoteListCRUDOperationsTests >> test09ToDoNoteCompletionDateCanBeUpdatedIfItH
 	aToDoNoteSelected := aToDoNoteListWithASingleToDo 
 		                     selectTheToDoIdentified: 1.
 	self assert: (aToDoNoteSelected completionDate sameAs:
-			 'No completion date assigned yet').
+			 'Unassigned Completion Date').
 	aToDoNoteListWithASingleToDo
 		modifyTheToDoIdentified: 1
 		withTheNewCompletionDate: '01/02/2023'.
-	self assert: (aToDoNoteSelected completionDate sameAs: '01/02/2023')
+	self assert: ((aToDoNoteListWithASingleToDo 
+		                     selectTheToDoIdentified: 1) completionDate sameAs: '01/02/2023')
 ]
 
 { #category : #tests }
@@ -200,7 +216,7 @@ ToDoNoteListCRUDOperationsTests >> test14AToDoNoteCompletionStatusCanBeSettedToI
 		assert:
 			(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1)
 				completionStatus
-		equals: 'In progress'
+		equals: 'In Progress'
 ]
 
 { #category : #tests }

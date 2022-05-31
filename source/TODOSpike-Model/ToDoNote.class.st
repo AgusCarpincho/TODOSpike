@@ -10,36 +10,13 @@ Class {
 		'completionStatus',
 		'employeeName',
 		'completionDate',
-		'toDoIdentifier'
+		'identifier'
 	],
 	#category : #'TODOSpike-Model'
 }
 
-{ #category : #'instance creation' }
-ToDoNote class >> identifiedBy: anIdentifier described: aDescription [
-
-	AssertionChecker
-		enforce: (aDescription isNil or: anIdentifier isNil) not
-		because: 'Cannot be passed a nil object by argument'
-		raising: ToDoNoteException.
-	AssertionChecker
-		enforce: aDescription isString
-		because: 'Cannot be passed a non string object by argument'
-		raising: ToDoNoteException.
-	AssertionChecker
-		enforce: (aDescription sameAs: '') not
-		because: 'The description cannot be a empty string'
-		raising: ToDoNoteException.
-
-	^ self new
-		  initializeIdentifiedBy: anIdentifier
-		  described: aDescription
-		  categorized: ''
-		  endingOn: 'No completion date assigned yet'
-]
-
-{ #category : #'instance creation' }
-ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized: aCategory [
+{ #category : #'initialization - private' }
+ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized: aCategory endingOn: aCompletionDate assignedTo: nameEmployee withStatus: completionStatus [
 
 	AssertionChecker
 		enforce: (aDescription isNil or: anIdentifier isNil) not
@@ -59,73 +36,30 @@ ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized
 		  initializeIdentifiedBy: anIdentifier
 		  described: aDescription
 		  categorized: aCategory
-		  endingOn: 'No completion date assigned yet'
-]
-
-{ #category : #'instance creation' }
-ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized: aCategory endingOn: aCompletionDate [
-
-	AssertionChecker
-		enforce: (aDescription isNil or: anIdentifier isNil) not
-		because: 'Cannot be passed a nil object by argument'
-		raising: ToDoNoteException.
-
-	AssertionChecker
-		enforce: aDescription isString
-		because: 'Cannot be passed a non string object by argument'
-		raising: ToDoNoteException.
-	AssertionChecker
-		enforce: (aDescription sameAs: '') not
-		because: 'The description cannot be a empty string'
-		raising: ToDoNoteException.
-
-	^ self new
-		  initializeIdentifiedBy: anIdentifier
-		  described: aDescription
-		  categorized: aCategory
 		  endingOn: aCompletionDate
+		  assignedTo: nameEmployee
+		  withStatus: completionStatus
 ]
 
-{ #category : #'instance creation' }
-ToDoNote class >> identifiedBy: anIdentifier described: aDescription endingOn: aCompletionDate [
-
-	AssertionChecker
-		enforce: (aDescription isNil or: anIdentifier isNil) not
-		because: 'Cannot be passed a nil object by argument'
-		raising: ToDoNoteException.
-
-	AssertionChecker
-		enforce: aDescription isString
-		because: 'Cannot be passed a non string object by argument'
-		raising: ToDoNoteException.
-	AssertionChecker
-		enforce: (aDescription sameAs: '') not
-		because: 'The description cannot be a empty string'
-		raising: ToDoNoteException.
-
-	^ self new
-		  initializeIdentifiedBy: anIdentifier
-		  described: aDescription
-		  categorized: ''
-		  endingOn: aCompletionDate
-]
-
-{ #category : #settings }
+{ #category : #transitioning }
 ToDoNote >> assignCompletionDate: aCompletionDate [
-	
-	(aCompletionDate allSatisfy: [ :character | character sameAs: '' ]) ifTrue: [ ToDoNoteException signal: 'The completion date cant in blank' ] .
-	completionDate := aCompletionDate
+
+	(aCompletionDate sameAs: '') ifTrue: [ 
+		ToDoNoteException signal: 'Invalid completion date'. ^ self ].
+
+	^ ToDoNote
+		  identifiedBy: self identifier
+		  described: self description
+		  categorized: self category
+		  endingOn: aCompletionDate
+		  assignedTo: self designatedEmployee
+		  withStatus: self completionStatus
 ]
 
-{ #category : #settings }
-ToDoNote >> assignedTo: anEmployeeName [
+{ #category : #transitioning }
+ToDoNote >> assignedTo: aNameEmployee [
 
-	AssertionChecker
-		enforce: (completionStatus sameAs: 'Open')
-		because:
-		'A ToDo cant be assigned to a new employee when the ToDo is in progress or finished'
-		raising: ToDoNoteException.
-	employeeName := anEmployeeName
+	((completionStatus sameAs: 'In Progress') or: (completionStatus sameAs: 'Finished')) ifTrue: [ ToDoNoteException signal: 'A ToDoNote cant be assigned to an employee if the completion status isnt Open' ]
 ]
 
 { #category : #accessing }
@@ -156,43 +90,69 @@ ToDoNote >> designatedEmployee [
 	^ employeeName
 ]
 
+{ #category : #accessing }
+ToDoNote >> identifier [
+
+	^ identifier
+]
+
 { #category : #'initialization - private' }
-ToDoNote >> initializeIdentifiedBy: aNumericalIdentifier described: aDescription categorized: aCategory endingOn: aCompletionDate [
+ToDoNote >> initializeIdentifiedBy: aNumericalIdentifier described: aDescription categorized: aCategory endingOn: aCompletionDate assignedTo: aEmployeeName withStatus: aCompletionStatus [
 
 	description := aDescription.
 	category := aCategory.
 	completionDate := aCompletionDate.
-	completionStatus := 'Open'.
-	toDoIdentifier := aNumericalIdentifier.
-	employeeName := 'Unassigned employee'
+	completionStatus := aCompletionStatus.
+	identifier := aNumericalIdentifier.
+	employeeName := aEmployeeName
 ]
 
-{ #category : #settings }
-ToDoNote >> setCompletionDateTo: aCompletionDate [ 
-	
-	(completionStatus sameAs: 'Open') ifTrue: [completionDate := aCompletionDate] ifFalse: [ToDoNoteException signal: 'The completion date of the ToDo cant be modified if the completion status is not open']
+{ #category : #transitioning }
+ToDoNote >> setCompletionDateTo: aCompletionDate [
+
+	(completionStatus sameAs: 'Open') not ifTrue: [ ToDoNoteException signal: 'The completion date cant be modify if the completion status is In Progress or Finished'].
+
+	^ ToDoNote
+		  identifiedBy: self identifier
+		  described: self description
+		  categorized: self category
+		  endingOn: aCompletionDate
+		  assignedTo: self designatedEmployee
+		  withStatus: self completionStatus
 ]
 
-{ #category : #settings }
+{ #category : #transitioning }
 ToDoNote >> setCompletionStatusToFinished [
-	
-	completionStatus := 'Finished'
+
+	^ ToDoNote
+		  identifiedBy: self identifier
+		  described: self description
+		  categorized: self category
+		  endingOn: self completionDate
+		  assignedTo: self designatedEmployee
+		  withStatus: 'Finished'
 ]
 
-{ #category : #settings }
+{ #category : #transitioning }
 ToDoNote >> setCompletionStatusToInProgress [
-
-	completionStatus := 'In progress'
-]
-
-{ #category : #settings }
-ToDoNote >> setCompletionStatusToOpen [
 	
-	completionStatus := 'Open'
+	^ ToDoNote
+		  identifiedBy: self identifier
+		  described: self description
+		  categorized: self category
+		  endingOn: self completionDate
+		  assignedTo: self designatedEmployee
+		  withStatus: 'In Progress'
 ]
 
-{ #category : #accessing }
-ToDoNote >> toDoIdentifier [
+{ #category : #transitioning }
+ToDoNote >> setCompletionStatusToOpen [
 
-	^ toDoIdentifier
+	^ ToDoNote
+		  identifiedBy: self identifier
+		  described: self description
+		  categorized: self category
+		  endingOn: self completionDate
+		  assignedTo: self designatedEmployee
+		  withStatus: 'Open'
 ]
