@@ -14,7 +14,7 @@ Class {
 	#category : #'TODOSpike-Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : #'initialization - private' }
 ToDoNoteList class >> named: aListName [
 
 	^ self new initializeNamed: aListName
@@ -23,9 +23,9 @@ ToDoNoteList class >> named: aListName [
 { #category : #'CRUD operations' }
 ToDoNoteList >> addNewToDo: aToDoNote [
 
-	[ toDos at: aToDoNote toDoIdentifier ]
+	[ toDos at: aToDoNote identifier ]
 		on: KeyNotFound
-		do: [ toDos at: aToDoNote toDoIdentifier put: aToDoNote. ^ self ].
+		do: [ toDos at: aToDoNote identifier put: aToDoNote. ^ self ].
 	ToDoNoteException signal: 'You cannot add a ToDo with the same ToDo number as another ToDo'
 ]
 
@@ -61,8 +61,8 @@ ToDoNoteList >> listName [
 { #category : #'CRUD operations' }
 ToDoNoteList >> modifyCompletionStatusToFinishedTheToDoIdentified: anIdentifier [
 
-	(self selectTheToDoIdentified: anIdentifier)
-		setCompletionStatusToFinished
+	toDos at: anIdentifier put: ((self selectTheToDoIdentified: anIdentifier)
+		setCompletionStatusToFinished)
 ]
 
 { #category : #'CRUD operations' }
@@ -75,14 +75,20 @@ ToDoNoteList >> modifyCompletionStatusToInProgressTheToDoIdentified: anIdentifie
 { #category : #'CRUD operations' }
 ToDoNoteList >> modifyCompletionStatusToOpenTheToDoIdentified: anIdentifier [
 
-	(self selectTheToDoIdentified: anIdentifier)
-		setCompletionStatusToOpen
+	toDos at: anIdentifier put: ((self selectTheToDoIdentified: anIdentifier)
+		setCompletionStatusToOpen)
 ]
 
 { #category : #'CRUD operations' }
 ToDoNoteList >> modifyTheToDoIdentified: anIdentifier withTheNewCompletionDate: aCompletionDate [
 
-	(toDos at: anIdentifier) setCompletionDateTo: aCompletionDate
+	(toDos at: anIdentifier put:((toDos at: anIdentifier) setCompletionDateTo: aCompletionDate))
+]
+
+{ #category : #accessing }
+ToDoNoteList >> nextNumericalIdentifier [
+
+	^ toDos size + 1
 ]
 
 { #category : #accessing }

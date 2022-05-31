@@ -8,9 +8,14 @@ Class {
 AssignmentOfToDosToEmployeesTests >> test01AToDoNoteCanBeAssignedToAnEmployee [
 
 	| aToDoNote |
-	
-	aToDoNote := ToDoNote identifiedBy: 1 described: 'A good description of the ToDo' categorized: 'Production' endingOn: '25/09/2022'.
-	aToDoNote assignedTo: 'Agustin'.
+	aToDoNote := ToDoNote
+		             identifiedBy: 1
+		             described: 'A good description of the ToDo'
+		             categorized: 'Production'
+		             endingOn: '25/09/2022'
+		             assignedTo: 'Agustin'
+		             withStatus: 'Open'.
+		
 	self assert: aToDoNote designatedEmployee equals: 'Agustin'
 ]
 
@@ -18,20 +23,30 @@ AssignmentOfToDosToEmployeesTests >> test01AToDoNoteCanBeAssignedToAnEmployee [
 AssignmentOfToDosToEmployeesTests >> test02AToDoNoteCantBeAssignedToAnEmployeWhenTheToDoIsInProgress [
 
 	| aToDoNote |
-	
-	aToDoNote := ToDoNote identifiedBy: 1 described: 'A good description of the ToDo' categorized: 'Production' endingOn: '25/09/2022'.
-	aToDoNote assignedTo: 'Agustin'.
-	aToDoNote setCompletionStatusToInProgress .
-	self should: [ aToDoNote assignedTo: 'Tomas' ] raise: ToDoNoteException .
+	aToDoNote := ToDoNote
+		             identifiedBy: 1
+		             described: 'A good description of the ToDo'
+		             categorized: 'Production'
+		             endingOn: '25/09/2022'
+		             assignedTo: 'Tomas'
+		             withStatus: 'In Progress'.
+	self
+		should: [ aToDoNote assignedTo: 'Tomas' ]
+		raise: ToDoNoteException
 ]
 
 { #category : #tests }
 AssignmentOfToDosToEmployeesTests >> test03AToDoNoteCantBeAssignedToAnEmployeWhenTheToDoIsFinished [
 
 	| aToDoNote |
-	
-	aToDoNote := ToDoNote identifiedBy: 1 described: 'A good description of the ToDo' categorized: 'Production' endingOn: '25/09/2022'.
-	aToDoNote assignedTo: 'Agustin'.
-	aToDoNote setCompletionStatusToFinished .
-	self should: [ aToDoNote assignedTo: 'Tomas' ] raise: ToDoNoteException .
+	aToDoNote := ToDoNote
+		             identifiedBy: 1
+		             described: 'A good description of the ToDo'
+		             categorized: 'Production'
+		             endingOn: '25/09/2022'
+		             assignedTo: 'Agustin'
+		             withStatus: 'Finished'.
+	self
+		should: [ aToDoNote assignedTo: 'Tomas' ]
+		raise: ToDoNoteException
 ]
