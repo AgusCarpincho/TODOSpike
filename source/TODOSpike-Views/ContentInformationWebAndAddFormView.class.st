@@ -8,7 +8,7 @@ Class {
 	#category : #'TODOSpike-Views'
 }
 
-{ #category : #rendering }
+{ #category : #'initialization - private' }
 ContentInformationWebAndAddFormView >> initialize [ 
 
 	toDoAddForm := ToDoAddFormView new.

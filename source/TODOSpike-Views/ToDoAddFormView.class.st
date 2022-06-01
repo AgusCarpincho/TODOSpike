@@ -127,7 +127,7 @@ ToDoAddFormView >> createToDoAddFormWrapping [
 					  margin: 20 px ] ]
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - private' }
 ToDoAddFormView >> initialize [
 
 	title := self createTitle.

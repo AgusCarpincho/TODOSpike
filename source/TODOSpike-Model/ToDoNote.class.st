@@ -28,7 +28,7 @@ ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized
 		because: 'Cannot be passed a non string object by argument'
 		raising: ToDoNoteException.
 	AssertionChecker
-		enforce: (aDescription sameAs: '') not
+		enforce: (aDescription isEmpty) not
 		because: 'The description cannot be a empty string'
 		raising: ToDoNoteException.
 

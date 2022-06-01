@@ -89,7 +89,7 @@ ToDoNoteBuilder >> hasAnIdentifier [
 	^ (identifier isNil) not
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - private' }
 ToDoNoteBuilder >> initializeWithNumericalIdentifier: aNumericalIdentifier [
 
 	category := 'Unassigned Category'.

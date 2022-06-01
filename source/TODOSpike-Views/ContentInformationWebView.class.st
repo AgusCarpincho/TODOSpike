@@ -8,7 +8,7 @@ Class {
 	#category : #'TODOSpike-Views'
 }
 
-{ #category : #initialization }
+{ #category : #'initialization - private' }
 ContentInformationWebView >> initialize [
 
 	title := HeadingWebView

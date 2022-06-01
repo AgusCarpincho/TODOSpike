@@ -27,7 +27,7 @@ ColumnListsView >> createRightColumnToDoList [
 	^ ToDoListColumnView title: 'Finished'
 ]
 
-{ #category : #rendering }
+{ #category : #'initialization - private' }
 ColumnListsView >> initialize [
 
 	leftColumnToDoList := self createLeftColumnToDoList.
