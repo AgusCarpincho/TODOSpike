@@ -1,5 +1,5 @@
 Class {
-	#name : #ToDoNoteBuilderConfigureMethodsAndBuildsTests,
+	#name : #ToDoNoteBuilderTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'toDoBuilderWithoutIdentifier',
@@ -9,27 +9,28 @@ Class {
 }
 
 { #category : #running }
-ToDoNoteBuilderConfigureMethodsAndBuildsTests >> setUp [
+ToDoNoteBuilderTest >> setUp [
+
 	super setUp.
 	
 	toDoBuilderWithoutIdentifier := ToDoNoteBuilder withNumericalIdentifier: nil.
 	toDoBuilder := ToDoNoteBuilder withNumericalIdentifier: 1.
 ]
 
-{ #category : #tests }
-ToDoNoteBuilderConfigureMethodsAndBuildsTests >> test01AToDoNoteBuilderDoesntBuildsAnythingIfItIsNotConfiguredAndRaiseAnException [
+{ #category : #building }
+ToDoNoteBuilderTest >> test01AToDoNoteBuilderDoesntBuildsAnythingIfItIsNotConfiguredAndRaiseAnException [
 
 	self should: [toDoBuilderWithoutIdentifier build] raise: ToDoNoteException
 ]
 
-{ #category : #tests }
-ToDoNoteBuilderConfigureMethodsAndBuildsTests >> test02AToDoNoteBuilderWithANumericalIdentifierConfiguredButWithoutAnyOtherConfiguredAtributeDoesntBuildAnythingAndRaiseAnException [
+{ #category : #building }
+ToDoNoteBuilderTest >> test02AToDoNoteBuilderWithANumericalIdentifierConfiguredButWithoutAnyOtherConfiguredAtributeDoesntBuildAnythingAndRaiseAnException [
 
 	self should: [toDoBuilder build] raise: ToDoNoteException
 ]
 
-{ #category : #tests }
-ToDoNoteBuilderConfigureMethodsAndBuildsTests >> test03AToDoNoteBuilderWithANumericalIdentifierAndADescriptionConfiguredBuildsAToDoNoteWithANumericalIdentifierAndADescription [
+{ #category : #building }
+ToDoNoteBuilderTest >> test03AToDoNoteBuilderWithANumericalIdentifierAndADescriptionConfiguredBuildsAToDoNoteWithANumericalIdentifierAndADescription [
 
 	| aToDoNote |
 	
@@ -42,8 +43,8 @@ ToDoNoteBuilderConfigureMethodsAndBuildsTests >> test03AToDoNoteBuilderWithANume
 	self assert: aToDoNote description equals: 'A good description'
 ]
 
-{ #category : #tests }
-ToDoNoteBuilderConfigureMethodsAndBuildsTests >> test04AToDoNoteBuilderWithANumericalIdentifierAndADescriptionAndACategoryConfiguredBuildsAToDoNoteWithANumericalIdentifierAndADescriptionAndACategory [
+{ #category : #building }
+ToDoNoteBuilderTest >> test04AToDoNoteBuilderWithANumericalIdentifierAndADescriptionAndACategoryConfiguredBuildsAToDoNoteWithANumericalIdentifierAndADescriptionAndACategory [
 
 	| aToDoNote |
 	toDoBuilder configuringDescription: 'A good description'.
@@ -56,8 +57,8 @@ ToDoNoteBuilderConfigureMethodsAndBuildsTests >> test04AToDoNoteBuilderWithANume
 	self assert: aToDoNote category equals: 'Development'.
 ]
 
-{ #category : #tests }
-ToDoNoteBuilderConfigureMethodsAndBuildsTests >> test05AToDoNoteBuilderWithAllNecessaryConfigurationBuildsAToDoNoteWithoutAnAssignedEmployee [
+{ #category : #building }
+ToDoNoteBuilderTest >> test05AToDoNoteBuilderWithAllNecessaryConfigurationBuildsAToDoNoteWithoutAnAssignedEmployee [
 
 	| aToDoNote |
 	toDoBuilder configuringDescription: 'A good description'.
@@ -74,8 +75,8 @@ ToDoNoteBuilderConfigureMethodsAndBuildsTests >> test05AToDoNoteBuilderWithAllNe
 	self assert: aToDoNote designatedEmployee equals: 'Agustin'
 ]
 
-{ #category : #tests }
-ToDoNoteBuilderConfigureMethodsAndBuildsTests >> test06AToDoNoteIsBuildedAlwaysWithOpenCompletionStatus [
+{ #category : #building }
+ToDoNoteBuilderTest >> test06AToDoNoteIsBuildedAlwaysWithOpenCompletionStatus [
 
 	toDoBuilder configuringDescription: 'A good description'.
 	self

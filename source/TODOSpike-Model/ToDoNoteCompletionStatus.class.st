@@ -1,6 +1,9 @@
 Class {
 	#name : #ToDoNoteCompletionStatus,
 	#superclass : #Object,
+	#instVars : [
+		'toDoNote'
+	],
 	#category : #'TODOSpike-Model'
 }
 

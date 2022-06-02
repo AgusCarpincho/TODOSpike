@@ -1,24 +1,24 @@
 Class {
-	#name : #ToDoNoteListCRUDOperationsTests,
+	#name : #ToDoNoteListTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'aToDoNoteList',
 		'aToDoNoteListWithASingleToDo',
 		'aToDoNoteListWithASingleToDoInProgress',
-		'aToDoNoteInProgress',
 		'aToDoNoteListWithASingleToDoFinished',
-		'aToDoNoteFinished',
 		'toDoNoteBuilder',
-		'aToDoNoteWithoutCompletionDateAndOpen'
+		'aToDoNoteInProgress',
+		'aToDoNoteWithoutCompletionDateAndOpen',
+		'aToDoNoteFinished'
 	],
 	#category : #'TODOSpike-Tests'
 }
 
 { #category : #running }
-ToDoNoteListCRUDOperationsTests >> setUp [
-
+ToDoNoteListTest >> setUp [
+	
 	super setUp.
-
+	
 	"Creation of lists"
 
 	aToDoNoteList := ToDoNoteList named: 'Development ToDos'.
@@ -60,8 +60,8 @@ ToDoNoteListCRUDOperationsTests >> setUp [
 	aToDoNoteListWithASingleToDoFinished addNewToDo: aToDoNoteFinished
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test01AToDoNoteListCanAddANewToDoNoteAndTheNumberOfTodosIsOneInTheToDoNoteList [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test01AToDoNoteListCanAddANewToDoNoteAndTheNumberOfTodosIsOneInTheToDoNoteList [
 
 	| newToDo |
 	
@@ -71,16 +71,30 @@ ToDoNoteListCRUDOperationsTests >> test01AToDoNoteListCanAddANewToDoNoteAndTheNu
 	self assert: aToDoNoteList numberOfToDos equals: 1
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test02AToDoNoteListCanAddANewToDoNoteWithoutCompletionDateAndTheNumberOfTodosIsOneInTheToDoNoteList [
+{ #category : #creation }
+ToDoNoteListTest >> test01AToDoNoteListCanStartWithAListName [
+
+	aToDoNoteList := ToDoNoteList named: 'Development ToDos'.
+	self assert: aToDoNoteList listName equals: 'Development ToDos'
+]
+
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test02AToDoNoteListCanAddANewToDoNoteWithoutCompletionDateAndTheNumberOfTodosIsOneInTheToDoNoteList [
 
 	toDoNoteBuilder configuringWithoutCompletionDate.
 	aToDoNoteList addNewToDo: toDoNoteBuilder build.
 	self assert: aToDoNoteList numberOfToDos equals: 1
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test03AToDoNoteListCanAddANewToDoNoteWithoutCompletionDateAndCategoryAndTheNumberOfTodosIsOneInTheToDoNoteList [
+{ #category : #creation }
+ToDoNoteListTest >> test02AToDoNoteListStartsWithZeroToDoNotes [
+
+	aToDoNoteList := ToDoNoteList named: 'Development ToDos'.
+	self assert: aToDoNoteList numberOfToDos equals: 0
+]
+
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test03AToDoNoteListCanAddANewToDoNoteWithoutCompletionDateAndCategoryAndTheNumberOfTodosIsOneInTheToDoNoteList [
 
 	toDoNoteBuilder configuringWithoutCompletionDate.
 	toDoNoteBuilder configuringWithoutCategory.
@@ -88,15 +102,15 @@ ToDoNoteListCRUDOperationsTests >> test03AToDoNoteListCanAddANewToDoNoteWithoutC
 	self assert: aToDoNoteList numberOfToDos equals: 1
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test04AToDoNoteCanBeDeletedFromTheToDoNoteListIfItsCompletionStatusIsOpen [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test04AToDoNoteCanBeDeletedFromTheToDoNoteListIfItsCompletionStatusIsOpen [
 
 	aToDoNoteListWithASingleToDo deleteToDoIdentified: 1.
 	self assert: aToDoNoteListWithASingleToDo numberOfToDos equals: 0.
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test05AToDoNoteCantBeDeletedFromTheToDoNoteListIfItsCompletionStatusIsInProgress [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test05AToDoNoteCantBeDeletedFromTheToDoNoteListIfItsCompletionStatusIsInProgress [
 
 	self should: [ aToDoNoteListWithASingleToDoInProgress deleteToDoIdentified: 1 ] raise: ToDoNoteException .
 	self
@@ -104,8 +118,8 @@ ToDoNoteListCRUDOperationsTests >> test05AToDoNoteCantBeDeletedFromTheToDoNoteLi
 		equals: 1.
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test06AToDoNoteCantBeDeletedFromTheToDoNoteListIfItsCompletionStatusIsFinished [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test06AToDoNoteCantBeDeletedFromTheToDoNoteListIfItsCompletionStatusIsFinished [
 
 	self
 		should: [ 
@@ -116,8 +130,8 @@ ToDoNoteListCRUDOperationsTests >> test06AToDoNoteCantBeDeletedFromTheToDoNoteLi
 		equals: 1
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test07CantBePossibleToDeleteANonExistingToDoFromTheToDoNoteList [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test07CantBePossibleToDeleteANonExistingToDoFromTheToDoNoteList [
 
 	self
 		should: [ 
@@ -125,8 +139,8 @@ ToDoNoteListCRUDOperationsTests >> test07CantBePossibleToDeleteANonExistingToDoF
 		raise: ToDoNoteException.
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test08CantBePossibleToAddAToDoNoteEnumeratedWithTheSameNumberThatAnotherToDo [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test08CantBePossibleToAddAToDoNoteEnumeratedWithTheSameNumberThatAnotherToDo [
 
 	aToDoNoteList addNewToDo:
 		toDoNoteBuilder build.
@@ -138,8 +152,8 @@ ToDoNoteListCRUDOperationsTests >> test08CantBePossibleToAddAToDoNoteEnumeratedW
 		raise: ToDoNoteException
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test09ToDoNoteCompletionDateCanBeUpdatedIfItHasNotCompletionDate [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test09ToDoNoteCompletionDateCanBeUpdatedIfItHasNotCompletionDate [
 
 	| aToDoNoteSelected |
 	aToDoNoteListWithASingleToDo modifyCompletionStatusToOpenTheToDoIdentified: 1.
@@ -154,8 +168,8 @@ ToDoNoteListCRUDOperationsTests >> test09ToDoNoteCompletionDateCanBeUpdatedIfItH
 		                     selectTheToDoIdentified: 1) completionDate sameAs: '01/02/2023')
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test10AToDoNoteCompletionDateCantBeModifyIfCompletionStatusIsInProgressOrFinished [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test10AToDoNoteCompletionDateCantBeModifyIfCompletionStatusIsInProgressOrFinished [
 
 	self
 		should: [ 
@@ -170,8 +184,8 @@ ToDoNoteListCRUDOperationsTests >> test10AToDoNoteCompletionDateCantBeModifyIfCo
 		raise: ToDoNoteException
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test11AToDoNoteCanBeAssignedIfOnlyItIsInOpenCompletionStatus [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test11AToDoNoteCanBeAssignedIfOnlyItIsInOpenCompletionStatus [
 
 	aToDoNoteListWithASingleToDo assignEmployee: 'Agustin' toTheToDoIdentified: 1.
 	self
@@ -180,8 +194,8 @@ ToDoNoteListCRUDOperationsTests >> test11AToDoNoteCanBeAssignedIfOnlyItIsInOpenC
 		equals: 'Agustin'
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test12AToDoNoteAssignedWhenTheCompletionStatusIsNotOpenRaiseAnError [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test12AToDoNoteAssignedWhenTheCompletionStatusIsNotOpenRaiseAnError [
 
 	self
 		should:
@@ -191,8 +205,8 @@ ToDoNoteListCRUDOperationsTests >> test12AToDoNoteAssignedWhenTheCompletionStatu
 		raise: ToDoNoteException.
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test13AToDoNoteCompletionStatusCanBeSettedToOpenCompletionStatus [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test13AToDoNoteCompletionStatusCanBeSettedToOpenCompletionStatus [
 
 	aToDoNoteListWithASingleToDoInProgress 
 		modifyCompletionStatusToOpenTheToDoIdentified: 1.
@@ -202,8 +216,8 @@ ToDoNoteListCRUDOperationsTests >> test13AToDoNoteCompletionStatusCanBeSettedToO
 			isOpen
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test14AToDoNoteCompletionStatusCanBeSettedToInProgressCompletionStatus [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test14AToDoNoteCompletionStatusCanBeSettedToInProgressCompletionStatus [
 
 	aToDoNoteListWithASingleToDoInProgress 
 		modifyCompletionStatusToInProgressTheToDoIdentified: 1.
@@ -213,8 +227,8 @@ ToDoNoteListCRUDOperationsTests >> test14AToDoNoteCompletionStatusCanBeSettedToI
 			(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1) isInProgress
 ]
 
-{ #category : #tests }
-ToDoNoteListCRUDOperationsTests >> test15AToDoNoteCompletionStatusCanBeSettedToFinishedCompletionStatus [
+{ #category : #'CRUD - operations' }
+ToDoNoteListTest >> test15AToDoNoteCompletionStatusCanBeSettedToFinishedCompletionStatus [
 
 	aToDoNoteListWithASingleToDoInProgress 
 		modifyCompletionStatusToFinishedTheToDoIdentified: 1.

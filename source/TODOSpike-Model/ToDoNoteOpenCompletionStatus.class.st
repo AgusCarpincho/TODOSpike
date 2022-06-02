@@ -1,9 +1,6 @@
 Class {
 	#name : #ToDoNoteOpenCompletionStatus,
 	#superclass : #ToDoNoteCompletionStatus,
-	#instVars : [
-		'toDoNote'
-	],
 	#category : #'TODOSpike-Model'
 }
 

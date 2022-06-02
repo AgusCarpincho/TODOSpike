@@ -2,7 +2,6 @@ Class {
 	#name : #ToDoNoteBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'toDoNote',
 		'category',
 		'description',
 		'assignedEmployee',
