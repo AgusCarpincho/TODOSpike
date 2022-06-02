@@ -83,8 +83,12 @@ TODOSpikeApplication >> renderPrincipalContentOn: aMainView [
 TODOSpikeApplication >> renderSendingReportBoxOn: aMainView [
 
 	| sendingReportBox |
-	
-	aMainView render: (ToDoNoteView with: (ToDoNote identifiedBy: 1 described: 'Description' categorized: 'Test' endingOn: '25/09/2022' assignedTo: 'Agustin' withStatus: 'Open' )).
+	aMainView render: (ToDoNoteView with: (ToDoNote
+				  identifiedBy: 1
+				  described: 'Description'
+				  categorized: 'Test'
+				  endingOn: '25/09/2022'
+				  assignedTo: 'Agustin')).
 	aMainView render: sendingReportBox
 ]
 

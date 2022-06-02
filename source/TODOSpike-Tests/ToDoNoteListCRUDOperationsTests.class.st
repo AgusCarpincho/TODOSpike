@@ -157,22 +157,16 @@ ToDoNoteListCRUDOperationsTests >> test09ToDoNoteCompletionDateCanBeUpdatedIfItH
 { #category : #tests }
 ToDoNoteListCRUDOperationsTests >> test10AToDoNoteCompletionDateCantBeModifyIfCompletionStatusIsInProgressOrFinished [
 
-	aToDoNoteListWithASingleToDo 
-		modifyCompletionStatusToInProgressTheToDoIdentified: 1.
-
 	self
-		should:
-			[(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1)
-				setCompletionDateTo: '31/12/2022']
+		should: [ 
+			(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1) 
+				assignCompletionDate: '31/12/2022' ]
 		raise: ToDoNoteException.
 
-	aToDoNoteListWithASingleToDoFinished 
-		modifyCompletionStatusToFinishedTheToDoIdentified: 1.
-
 	self
-		should:
-			[(aToDoNoteListWithASingleToDoFinished selectTheToDoIdentified: 1)
-				setCompletionDateTo: '31/12/2022']
+		should: [ 
+			(aToDoNoteListWithASingleToDoFinished selectTheToDoIdentified: 1) 
+				assignCompletionDate: '31/12/2022' ]
 		raise: ToDoNoteException
 ]
 
@@ -202,8 +196,10 @@ ToDoNoteListCRUDOperationsTests >> test13AToDoNoteCompletionStatusCanBeSettedToO
 
 	aToDoNoteListWithASingleToDoInProgress 
 		modifyCompletionStatusToOpenTheToDoIdentified: 1.
-		
-	self assert: ((aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1) completionStatus) equals: 'Open'
+
+	self assert:
+		(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1)
+			isOpen
 ]
 
 { #category : #tests }
@@ -211,12 +207,10 @@ ToDoNoteListCRUDOperationsTests >> test14AToDoNoteCompletionStatusCanBeSettedToI
 
 	aToDoNoteListWithASingleToDoInProgress 
 		modifyCompletionStatusToInProgressTheToDoIdentified: 1.
-		
+
 	self
 		assert:
-			(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1)
-				completionStatus
-		equals: 'In Progress'
+			(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1) isInProgress
 ]
 
 { #category : #tests }
@@ -225,9 +219,7 @@ ToDoNoteListCRUDOperationsTests >> test15AToDoNoteCompletionStatusCanBeSettedToF
 	aToDoNoteListWithASingleToDoInProgress 
 		modifyCompletionStatusToFinishedTheToDoIdentified: 1.
 
-	self
-		assert:
-			(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1)
-				completionStatus
-		equals: 'Finished'
+	self assert:
+		(aToDoNoteListWithASingleToDoInProgress selectTheToDoIdentified: 1)
+			isFinished
 ]
