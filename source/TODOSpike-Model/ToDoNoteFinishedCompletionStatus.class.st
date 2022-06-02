@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-ToDoNoteFinishedCompletionStatus class >> isStateOf: aToDoNote [
+ToDoNoteFinishedCompletionStatus class >> referenceAToDoNote: aToDoNote [
 
 	^ self new initializeIsStateOf: aToDoNote
 ]
@@ -48,10 +48,4 @@ ToDoNoteFinishedCompletionStatus >> isInProgress [
 ToDoNoteFinishedCompletionStatus >> isOpen [
 
 	^ false
-]
-
-{ #category : #accessing }
-ToDoNoteFinishedCompletionStatus >> statusDescription [
-
-	^ 'Finished'
 ]

@@ -77,7 +77,7 @@ ToDoNote >> initializeIdentifiedBy: aNumericalIdentifier described: aDescription
 	description := aDescription.
 	category := aCategory.
 	completionDate := aCompletionDate.
-	completionStatus := ToDoNoteOpenCompletionStatus isStateOf: self.
+	completionStatus := ToDoNoteOpenCompletionStatus referenceAToDoNote: self.
 	identifier := aNumericalIdentifier.
 	employeeName := aEmployeeName
 ]
@@ -103,20 +103,20 @@ ToDoNote >> isOpen [
 { #category : #transitioning }
 ToDoNote >> setCompletionStatusToFinished [
 
-	completionStatus := ToDoNoteFinishedCompletionStatus isStateOf:
+	completionStatus := ToDoNoteFinishedCompletionStatus referenceAToDoNote:
 		                    self
 ]
 
 { #category : #transitioning }
 ToDoNote >> setCompletionStatusToInProgress [
 
-	completionStatus := (ToDoNoteInProgressCompletionStatus isStateOf: self)
+	completionStatus := (ToDoNoteInProgressCompletionStatus referenceAToDoNote: self)
 ]
 
 { #category : #transitioning }
 ToDoNote >> setCompletionStatusToOpen [
 
-	completionStatus := ToDoNoteOpenCompletionStatus isStateOf:
+	completionStatus := ToDoNoteOpenCompletionStatus referenceAToDoNote:
 		                    self
 ]
 

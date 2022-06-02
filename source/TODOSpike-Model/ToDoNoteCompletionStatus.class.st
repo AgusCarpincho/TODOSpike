@@ -11,7 +11,7 @@ ToDoNoteCompletionStatus class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-ToDoNoteCompletionStatus class >> isStateOf: aTodoNote [
+ToDoNoteCompletionStatus class >> referenceAToDoNote: aTodoNote [
 
 	self subclassResponsibility
 ]
@@ -48,12 +48,6 @@ ToDoNoteCompletionStatus >> isInProgress [
 
 { #category : #testing }
 ToDoNoteCompletionStatus >> isOpen [
-
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
-ToDoNoteCompletionStatus >> statusDescription [
 
 	self subclassResponsibility
 ]
