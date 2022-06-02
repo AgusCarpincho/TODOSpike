@@ -9,7 +9,12 @@ ToDoNoteCreationTests >> test01AToDoNoteHasADescription [
 
 	| aToDoNote aDescription |
 	aDescription := 'Make some tests for the ToDoApp'.
-	aToDoNote := ToDoNote identifiedBy: 1 described: aDescription categorized: 'Development' endingOn: '25/09/2022' assignedTo: 'Agus' withStatus: 'Open'.
+	aToDoNote := ToDoNote
+		             identifiedBy: 1
+		             described: aDescription
+		             categorized: 'Development'
+		             endingOn: '25/09/2022'
+		             assignedTo: 'Agus'.
 
 	self assert: aToDoNote description equals: aDescription
 ]
@@ -23,8 +28,7 @@ ToDoNoteCreationTests >> test02AToDoNoteHasACategoryAndADescription [
 		             described: 'A good description'
 		             categorized: 'ANiceCategory'
 		             endingOn: '25/09/2022'
-		             assignedTo: 'Agus'
-		             withStatus: 'Open'.
+		             assignedTo: 'Agus'.
 
 
 	self assert: aToDoNote category equals: 'ANiceCategory'
@@ -34,18 +38,16 @@ ToDoNoteCreationTests >> test02AToDoNoteHasACategoryAndADescription [
 ToDoNoteCreationTests >> test03AToDoNoteHasAFinishDateAndADescription [
 
 	| aToDoNote |
-	
 	aToDoNote := ToDoNote
 		             identifiedBy: 1
 		             described: 'Some description'
 		             categorized: 'Development'
 		             endingOn: '5/6/2022'
-		             assignedTo: 'Agus'
-		             withStatus: 'Open'.
+		             assignedTo: 'Agus'.
 
-	
-	self assert: ( aToDoNote description ) equals: 'Some description'.
-	self assert: ( aToDoNote completionDate ) equals: '5/6/2022'.
+
+	self assert: aToDoNote description equals: 'Some description'.
+	self assert: aToDoNote completionDate equals: '5/6/2022'
 ]
 
 { #category : #tests }
@@ -57,8 +59,7 @@ ToDoNoteCreationTests >> test04AToDoNoteHasAFinishDateAndADescriptionAndACategor
 		             described: 'Some description'
 		             categorized: 'AGoodCategory'
 		             endingOn: '5/6/2022'
-		             assignedTo: 'Unassigned Employee'
-		             withStatus: 'Open'.
+		             assignedTo: 'Unassigned Employee'.
 
 	self assert: aToDoNote description equals: 'Some description'.
 	self assert: aToDoNote completionDate equals: '5/6/2022'.
@@ -75,121 +76,25 @@ ToDoNoteCreationTests >> test05AToDoNoteRaiseAnExceptionIfTheDescriptionIsEmpty 
 				described: ''
 				categorized: 'AGoodCategory'
 				endingOn: '5/6/2022'
-				assignedTo: 'Unassigned Employee'
-				withStatus: 'Open' ]
+				assignedTo: 'Unassigned Employee' ]
 		raise: ToDoNoteException
 ]
 
 { #category : #tests }
-ToDoNoteCreationTests >> test06AToDoNoteRaiseAnExceptionIfTheDescriptionIsNil [
+ToDoNoteCreationTests >> test06AToDoNoteStartsWithoutAnAssignedEmployee [
 
 	self
-		should: [ 
-			ToDoNote
-				identifiedBy: 1
-				described: nil
-				categorized: 'AGoodCategory'
-				endingOn: '5/6/2022'
-				assignedTo: 'Unassigned Employee'
-				withStatus: 'Open' ]
-		raise: ToDoNoteException
+		assert: (ToDoNote
+				 identifiedBy: 1
+				 described: 'A good description'
+				 categorized: 'A good category'
+				 endingOn: '25/09/2022'
+				 assignedTo: 'Unassigned employee') designatedEmployee
+		equals: 'Unassigned employee'
 ]
 
 { #category : #tests }
-ToDoNoteCreationTests >> test07AToDoNoteRaiseAnExceptionIfTheDescriptionIsNotAString [
-
-	self
-		should: [ 
-			ToDoNote
-				identifiedBy: 1
-				described: 10
-				categorized: 'AGoodCategory'
-				endingOn: '5/6/2022'
-				assignedTo: 'Unassigned Employee'
-				withStatus: 'Open' ]
-		raise: ToDoNoteException
-]
-
-{ #category : #tests }
-ToDoNoteCreationTests >> test08AToDoNoteWithoutCategoryAndFinishDateWithANilDescriptionRaiseAFailure [
-
-	self should: [ ToDoNote
-		             identifiedBy: 1
-		             described: nil
-		             categorized: ''
-		             endingOn: ''
-		             assignedTo: 'Agus'
-		             withStatus: 'Open'.
- ] raise: ToDoNoteException.
-]
-
-{ #category : #tests }
-ToDoNoteCreationTests >> test09AToDoNoteWithoutFinishDateWithANilDescriptionRaiseAFailure [
-
-	self should: [ ToDoNote
-		             identifiedBy: 1
-		             described: nil
-		             categorized: 'AGoodCategory'
-		             endingOn: ''
-		             assignedTo: 'Agus'
-		             withStatus: 'Open'.
-] raise: ToDoNoteException.
-]
-
-{ #category : #tests }
-ToDoNoteCreationTests >> test10AToDoNoteWithoutCategoryAndFinishDateWithADescriptionThatIsNotAStringRaiseAFailure [
-
-	self
-		should: [ 
-			ToDoNote
-				identifiedBy: 1
-				described: 10
-				categorized: ''
-				endingOn: ''
-				assignedTo: 'Agus'
-				withStatus: 'Open' ]
-		raise: ToDoNoteException
-]
-
-{ #category : #tests }
-ToDoNoteCreationTests >> test11AToDoNoteWithoutFinishDateWithADescriptionThatIsNotAStringRaiseAFailure [
-
-	self should: [ ToDoNote
-		             identifiedBy: 1
-		             described: 10
-		             categorized: 'Development'
-		             endingOn: ''
-		             assignedTo: 'Agus'
-		             withStatus: 'Open'.
- ] raise: ToDoNoteException.
-]
-
-{ #category : #tests }
-ToDoNoteCreationTests >> test12AToDoNoteStartsWithoutAnAssignedEmployee [
-
-	self assert: (ToDoNote
-				identifiedBy: 1
-				described: 'A good description'
-				categorized: 'A good category'
-				endingOn: '25/09/2022'
-				assignedTo: 'Unassigned employee'
-				withStatus: 'Open') designatedEmployee equals: 'Unassigned employee'.
-]
-
-{ #category : #tests }
-ToDoNoteCreationTests >> test13AToDoNoteRaiseAnExceptionIfTheCategoryArgumentIsANonStringObject [
-
-	self should: [ ToDoNote
-				identifiedBy: 1
-				described: 'A good description'
-				categorized: 1
-				endingOn: ''
-				assignedTo: 'Agus'
-				withStatus: 'Open' ] raise: ToDoNoteException .
-]
-
-{ #category : #tests }
-ToDoNoteCreationTests >> test14AToDoNoteStartsWithAnIdentifier [
+ToDoNoteCreationTests >> test07AToDoNoteStartsWithAnIdentifier [
 
 	self
 		assert: (ToDoNote
@@ -197,7 +102,6 @@ ToDoNoteCreationTests >> test14AToDoNoteStartsWithAnIdentifier [
 				 described: 'A good description'
 				 categorized: 'Make Tests'
 				 endingOn: '25/12/22'
-				 assignedTo: 'Unassigned Employee'
-				 withStatus: 'Open') identifier
+				 assignedTo: 'Unassigned Employee') identifier
 		equals: 1
 ]

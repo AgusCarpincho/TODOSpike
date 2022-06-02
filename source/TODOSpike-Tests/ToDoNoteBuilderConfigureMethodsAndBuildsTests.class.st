@@ -78,5 +78,6 @@ ToDoNoteBuilderConfigureMethodsAndBuildsTests >> test05AToDoNoteBuilderWithAllNe
 ToDoNoteBuilderConfigureMethodsAndBuildsTests >> test06AToDoNoteIsBuildedAlwaysWithOpenCompletionStatus [
 
 	toDoBuilder configuringDescription: 'A good description'.
-	self assert: toDoBuilder build completionStatus equals: 'Open'
+	self
+		assert: toDoBuilder build isOpen
 ]

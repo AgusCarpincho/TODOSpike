@@ -12,7 +12,7 @@ Class {
 	#category : #'TODOSpike-Model'
 }
 
-{ #category : #'initialization - private' }
+{ #category : #'instance creation' }
 ToDoNoteBuilder class >> withNumericalIdentifier: aNumericalIdentifier [
 
 	^ self new initializeWithNumericalIdentifier: aNumericalIdentifier
@@ -26,18 +26,12 @@ ToDoNoteBuilder >> build [
 		enforce: self hasADescription
 		because: 'A ToDoNote must have a description'
 		raising: ToDoNoteException.
-	AssertionChecker
-		enforce: self hasAnIdentifier
-		because: 'A ToDoNote must have a valid identifier'
-		raising: ToDoNoteException.
 	newToDo := ToDoNote
 		           identifiedBy: identifier
 		           described: description
 		           categorized: category
 		           endingOn: completionDate
-		           assignedTo: assignedEmployee
-		           withStatus: 'Open'.
-	newToDo assignedTo: assignedEmployee.
+		           assignedTo: assignedEmployee.
 	^ newToDo
 ]
 
@@ -81,12 +75,6 @@ ToDoNoteBuilder >> configuringWithoutCompletionDate [
 ToDoNoteBuilder >> hasADescription [
 
 	^ (description sameAs: 'Unassigned Description') not
-]
-
-{ #category : #testing }
-ToDoNoteBuilder >> hasAnIdentifier [
-
-	^ (identifier isNil) not
 ]
 
 { #category : #'initialization - private' }

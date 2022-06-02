@@ -14,7 +14,7 @@ Class {
 	#category : #'TODOSpike-Model'
 }
 
-{ #category : #'initialization - private' }
+{ #category : #'instance creation' }
 ToDoNoteList class >> named: aListName [
 
 	^ self new initializeNamed: aListName
@@ -32,13 +32,13 @@ ToDoNoteList >> addNewToDo: aToDoNote [
 { #category : #'CRUD operations' }
 ToDoNoteList >> assignEmployee: nameEmployee toTheToDoIdentified: anIdentifier [
 
-	(self selectTheToDoIdentified: anIdentifier) assignedTo: nameEmployee
+	(self selectTheToDoIdentified: anIdentifier) assignTo: nameEmployee
 ]
 
 { #category : #'CRUD operations' }
 ToDoNoteList >> deleteToDoIdentified: anIdentifier [
 
-	((toDos at: anIdentifier) completionStatus sameAs: 'Open')
+	(toDos at: anIdentifier) isOpen
 		ifTrue: [ toDos removeKey: anIdentifier ]
 		ifFalse: [ 
 			ToDoNoteException signal:
@@ -61,28 +61,28 @@ ToDoNoteList >> listName [
 { #category : #'CRUD operations' }
 ToDoNoteList >> modifyCompletionStatusToFinishedTheToDoIdentified: anIdentifier [
 
-	toDos at: anIdentifier put: ((self selectTheToDoIdentified: anIdentifier)
+	((self selectTheToDoIdentified: anIdentifier)
 		setCompletionStatusToFinished)
 ]
 
 { #category : #'CRUD operations' }
 ToDoNoteList >> modifyCompletionStatusToInProgressTheToDoIdentified: anIdentifier [
 
-	(self selectTheToDoIdentified: anIdentifier)
-		setCompletionStatusToInProgress
+	((self selectTheToDoIdentified: anIdentifier)
+		setCompletionStatusToInProgress)
 ]
 
 { #category : #'CRUD operations' }
 ToDoNoteList >> modifyCompletionStatusToOpenTheToDoIdentified: anIdentifier [
 
-	toDos at: anIdentifier put: ((self selectTheToDoIdentified: anIdentifier)
+	((self selectTheToDoIdentified: anIdentifier)
 		setCompletionStatusToOpen)
 ]
 
 { #category : #'CRUD operations' }
 ToDoNoteList >> modifyTheToDoIdentified: anIdentifier withTheNewCompletionDate: aCompletionDate [
 
-	(toDos at: anIdentifier put:((toDos at: anIdentifier) setCompletionDateTo: aCompletionDate))
+	((toDos at: anIdentifier) assignCompletionDate: aCompletionDate)
 ]
 
 { #category : #accessing }

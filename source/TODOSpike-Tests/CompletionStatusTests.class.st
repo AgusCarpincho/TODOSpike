@@ -13,10 +13,10 @@ CompletionStatusTests >> test01AToDoNoteStartsWithAnOpenCompletionStatus [
 		             described: 'A good description for a good development'
 		             categorized: 'Development'
 		             endingOn: '25/9/2022'
-		             assignedTo: 'Unassigned Employee'
-		             withStatus: 'Open'.
+		             assignedTo: 'Unassigned Employee'.
 
-	self assert: aToDoNote completionStatus equals: 'Open'
+	self
+		assert: aToDoNote isOpen
 ]
 
 { #category : #tests }
@@ -28,12 +28,12 @@ CompletionStatusTests >> test02AToDoNoteWithAnOpenCompletionStatusCanBeSettedToI
 		             described: 'A good description for a good development'
 		             categorized: 'Development'
 		             endingOn: '25/9/2022'
-		             assignedTo: 'Unassigned Employee'
-		             withStatus: 'Open'.
+		             assignedTo: 'Unassigned Employee'.
 
-	self assert: aToDoNote completionStatus equals: 'Open'.
+	self assert: aToDoNote isOpen.
 	aToDoNote := aToDoNote setCompletionStatusToInProgress.
-	self assert: aToDoNote completionStatus equals: 'In Progress'
+	self
+		assert: aToDoNote isInProgress
 ]
 
 { #category : #tests }
@@ -45,14 +45,14 @@ CompletionStatusTests >> test03AToDoNoteWithAnInProgressCompletionStatusCanBeSet
 		             described: 'A good description for a good development'
 		             categorized: 'Development'
 		             endingOn: '25/9/2022'
-		             assignedTo: 'Unassigned Employee'
-		             withStatus: 'Open'.
+		             assignedTo: 'Unassigned Employee'.
 
-	self assert: aToDoNote completionStatus equals: 'Open'.
+	self assert: aToDoNote isOpen.
 
 	aToDoNote := aToDoNote setCompletionStatusToInProgress.
-	self assert: aToDoNote completionStatus equals: 'In Progress'.
+	self assert: aToDoNote isInProgress.
 
 	aToDoNote := aToDoNote setCompletionStatusToFinished.
-	self assert: aToDoNote completionStatus equals: 'Finished'
+	self
+		assert: aToDoNote isFinished
 ]
