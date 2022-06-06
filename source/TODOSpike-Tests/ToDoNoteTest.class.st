@@ -33,32 +33,23 @@ ToDoNoteTest >> test01AToDoNoteHasADescription [
 	self assert: aToDoNote description equals: aDescription
 ]
 
-{ #category : #'completion status' }
-ToDoNoteTest >> test01AToDoNoteStartsWithAnOpenCompletionStatus [
-
-	| aToDoNote |
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
-		             described: 'A good description for a good development'
-		             categorized: 'Development'
-		             endingOn: '25/9/2022'
-		             assignedTo: 'Unassigned Employee'.
-
-	self
-		assert: aToDoNote isOpen
-]
-
 { #category : #'completion date assignments' }
 ToDoNoteTest >> test01AToDoNoteWithoutACompletionDateCanBeAssignedWithACompletionDate [
 
-	| aToDoNote |
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
-		             described: 'A good description'
-		             categorized: 'Development'
-		             endingOn: 'Unassigned Completion Date'
-		             assignedTo: 'Agustin'.aToDoNote assignCompletionDate: '25/12/2022'.
-	self assert: aToDoNote completionDate equals: '25/12/2022'
+	| toDoNote toDoNoteBuilder |
+	toDoNoteBuilder := ToDoNoteBuilder withNumericalIdentifier: 1.
+	toDoNoteBuilder configuringCategory: 'A good category'.
+	toDoNote := toDoNoteBuilder build.
+
+	toDoNote completionDate withContentDo: [ :completionDate | self
+		assert: completionDate
+		equals: 'Unassigned Completion Date'].
+	
+	toDoNote assignCompletionDate: '1/01/2023'.
+	
+	toDoNote completionDate withContentDo: [ :completionDate | self
+		assert: completionDate
+		equals:  '1/01/2023'].
 ]
 
 { #category : #'employee assignments' }
@@ -104,24 +95,7 @@ ToDoNoteTest >> test02AToDoNoteWithACompletionDateCanBeReassignedWithANewComplet
 		             assignedTo: 'Agus'.
 
 	aToDoNote assignCompletionDate: '25/12/2023'.
-	self assert: aToDoNote completionDate equals: '25/12/2023'
-]
-
-{ #category : #'completion status' }
-ToDoNoteTest >> test02AToDoNoteWithAnOpenCompletionStatusCanBeSettedToInProgress [
-
-	| aToDoNote |
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
-		             described: 'A good description for a good development'
-		             categorized: 'Development'
-		             endingOn: '25/9/2022'
-		             assignedTo: 'Unassigned Employee'.
-
-	self assert: aToDoNote isOpen.
-	aToDoNote := aToDoNote setCompletionStatusToInProgress.
-	self
-		assert: aToDoNote isInProgress
+	aToDoNote completionDate withContentDo: [ :completionDate | self assert: completionDate equals: '25/12/2023']
 ]
 
 { #category : #'employee assignments' }
@@ -154,27 +128,6 @@ ToDoNoteTest >> test03AToDoNoteHasAFinishDateAndADescription [
 
 	self assert: aToDoNote description equals: 'Some description'.
 	self assert: aToDoNote completionDate equals: '5/6/2022'
-]
-
-{ #category : #'completion status' }
-ToDoNoteTest >> test03AToDoNoteWithAnInProgressCompletionStatusCanBeSettedToFinished [
-
-	| aToDoNote |
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
-		             described: 'A good description for a good development'
-		             categorized: 'Development'
-		             endingOn: '25/9/2022'
-		             assignedTo: 'Unassigned Employee'.
-
-	self assert: aToDoNote isOpen.
-
-	aToDoNote := aToDoNote setCompletionStatusToInProgress.
-	self assert: aToDoNote isInProgress.
-
-	aToDoNote := aToDoNote setCompletionStatusToFinished.
-	self
-		assert: aToDoNote isFinished
 ]
 
 { #category : #creation }

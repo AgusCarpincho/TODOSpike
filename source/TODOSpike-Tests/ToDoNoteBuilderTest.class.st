@@ -2,7 +2,6 @@ Class {
 	#name : #ToDoNoteBuilderTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'toDoBuilderWithoutIdentifier',
 		'toDoBuilder'
 	],
 	#category : #'TODOSpike-Tests'
@@ -13,33 +12,31 @@ ToDoNoteBuilderTest >> setUp [
 
 	super setUp.
 	
-	toDoBuilderWithoutIdentifier := ToDoNoteBuilder withNumericalIdentifier: nil.
 	toDoBuilder := ToDoNoteBuilder withNumericalIdentifier: 1.
 ]
 
-{ #category : #building }
-ToDoNoteBuilderTest >> test01AToDoNoteBuilderDoesntBuildsAnythingIfItIsNotConfiguredAndRaiseAnException [
+{ #category : #creation }
+ToDoNoteBuilderTest >> test01AToDoNoteBuilderCantBeCreatedIfTheIdentifierIIsANonNumericalObjectAndAnExceptionIsRaised [
 
-	self should: [toDoBuilderWithoutIdentifier build] raise: ToDoNoteException
+	
+	self should: [ToDoNoteBuilder withNumericalIdentifier: nil] raise: ToDoNoteException
 ]
 
 { #category : #building }
-ToDoNoteBuilderTest >> test02AToDoNoteBuilderWithANumericalIdentifierConfiguredButWithoutAnyOtherConfiguredAtributeDoesntBuildAnythingAndRaiseAnException [
+ToDoNoteBuilderTest >> test02AToDoNoteBuilderWithANumericalIdentifierAndADescriptionConfiguredBuildAToDoNoteAndDontRaiseAnException [
 
-	self should: [toDoBuilder build] raise: ToDoNoteException
+	self shouldnt: [ toDoBuilder build ] raise: ToDoNoteException
 ]
 
 { #category : #building }
 ToDoNoteBuilderTest >> test03AToDoNoteBuilderWithANumericalIdentifierAndADescriptionConfiguredBuildsAToDoNoteWithANumericalIdentifierAndADescription [
 
 	| aToDoNote |
-	
-	toDoBuilder configuringDescription: 'A good description'.
-	
+
 	self shouldnt: [ toDoBuilder build ] raise: ToDoNoteException.
-	
+
 	aToDoNote := toDoBuilder build.
-	
+
 	self assert: aToDoNote description equals: 'A good description'
 ]
 
@@ -47,21 +44,20 @@ ToDoNoteBuilderTest >> test03AToDoNoteBuilderWithANumericalIdentifierAndADescrip
 ToDoNoteBuilderTest >> test04AToDoNoteBuilderWithANumericalIdentifierAndADescriptionAndACategoryConfiguredBuildsAToDoNoteWithANumericalIdentifierAndADescriptionAndACategory [
 
 	| aToDoNote |
-	toDoBuilder configuringDescription: 'A good description'.
 	toDoBuilder configuringCategory: 'Development'.
-	
+
 	self shouldnt: [ toDoBuilder build ] raise: ToDoNoteException.
 	aToDoNote := toDoBuilder build.
 
 	self assert: aToDoNote description equals: 'A good description'.
-	self assert: aToDoNote category equals: 'Development'.
+	self assert: (aToDoNote category equalsTo: (Optional containing: 'Development'))
 ]
 
 { #category : #building }
 ToDoNoteBuilderTest >> test05AToDoNoteBuilderWithAllNecessaryConfigurationBuildsAToDoNoteWithoutAnAssignedEmployee [
 
 	| aToDoNote |
-	toDoBuilder configuringDescription: 'A good description'.
+
 	toDoBuilder configuringCategory: 'Development'.
 	toDoBuilder configuringCompletionDate: '1/1/2023'.
 	toDoBuilder configuringAssignedEmployee: 'Agustin'.
@@ -70,15 +66,16 @@ ToDoNoteBuilderTest >> test05AToDoNoteBuilderWithAllNecessaryConfigurationBuilds
 	aToDoNote := toDoBuilder build.
 
 	self assert: aToDoNote description equals: 'A good description'.
-	self assert: aToDoNote category equals: 'Development'.
-	self assert: aToDoNote completionDate equals: '1/1/2023'.
-	self assert: aToDoNote designatedEmployee equals: 'Agustin'
+	self assert: (aToDoNote category equalsTo: (Optional containing: 'Development')).
+
+	aToDoNote completionDate withContentDo: [ :completionDate | 
+		self assert: (completionDate sameAs: '1/1/2023') ].
+
+	aToDoNote designatedEmployee withContentDo: [ :designatedEmployeeContent | self assert: designatedEmployeeContent equals: 'Agustin']
 ]
 
 { #category : #building }
 ToDoNoteBuilderTest >> test06AToDoNoteIsBuildedAlwaysWithOpenCompletionStatus [
 
-	toDoBuilder configuringDescription: 'A good description'.
-	self
-		assert: toDoBuilder build isOpen
+	self assert: toDoBuilder build isOpen
 ]

@@ -16,19 +16,19 @@ Class {
 }
 
 { #category : #'instance creation' }
-ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized: aCategory endingOn: aCompletionDate assignedTo: nameEmployee [
+ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized: aOptionalCategory endingOn: aOptionalCompletionDate assignedTo: anOptionalNameEmployee [
 
 	AssertionChecker
-		enforce: aDescription isNotEmpty
+		enforce: (aDescription isNotEmpty)
 		because: 'The description cannot be a empty string'
 		raising: ToDoNoteException.
 
 	^ self new
 		  initializeIdentifiedBy: anIdentifier
 		  described: aDescription
-		  categorized: aCategory
-		  endingOn: aCompletionDate
-		  assignedTo: nameEmployee
+		  categorized: aOptionalCategory
+		  endingOn: aOptionalCompletionDate
+		  assignedTo: anOptionalNameEmployee
 ]
 
 { #category : #transitioning }
@@ -45,6 +45,7 @@ ToDoNote >> assignTo: aNameEmployee [
 
 { #category : #accessing }
 ToDoNote >> category [
+
 	^ category
 ]
 
@@ -61,8 +62,8 @@ ToDoNote >> description [
 
 { #category : #accessing }
 ToDoNote >> designatedEmployee [
-	
-	^ employeeName
+
+	^employeeName
 ]
 
 { #category : #accessing }
@@ -128,7 +129,8 @@ ToDoNote >> throughStateAssignNewCompletionDate: aCompletionDate [
 		               identifiedBy: identifier
 		               described: description
 		               categorized: category
-		               endingOn: aCompletionDate
+		               endingOn:
+		               (Optional containing: aCompletionDate)
 		               assignedTo: employeeName.
 
 	completionDate := updatedToDo completionDate
@@ -143,7 +145,7 @@ ToDoNote >> throughStateAssignTo: aNameEmployee [
 		               described: description
 		               categorized: category
 		               endingOn: completionDate
-		               assignedTo: aNameEmployee.
+		               assignedTo: (Optional containing: aNameEmployee).
 		
 	employeeName := updatedToDo designatedEmployee
 ]
