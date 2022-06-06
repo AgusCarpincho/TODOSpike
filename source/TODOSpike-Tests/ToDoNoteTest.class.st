@@ -37,19 +37,19 @@ ToDoNoteTest >> test01AToDoNoteHasADescription [
 ToDoNoteTest >> test01AToDoNoteWithoutACompletionDateCanBeAssignedWithACompletionDate [
 
 	| toDoNote toDoNoteBuilder |
-	toDoNoteBuilder := ToDoNoteBuilder withNumericalIdentifier: 1.
+	toDoNoteBuilder := ToDoNoteBuilder
+		                   withNumericalIdentifier: 1
+		                   withDescription: 'A good description'.
 	toDoNoteBuilder configuringCategory: 'A good category'.
 	toDoNote := toDoNoteBuilder build.
 
-	toDoNote completionDate withContentDo: [ :completionDate | self
-		assert: completionDate
-		equals: 'Unassigned Completion Date'].
-	
+	toDoNote completionDate withContentDo: [ :completionDate | 
+		self assert: completionDate equals: 'Unassigned Completion Date' ].
+
 	toDoNote assignCompletionDate: '1/01/2023'.
-	
-	toDoNote completionDate withContentDo: [ :completionDate | self
-		assert: completionDate
-		equals:  '1/01/2023'].
+
+	toDoNote completionDate withContentDo: [ :completionDate | 
+		self assert: completionDate equals: '1/01/2023' ]
 ]
 
 { #category : #'employee assignments' }
