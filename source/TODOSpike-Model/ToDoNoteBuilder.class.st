@@ -14,74 +14,69 @@ Class {
 { #category : #'instance creation' }
 ToDoNoteBuilder class >> withNumericalIdentifier: aNumericalIdentifier [
 
-	^ self new initializeWithNumericalIdentifier: aNumericalIdentifier
+	AssertionChecker
+		enforce: aNumericalIdentifier isNumber
+		because: 'An identifier must be numerical'
+		raising: ToDoNoteException.
+	^ self new
+		  initializeWithNumericalIdentifier: aNumericalIdentifier
+		  withDescription: 'A good description'
 ]
 
 { #category : #building }
 ToDoNoteBuilder >> build [
 
-	| newToDo |
-	AssertionChecker
-		enforce: self hasADescription
-		because: 'A ToDoNote must have a description'
-		raising: ToDoNoteException.
-	newToDo := ToDoNote
-		           identifiedBy: identifier
-		           described: description
-		           categorized: category
-		           endingOn: completionDate
-		           assignedTo: assignedEmployee.
-	^ newToDo
+	^ ToDoNote
+		  identifiedBy: identifier
+		  described: description
+		  categorized: category
+		  endingOn: completionDate
+		  assignedTo: assignedEmployee
 ]
 
 { #category : #configuring }
 ToDoNoteBuilder >> configuringAssignedEmployee: anAssignedEmployee [
 
-	assignedEmployee := anAssignedEmployee
+	assignedEmployee := Optional containing: anAssignedEmployee
 ]
 
 { #category : #configuring }
 ToDoNoteBuilder >> configuringCategory: aCategory [
 
-	category := aCategory
+	category := Optional containing: aCategory
 ]
 
 { #category : #configuring }
 ToDoNoteBuilder >> configuringCompletionDate: aCompletionDate [
 
-	completionDate := aCompletionDate
-]
-
-{ #category : #configuring }
-ToDoNoteBuilder >> configuringDescription: aDescription [
-
-	description := aDescription
+	completionDate := Optional containing: aCompletionDate
 ]
 
 { #category : #configuring }
 ToDoNoteBuilder >> configuringWithoutCategory [
 	
-	category := ''
+	category := Optional unusedBecause: 'Unassigned Category' 
 ]
 
 { #category : #configuring }
 ToDoNoteBuilder >> configuringWithoutCompletionDate [
 
-	completionDate := 'Unassigned Completion Date'
+	completionDate := Optional unusedBecause: 'Unassigned Completion Date'
 ]
 
 { #category : #testing }
 ToDoNoteBuilder >> hasADescription [
 
-	^ (description sameAs: 'Unassigned Description') not
+	((description) withContentDo: [ :descriptionContent | ^ (descriptionContent sameAs: 'Unassigned Description') not ])
 ]
 
 { #category : #'initialization - private' }
-ToDoNoteBuilder >> initializeWithNumericalIdentifier: aNumericalIdentifier [
+ToDoNoteBuilder >> initializeWithNumericalIdentifier: aNumericalIdentifier withDescription: aDescription [
 
-	category := 'Unassigned Category'.
-	description := 'Unassigned Description'.
-	assignedEmployee := 'Unassigned Employee'.
-	completionDate := 'Unassigned Completion Date'.
+	category := Optional unusedBecause: 'Unassigned Category'.
+	description := aDescription.
+	assignedEmployee := Optional unusedBecause: 'Unassigned Employee'.
+	completionDate := Optional unusedBecause:
+		                  'Unassigned Completion Date'.
 	identifier := aNumericalIdentifier
 ]

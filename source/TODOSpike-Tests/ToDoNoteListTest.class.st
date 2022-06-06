@@ -16,13 +16,13 @@ Class {
 
 { #category : #running }
 ToDoNoteListTest >> setUp [
-	
+
 	super setUp.
-	
+
 	"Creation of lists"
 
 	aToDoNoteList := ToDoNoteList named: 'Development ToDos'.
-	
+
 	aToDoNoteListWithASingleToDo := ToDoNoteList named:
 		                                'Development ToDos'.
 	aToDoNoteListWithASingleToDoInProgress := ToDoNoteList named:
@@ -30,30 +30,33 @@ ToDoNoteListTest >> setUp [
 	aToDoNoteListWithASingleToDoFinished := ToDoNoteList named:
 		                                        'Development ToDos'.
 	"Creation of ToDoBuilder"
-		
+
 	toDoNoteBuilder := ToDoNoteBuilder withNumericalIdentifier:
 		                   aToDoNoteList nextNumericalIdentifier.
 
 	"Configuring the basic of ToDoBuilder"
 	toDoNoteBuilder
-		configuringDescription: 'A good description';
 		configuringCategory: 'Reify ToDoNoteList';
 		configuringCompletionDate: '25/9/2022';
 		configuringAssignedEmployee: 'Agustin'.
-	
+
 	"Building ToDos"
 	aToDoNoteInProgress := toDoNoteBuilder build
 		                       setCompletionStatusToInProgress.
 
-	aToDoNoteWithoutCompletionDateAndOpen := (toDoNoteBuilder configuringWithoutCompletionDate; build) setCompletionStatusToOpen.
-	
+	aToDoNoteWithoutCompletionDateAndOpen := (toDoNoteBuilder
+		                                          
+			                                          configuringWithoutCompletionDate;
+		                                          build)
+		                                         setCompletionStatusToOpen.
+
 	aToDoNoteFinished := toDoNoteBuilder build
 		                     setCompletionStatusToFinished.
-	
-	"Adding the ToDos to the Lists"	
+
+	"Adding the ToDos to the Lists"
 	aToDoNoteListWithASingleToDo addNewToDo:
 		aToDoNoteWithoutCompletionDateAndOpen.
-		
+
 	aToDoNoteListWithASingleToDoInProgress addNewToDo:
 		aToDoNoteInProgress.
 
@@ -78,6 +81,21 @@ ToDoNoteListTest >> test01AToDoNoteListCanStartWithAListName [
 	self assert: aToDoNoteList listName equals: 'Development ToDos'
 ]
 
+{ #category : #'completion status' }
+ToDoNoteListTest >> test01AToDoNoteStartsWithAnOpenCompletionStatus [
+
+	| aToDoNote |
+	aToDoNote := ToDoNote
+		             identifiedBy: 1
+		             described: 'A good description for a good development'
+		             categorized: 'Development'
+		             endingOn: '25/9/2022'
+		             assignedTo: 'Unassigned Employee'.
+
+	self
+		assert: aToDoNote isOpen
+]
+
 { #category : #'CRUD - operations' }
 ToDoNoteListTest >> test02AToDoNoteListCanAddANewToDoNoteWithoutCompletionDateAndTheNumberOfTodosIsOneInTheToDoNoteList [
 
@@ -93,6 +111,23 @@ ToDoNoteListTest >> test02AToDoNoteListStartsWithZeroToDoNotes [
 	self assert: aToDoNoteList numberOfToDos equals: 0
 ]
 
+{ #category : #'completion status' }
+ToDoNoteListTest >> test02AToDoNoteWithAnOpenCompletionStatusCanBeSettedToInProgress [
+
+	| aToDoNote |
+	aToDoNote := ToDoNote
+		             identifiedBy: 1
+		             described: 'A good description for a good development'
+		             categorized: 'Development'
+		             endingOn: '25/9/2022'
+		             assignedTo: 'Unassigned Employee'.
+
+	self assert: aToDoNote isOpen.
+	aToDoNote := aToDoNote setCompletionStatusToInProgress.
+	self
+		assert: aToDoNote isInProgress
+]
+
 { #category : #'CRUD - operations' }
 ToDoNoteListTest >> test03AToDoNoteListCanAddANewToDoNoteWithoutCompletionDateAndCategoryAndTheNumberOfTodosIsOneInTheToDoNoteList [
 
@@ -100,6 +135,27 @@ ToDoNoteListTest >> test03AToDoNoteListCanAddANewToDoNoteWithoutCompletionDateAn
 	toDoNoteBuilder configuringWithoutCategory.
 	aToDoNoteList addNewToDo: toDoNoteBuilder build.
 	self assert: aToDoNoteList numberOfToDos equals: 1
+]
+
+{ #category : #'completion status' }
+ToDoNoteListTest >> test03AToDoNoteWithAnInProgressCompletionStatusCanBeSettedToFinished [
+
+	| aToDoNote |
+	aToDoNote := ToDoNote
+		             identifiedBy: 1
+		             described: 'A good description for a good development'
+		             categorized: 'Development'
+		             endingOn: '25/9/2022'
+		             assignedTo: 'Unassigned Employee'.
+
+	self assert: aToDoNote isOpen.
+
+	aToDoNote := aToDoNote setCompletionStatusToInProgress.
+	self assert: aToDoNote isInProgress.
+
+	aToDoNote := aToDoNote setCompletionStatusToFinished.
+	self
+		assert: aToDoNote isFinished
 ]
 
 { #category : #'CRUD - operations' }
@@ -153,19 +209,25 @@ ToDoNoteListTest >> test08CantBePossibleToAddAToDoNoteEnumeratedWithTheSameNumbe
 ]
 
 { #category : #'CRUD - operations' }
-ToDoNoteListTest >> test09ToDoNoteCompletionDateCanBeUpdatedIfItHasNotCompletionDate [
+ToDoNoteListTest >> test09TheCompletionDateOfTheToDoNoteCanBeUpdatedIfDoesntHaveOne [
 
 	| aToDoNoteSelected |
-	aToDoNoteListWithASingleToDo modifyCompletionStatusToOpenTheToDoIdentified: 1.
+	aToDoNoteListWithASingleToDo 
+		modifyCompletionStatusToOpenTheToDoIdentified: 1.
+
 	aToDoNoteSelected := aToDoNoteListWithASingleToDo 
 		                     selectTheToDoIdentified: 1.
-	self assert: (aToDoNoteSelected completionDate sameAs:
-			 'Unassigned Completion Date').
+
+	"self deny: aToDoNoteSelected hasCompletionDate."
+	aToDoNoteSelected completionDate withContentDo: [ :completionDate | 
+		self assert: (completionDate sameAs: 'Unassigned Completion Date') ].
+
 	aToDoNoteListWithASingleToDo
 		modifyTheToDoIdentified: 1
 		withTheNewCompletionDate: '01/02/2023'.
-	self assert: ((aToDoNoteListWithASingleToDo 
-		                     selectTheToDoIdentified: 1) completionDate sameAs: '01/02/2023')
+
+	aToDoNoteSelected completionDate withContentDo: [ :completionDate | 
+		self assert: (completionDate sameAs: '01/02/2023') ]
 ]
 
 { #category : #'CRUD - operations' }
@@ -187,11 +249,12 @@ ToDoNoteListTest >> test10AToDoNoteCompletionDateCantBeModifyIfCompletionStatusI
 { #category : #'CRUD - operations' }
 ToDoNoteListTest >> test11AToDoNoteCanBeAssignedIfOnlyItIsInOpenCompletionStatus [
 
-	aToDoNoteListWithASingleToDo assignEmployee: 'Agustin' toTheToDoIdentified: 1.
-	self
-		assert:
-		(aToDoNoteListWithASingleToDo selectTheToDoIdentified: 1) designatedEmployee
-		equals: 'Agustin'
+	aToDoNoteListWithASingleToDo
+		assignEmployee: 'Agustin'
+		toTheToDoIdentified: 1.
+(aToDoNoteListWithASingleToDo selectTheToDoIdentified: 1)
+				designatedEmployee
+		withContentDo: [:deisgnatedEmployee | self assert: deisgnatedEmployee equals: 'Agustin']
 ]
 
 { #category : #'CRUD - operations' }
