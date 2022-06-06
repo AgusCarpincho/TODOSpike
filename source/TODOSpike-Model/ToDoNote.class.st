@@ -16,18 +16,18 @@ Class {
 }
 
 { #category : #'instance creation' }
-ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized: aOptionalCategory endingOn: aOptionalCompletionDate assignedTo: anOptionalNameEmployee [
+ToDoNote class >> identifiedBy: anIdentifier described: aDescription categorized: anOptionalCategory endingOn: anOptionalCompletionDate assignedTo: anOptionalNameEmployee [
 
 	AssertionChecker
-		enforce: (aDescription isNotEmpty)
+		enforce: aDescription isNotEmpty
 		because: 'The description cannot be a empty string'
 		raising: ToDoNoteException.
 
 	^ self new
 		  initializeIdentifiedBy: anIdentifier
 		  described: aDescription
-		  categorized: aOptionalCategory
-		  endingOn: aOptionalCompletionDate
+		  categorized: anOptionalCategory
+		  endingOn: anOptionalCompletionDate
 		  assignedTo: anOptionalNameEmployee
 ]
 
@@ -63,7 +63,7 @@ ToDoNote >> description [
 { #category : #accessing }
 ToDoNote >> designatedEmployee [
 
-	^employeeName
+	^ employeeName
 ]
 
 { #category : #accessing }
@@ -73,14 +73,15 @@ ToDoNote >> identifier [
 ]
 
 { #category : #'initialization - private' }
-ToDoNote >> initializeIdentifiedBy: aNumericalIdentifier described: aDescription categorized: aCategory endingOn: aCompletionDate assignedTo: aEmployeeName [
+ToDoNote >> initializeIdentifiedBy: aNumericalIdentifier described: aDescription categorized: anOptionalCategory endingOn: anOptionalCompletionDate assignedTo: anOptionalEmployeeName [
 
 	description := aDescription.
-	category := aCategory.
-	completionDate := aCompletionDate.
-	completionStatus := ToDoNoteOpenCompletionStatus referenceAToDoNote: self.
+	category := anOptionalCategory.
+	completionDate := anOptionalCompletionDate.
+	completionStatus := ToDoNoteOpenCompletionStatus references:
+		                    self.
 	identifier := aNumericalIdentifier.
-	employeeName := aEmployeeName
+	employeeName := anOptionalEmployeeName
 ]
 
 { #category : #testing }
@@ -104,20 +105,20 @@ ToDoNote >> isOpen [
 { #category : #transitioning }
 ToDoNote >> setCompletionStatusToFinished [
 
-	completionStatus := ToDoNoteFinishedCompletionStatus referenceAToDoNote:
+	completionStatus := ToDoNoteFinishedCompletionStatus references:
 		                    self
 ]
 
 { #category : #transitioning }
 ToDoNote >> setCompletionStatusToInProgress [
 
-	completionStatus := (ToDoNoteInProgressCompletionStatus referenceAToDoNote: self)
+	completionStatus := (ToDoNoteInProgressCompletionStatus references: self)
 ]
 
 { #category : #transitioning }
 ToDoNote >> setCompletionStatusToOpen [
 
-	completionStatus := ToDoNoteOpenCompletionStatus referenceAToDoNote:
+	completionStatus := ToDoNoteOpenCompletionStatus references:
 		                    self
 ]
 

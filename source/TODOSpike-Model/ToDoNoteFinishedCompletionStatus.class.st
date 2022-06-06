@@ -5,7 +5,11 @@ Class {
 }
 
 { #category : #'instance creation' }
-ToDoNoteFinishedCompletionStatus class >> referenceAToDoNote: aToDoNote [
+ToDoNoteFinishedCompletionStatus class >> references: aToDoNote [
+
+	(aToDoNote className sameAs: 'ToDoNote') ifFalse: [ 
+		ToDoNoteException signal:
+			'The Completion Satus need reference a ToDoNote' ].
 
 	^ self new initializeIsStateOf: aToDoNote
 ]

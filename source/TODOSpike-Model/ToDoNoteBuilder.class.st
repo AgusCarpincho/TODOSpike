@@ -12,15 +12,23 @@ Class {
 }
 
 { #category : #'instance creation' }
-ToDoNoteBuilder class >> withNumericalIdentifier: aNumericalIdentifier [
+ToDoNoteBuilder class >> withNumericalIdentifier: aNumericalIdentifier withDescription: aDescription [
 
 	AssertionChecker
 		enforce: aNumericalIdentifier isNumber
 		because: 'An identifier must be numerical'
 		raising: ToDoNoteException.
+	AssertionChecker
+		enforce: (aDescription className sameAs: 'ByteString')
+		because: 'A description must be a ByteString'
+		raising: ToDoNoteException.
+	AssertionChecker
+		enforce: aDescription isNotEmpty
+		because: 'A description musnt be empty'
+		raising: ToDoNoteException.
 	^ self new
 		  initializeWithNumericalIdentifier: aNumericalIdentifier
-		  withDescription: 'A good description'
+		  withDescription: aDescription
 ]
 
 { #category : #building }
@@ -62,12 +70,6 @@ ToDoNoteBuilder >> configuringWithoutCategory [
 ToDoNoteBuilder >> configuringWithoutCompletionDate [
 
 	completionDate := Optional unusedBecause: 'Unassigned Completion Date'
-]
-
-{ #category : #testing }
-ToDoNoteBuilder >> hasADescription [
-
-	((description) withContentDo: [ :descriptionContent | ^ (descriptionContent sameAs: 'Unassigned Description') not ])
 ]
 
 { #category : #'initialization - private' }

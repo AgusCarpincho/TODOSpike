@@ -31,8 +31,10 @@ ToDoNoteListTest >> setUp [
 		                                        'Development ToDos'.
 	"Creation of ToDoBuilder"
 
-	toDoNoteBuilder := ToDoNoteBuilder withNumericalIdentifier:
-		                   aToDoNoteList nextNumericalIdentifier.
+	toDoNoteBuilder := ToDoNoteBuilder
+		                   withNumericalIdentifier:
+		                   aToDoNoteList nextNumericalIdentifier
+		                   withDescription: 'A good description'.
 
 	"Configuring the basic of ToDoBuilder"
 	toDoNoteBuilder

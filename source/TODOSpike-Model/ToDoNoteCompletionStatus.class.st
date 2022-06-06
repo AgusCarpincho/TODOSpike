@@ -14,7 +14,7 @@ ToDoNoteCompletionStatus class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-ToDoNoteCompletionStatus class >> referenceAToDoNote: aTodoNote [
+ToDoNoteCompletionStatus class >> references: aTodoNote [
 
 	self subclassResponsibility
 ]
