@@ -1,5 +1,5 @@
 Class {
-	#name : #ToDoNoteBuilderTest,
+	#name : #ToDoBuilderTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'toDoBuilder'
@@ -8,37 +8,37 @@ Class {
 }
 
 { #category : #running }
-ToDoNoteBuilderTest >> setUp [
+ToDoBuilderTest >> setUp [
 
 	super setUp.
 
-	toDoBuilder := ToDoNoteBuilder
+	toDoBuilder := ToDoBuilder
 		               withNumericalIdentifier: 1
 		               withDescription: 'A good description'
 ]
 
 { #category : #creation }
-ToDoNoteBuilderTest >> test01AToDoNoteBuilderCantBeCreatedIfTheIdentifierIIsANonNumericalObjectAndAnExceptionIsRaised [
+ToDoBuilderTest >> test01AToDoNoteBuilderCantBeCreatedIfTheIdentifierIIsANonNumericalObjectAndAnExceptionIsRaised [
 
 	self
 		should: [ 
-			ToDoNoteBuilder
+			ToDoBuilder
 				withNumericalIdentifier: nil
 				withDescription: 'A good description' ]
-		raise: ToDoNoteException
+		raise: ToDoException
 ]
 
 { #category : #building }
-ToDoNoteBuilderTest >> test02AToDoNoteBuilderWithANumericalIdentifierAndADescriptionConfiguredBuildAToDoNoteAndDontRaiseAnException [
+ToDoBuilderTest >> test02AToDoNoteBuilderWithANumericalIdentifierAndADescriptionConfiguredBuildAToDoNoteAndDontRaiseAnException [
 
-	self shouldnt: [ toDoBuilder build ] raise: ToDoNoteException
+	self shouldnt: [ toDoBuilder build ] raise: ToDoException
 ]
 
 { #category : #building }
-ToDoNoteBuilderTest >> test03AToDoNoteBuilderWithANumericalIdentifierAndADescriptionConfiguredBuildsAToDoNoteWithANumericalIdentifierAndADescription [
+ToDoBuilderTest >> test03AToDoNoteBuilderWithANumericalIdentifierAndADescriptionConfiguredBuildsAToDoNoteWithANumericalIdentifierAndADescription [
 
 	| aToDoNote |
-	self shouldnt: [ toDoBuilder build ] raise: ToDoNoteException.
+	self shouldnt: [ toDoBuilder build ] raise: ToDoException.
 
 	aToDoNote := toDoBuilder build.
 
@@ -47,12 +47,12 @@ ToDoNoteBuilderTest >> test03AToDoNoteBuilderWithANumericalIdentifierAndADescrip
 ]
 
 { #category : #building }
-ToDoNoteBuilderTest >> test04AToDoNoteBuilderWithANumericalIdentifierAndADescriptionAndACategoryConfiguredBuildsAToDoNoteWithANumericalIdentifierAndADescriptionAndACategory [
+ToDoBuilderTest >> test04AToDoNoteBuilderWithANumericalIdentifierAndADescriptionAndACategoryConfiguredBuildsAToDoNoteWithANumericalIdentifierAndADescriptionAndACategory [
 
 	| aToDoNote |
 	toDoBuilder configuringCategory: 'Development'.
 
-	self shouldnt: [ toDoBuilder build ] raise: ToDoNoteException.
+	self shouldnt: [ toDoBuilder build ] raise: ToDoException.
 	aToDoNote := toDoBuilder build.
 
 	self assert: aToDoNote description equals: 'A good description'.
@@ -60,7 +60,7 @@ ToDoNoteBuilderTest >> test04AToDoNoteBuilderWithANumericalIdentifierAndADescrip
 ]
 
 { #category : #building }
-ToDoNoteBuilderTest >> test05AToDoNoteBuilderWithAllNecessaryConfigurationBuildsAToDoNoteWithoutAnAssignedEmployee [
+ToDoBuilderTest >> test05AToDoNoteBuilderWithAllNecessaryConfigurationBuildsAToDoNoteWithoutAnAssignedEmployee [
 
 	| aToDoNote |
 
@@ -68,7 +68,7 @@ ToDoNoteBuilderTest >> test05AToDoNoteBuilderWithAllNecessaryConfigurationBuilds
 	toDoBuilder configuringCompletionDate: '1/1/2023'.
 	toDoBuilder configuringAssignedEmployee: 'Agustin'.
 
-	self shouldnt: [ toDoBuilder build ] raise: ToDoNoteException.
+	self shouldnt: [ toDoBuilder build ] raise: ToDoException.
 	aToDoNote := toDoBuilder build.
 
 	self assert: aToDoNote description equals: 'A good description'.
@@ -81,26 +81,20 @@ ToDoNoteBuilderTest >> test05AToDoNoteBuilderWithAllNecessaryConfigurationBuilds
 ]
 
 { #category : #building }
-ToDoNoteBuilderTest >> test06AToDoNoteIsBuildedAlwaysWithOpenCompletionStatus [
-
-	self assert: toDoBuilder build isOpen
-]
-
-{ #category : #building }
-ToDoNoteBuilderTest >> test07AToDoNoteBuilderMustBeInstantiatedWithAByteStringDescriptionAndMusntBeEmpty [
+ToDoBuilderTest >> test07AToDoNoteBuilderMustBeInstantiatedWithAByteStringDescriptionAndMusntBeEmpty [
 
 	self
 		should: [ 
-		ToDoNoteBuilder withNumericalIdentifier: 1 withDescription: '' ]
-		raise: ToDoNoteException.
+		ToDoBuilder withNumericalIdentifier: 1 withDescription: '' ]
+		raise: ToDoException.
 	self
 		should: [ 
-		ToDoNoteBuilder withNumericalIdentifier: 1 withDescription: 1 ]
-		raise: ToDoNoteException.
+		ToDoBuilder withNumericalIdentifier: 1 withDescription: 1 ]
+		raise: ToDoException.
 	self
 		shouldnt: [ 
-			ToDoNoteBuilder
+			ToDoBuilder
 				withNumericalIdentifier: 1
 				withDescription: 'A good description' ]
-		raise: ToDoNoteException
+		raise: ToDoException
 ]

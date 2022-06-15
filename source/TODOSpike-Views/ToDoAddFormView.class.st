@@ -8,40 +8,55 @@ Class {
 		'categoryField',
 		'descriptionLabel',
 		'descriptionField',
-		'addToDoButton'
+		'addToDoButton',
+		'contentOfCategoryField',
+		'contentOfDescriptionField'
 	],
 	#category : #'TODOSpike-Views'
 }
 
-{ #category : #creating }
+{ #category : #'creating - private' }
 ToDoAddFormView >> createAddToDoButton [
 
-	^ AsynchronicButtonWebView labeled: 'Add' applying: [ :canvas | 
-		  canvas setStyleTo: [ :style | 
-			  style
-				  height: 50 px;
-				  width: 100 px;
-				  fontFamily: 'Roboto';
-				  fontWeight: #bold;
-				  fontSize: 25 px;
-				  borderRadius: 10 px ] ]
+	addToDoButton := AsynchronicButtonWebView
+		                 labeled: 'Add'
+		                 applying: [ :canvas | 
+			                 canvas setStyleTo: [ :style | 
+				                 style
+					                 height: 50 px;
+					                 width: 100 px;
+					                 fontFamily: 'Roboto';
+					                 fontWeight: #bold;
+					                 fontSize: 25 px;
+					                 borderRadius: 10 px ] ].
+	addToDoButton on trigger serverDo: [ 
+		| toDoNoteBuilder |
+		toDoNoteBuilder := ToDoBuilder
+			                   withNumericalIdentifier: 1
+			                   withDescription: contentOfDescriptionField.	
+		toDoNoteBuilder configuringCategory: contentOfCategoryField.	
+		toDoNoteBuilder build inspect ]
 ]
 
-{ #category : #creating }
+{ #category : #'creating - private' }
 ToDoAddFormView >> createCategoryField [
-		
-	^ TextFieldWebView singleLineApplying: [ :canvas | 
-		  canvas setStyleTo: [ :style | 
-			  style
-				  margin: 20 px;
-				  marginTop: 10 px;
-				  borderRadius: 10 px ] ]
+
+	categoryField := TextFieldWebView singleLineApplying: [ :canvas | 
+		                  canvas setStyleTo: [ :style | 
+			                  style
+				                  margin: 20 px;
+				                  marginTop: 10 px;
+				                  borderRadius: 10 px ] ].
+
+	categoryField on trigger serverDo: [ 
+		contentOfCategoryField := Optional containing: categoryField model ].
+
 ]
 
-{ #category : #creating }
+{ #category : #'creating - private' }
 ToDoAddFormView >> createCategoryLabel [
 
-	^ HeadingWebView
+	categoryLabel := HeadingWebView
 		  displaying: 'Category'
 		  withLevel: 3
 		  applying: [ :canvas | 
@@ -51,25 +66,28 @@ ToDoAddFormView >> createCategoryLabel [
 					  fontFamily: #Roboto;
 					  margin: 20 px;
 					  height: 20 px;
-					  marginTop: 10 px ] ]				
+					  marginTop: 10 px ] ]
 ]
 
-{ #category : #creating }
+{ #category : #'creating - private' }
 ToDoAddFormView >> createDescriptionField [
 
-	^ TextFieldWebView singleLineApplying: [ :canvas | 
-		  canvas setStyleTo: [ :style | 
-			  style
-				  height: 50 px;	
-				  margin: 20 px;
-				  marginTop: 5 px;
-				  borderRadius: 10 px ] ]
+	descriptionField := TextFieldWebView singleLineApplying: [ :canvas | 
+		             canvas setStyleTo: [ :style | 
+			             style
+				             height: 50 px;
+				             margin: 20 px;
+				             marginTop: 5 px;
+				             borderRadius: 10 px ] ].
+		
+	descriptionField on trigger serverDo: [ 
+		contentOfDescriptionField := descriptionField model ].
 ]
 
-{ #category : #creating }
+{ #category : #'creating - private' }
 ToDoAddFormView >> createDescriptionLabel [
 
-	^ HeadingWebView
+	descriptionLabel := HeadingWebView
 		  displaying: 'Description'
 		  withLevel: 3
 		  applying: [ :canvas | 
@@ -82,10 +100,10 @@ ToDoAddFormView >> createDescriptionLabel [
 					  marginTop: 10 px ] ]
 ]
 
-{ #category : #creating }
+{ #category : #'creating - private' }
 ToDoAddFormView >> createTitle [
 
-	^ HeadingWebView
+	title := HeadingWebView
 		  displaying: 'Add new ToDo'
 		  withLevel: 2
 		  applying: [ :canvas | 
@@ -93,14 +111,14 @@ ToDoAddFormView >> createTitle [
 				  style
 					  color: #black;
 					  fontFamily: #Roboto;
-					  margin: 20 px;	
+					  margin: 20 px;
 					  marginTop: 30 px ] ]
 ]
 
-{ #category : #creating }
+{ #category : #'creating - private' }
 ToDoAddFormView >> createToDoAddFormWrapping [
 
-	^ ContainerWebView
+	toDoAddForm:= ContainerWebView
 		  wrapping: [ :canvas | 
 			  canvas
 				  render: title;
@@ -130,16 +148,19 @@ ToDoAddFormView >> createToDoAddFormWrapping [
 { #category : #'initialization - private' }
 ToDoAddFormView >> initialize [
 
-	title := self createTitle.
+	self createTitle.
+self createCategoryLabel.
+	self createCategoryField.
+	contentOfCategoryField := Optional unusedBecause:
+		                          'The user must add a category in the form'.
 
-	categoryLabel := self createCategoryLabel.
-	categoryField := self createCategoryField.
+	self createDescriptionLabel.
+	self createDescriptionField.
+	contentOfDescriptionField := Optional unusedBecause:
+		                             'The user must add a description in the form'.
 
-	descriptionLabel := self createDescriptionLabel.
-	descriptionField := self createDescriptionField.
-
-	addToDoButton := self createAddToDoButton.
-	toDoAddForm := self createToDoAddFormWrapping
+	self createAddToDoButton.
+	self createToDoAddFormWrapping
 ]
 
 { #category : #rendering }

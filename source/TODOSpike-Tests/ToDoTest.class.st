@@ -1,15 +1,15 @@
 Class {
-	#name : #ToDoNoteTest,
+	#name : #ToDoTest,
 	#superclass : #TestCase,
 	#category : #'TODOSpike-Tests'
 }
 
 { #category : #'employee assignments' }
-ToDoNoteTest >> test01AToDoNoteCanBeAssignedToAnEmployee [
+ToDoTest >> test01AToDoNoteCanBeAssignedToAnEmployee [
 
 	| aToDoNote |
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
+	aToDoNote := ToDo
+		             identifiedByANumericalIdentifier: 1
 		             described: 'A good description of the ToDo'
 		             categorized: 'Production'
 		             endingOn: '25/09/2022'
@@ -19,12 +19,12 @@ ToDoNoteTest >> test01AToDoNoteCanBeAssignedToAnEmployee [
 ]
 
 { #category : #creation }
-ToDoNoteTest >> test01AToDoNoteHasADescription [
+ToDoTest >> test01AToDoNoteHasADescription [
 
 	| aToDoNote aDescription |
 	aDescription := 'Make some tests for the ToDoApp'.
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
+	aToDoNote := ToDo
+		             identifiedByANumericalIdentifier: 1
 		             described: aDescription
 		             categorized: 'Development'
 		             endingOn: '25/09/2022'
@@ -34,10 +34,10 @@ ToDoNoteTest >> test01AToDoNoteHasADescription [
 ]
 
 { #category : #'completion date assignments' }
-ToDoNoteTest >> test01AToDoNoteWithoutACompletionDateCanBeAssignedWithACompletionDate [
+ToDoTest >> test01AToDoNoteWithoutACompletionDateCanBeAssignedWithACompletionDate [
 
 	| toDoNote toDoNoteBuilder |
-	toDoNoteBuilder := ToDoNoteBuilder
+	toDoNoteBuilder := ToDoBuilder
 		                   withNumericalIdentifier: 1
 		                   withDescription: 'A good description'.
 	toDoNoteBuilder configuringCategory: 'A good category'.
@@ -53,11 +53,11 @@ ToDoNoteTest >> test01AToDoNoteWithoutACompletionDateCanBeAssignedWithACompletio
 ]
 
 { #category : #'employee assignments' }
-ToDoNoteTest >> test02AToDoNoteCantBeAssignedToAnEmployeWhenTheToDoIsInProgress [
+ToDoTest >> test02AToDoNoteCantBeAssignedToAnEmployeWhenTheToDoIsInProgress [
 
 	| aToDoNote |
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
+	aToDoNote := ToDo
+		             identifiedByANumericalIdentifier: 1
 		             described: 'A good description of the ToDo'
 		             categorized: 'Production'
 		             endingOn: '25/09/2022'
@@ -65,15 +65,15 @@ ToDoNoteTest >> test02AToDoNoteCantBeAssignedToAnEmployeWhenTheToDoIsInProgress 
 		aToDoNote setCompletionStatusToInProgress .
 	self
 		should: [ aToDoNote assignTo: 'Tomas' ]
-		raise: ToDoNoteException
+		raise: ToDoException
 ]
 
 { #category : #creation }
-ToDoNoteTest >> test02AToDoNoteHasACategoryAndADescription [
+ToDoTest >> test02AToDoNoteHasACategoryAndADescription [
 
 	| aToDoNote |
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
+	aToDoNote := ToDo
+		             identifiedByANumericalIdentifier: 1
 		             described: 'A good description'
 		             categorized: 'ANiceCategory'
 		             endingOn: '25/09/2022'
@@ -84,11 +84,11 @@ ToDoNoteTest >> test02AToDoNoteHasACategoryAndADescription [
 ]
 
 { #category : #'completion date assignments' }
-ToDoNoteTest >> test02AToDoNoteWithACompletionDateCanBeReassignedWithANewCompletionDate [
+ToDoTest >> test02AToDoNoteWithACompletionDateCanBeReassignedWithANewCompletionDate [
 
 	| aToDoNote |
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
+	aToDoNote := ToDo
+		             identifiedByANumericalIdentifier: 1
 		             described: 'A good description'
 		             categorized: 'Development'
 		             endingOn: '25/12/2022'
@@ -99,11 +99,11 @@ ToDoNoteTest >> test02AToDoNoteWithACompletionDateCanBeReassignedWithANewComplet
 ]
 
 { #category : #'employee assignments' }
-ToDoNoteTest >> test03AToDoNoteCantBeAssignedToAnEmployeWhenTheToDoIsFinished [
+ToDoTest >> test03AToDoNoteCantBeAssignedToAnEmployeWhenTheToDoIsFinished [
 
 	| aToDoNote |
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
+	aToDoNote := ToDo
+		             identifiedByANumericalIdentifier: 1
 		             described: 'A good description of the ToDo'
 		             categorized: 'Production'
 		             endingOn: '25/09/2022'
@@ -111,15 +111,15 @@ ToDoNoteTest >> test03AToDoNoteCantBeAssignedToAnEmployeWhenTheToDoIsFinished [
 		aToDoNote setCompletionStatusToFinished.
 	self
 		should: [ aToDoNote assignTo: 'Tomas' ]
-		raise: ToDoNoteException
+		raise: ToDoException
 ]
 
 { #category : #creation }
-ToDoNoteTest >> test03AToDoNoteHasAFinishDateAndADescription [
+ToDoTest >> test03AToDoNoteHasAFinishDateAndADescription [
 
 	| aToDoNote |
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
+	aToDoNote := ToDo
+		             identifiedByANumericalIdentifier: 1
 		             described: 'Some description'
 		             categorized: 'Development'
 		             endingOn: '5/6/2022'
@@ -131,11 +131,11 @@ ToDoNoteTest >> test03AToDoNoteHasAFinishDateAndADescription [
 ]
 
 { #category : #creation }
-ToDoNoteTest >> test04AToDoNoteHasAFinishDateAndADescriptionAndACategory [
+ToDoTest >> test04AToDoNoteHasAFinishDateAndADescriptionAndACategory [
 
 	| aToDoNote |
-	aToDoNote := ToDoNote
-		             identifiedBy: 1
+	aToDoNote := ToDo
+		             identifiedByANumericalIdentifier: 1
 		             described: 'Some description'
 		             categorized: 'AGoodCategory'
 		             endingOn: '5/6/2022'
@@ -147,25 +147,25 @@ ToDoNoteTest >> test04AToDoNoteHasAFinishDateAndADescriptionAndACategory [
 ]
 
 { #category : #creation }
-ToDoNoteTest >> test05AToDoNoteRaiseAnExceptionIfTheDescriptionIsEmpty [
+ToDoTest >> test05AToDoNoteRaiseAnExceptionIfTheDescriptionIsEmpty [
 
 	self
 		should: [ 
-			ToDoNote
-				identifiedBy: 1
+			ToDo
+				identifiedByANumericalIdentifier: 1
 				described: ''
 				categorized: 'AGoodCategory'
 				endingOn: '5/6/2022'
 				assignedTo: 'Unassigned Employee' ]
-		raise: ToDoNoteException
+		raise: ToDoException
 ]
 
 { #category : #creation }
-ToDoNoteTest >> test06AToDoNoteStartsWithoutAnAssignedEmployee [
+ToDoTest >> test06AToDoNoteStartsWithoutAnAssignedEmployee [
 
 	self
-		assert: (ToDoNote
-				 identifiedBy: 1
+		assert: (ToDo
+				 identifiedByANumericalIdentifier: 1
 				 described: 'A good description'
 				 categorized: 'A good category'
 				 endingOn: '25/09/2022'
@@ -174,11 +174,11 @@ ToDoNoteTest >> test06AToDoNoteStartsWithoutAnAssignedEmployee [
 ]
 
 { #category : #creation }
-ToDoNoteTest >> test07AToDoNoteStartsWithAnIdentifier [
+ToDoTest >> test07AToDoNoteStartsWithAnIdentifier [
 
 	self
-		assert: (ToDoNote
-				 identifiedBy: 1
+		assert: (ToDo
+				 identifiedByANumericalIdentifier: 1
 				 described: 'A good description'
 				 categorized: 'Make Tests'
 				 endingOn: '25/12/22'

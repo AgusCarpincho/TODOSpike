@@ -54,7 +54,7 @@ ContentInformationWebView >> renderContentOn: aRenderer [
 					                        borderRadius: 10 px;
 					                        padding: 20 px;
 					                        display: 'inline-block';
-					                        height: 330 px;
+					                        height: 340 px;
 					                        fontSize: 20 px;
 					                        width: 1360 px;
 					                        margin: 20 px ] ].

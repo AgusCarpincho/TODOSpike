@@ -2,44 +2,30 @@ Class {
 	#name : #ColumnListsView,
 	#superclass : #WAPainter,
 	#instVars : [
-		'leftColumnToDoList',
-		'middleColumnToDoList',
-		'rightColumnToDoList'
+		'leftColumnToDoListView',
+		'middleColumnToDoListView',
+		'rightColumnToDoListView',
+		'toDoListColumnViews'
 	],
 	#category : #'TODOSpike-Views'
 }
 
-{ #category : #creating }
-ColumnListsView >> createLeftColumnToDoList [
+{ #category : #'instance creation' }
+ColumnListsView class >> withToDoNoteLists: aToDoNoteLists [
 
-	^ ToDoListColumnView title: 'Open'
-]
-
-{ #category : #creating }
-ColumnListsView >> createMiddleColumnToDoList [
-
-	^ ToDoListColumnView title: 'In Progress'
-]
-
-{ #category : #creating }
-ColumnListsView >> createRightColumnToDoList [
-
-	^ ToDoListColumnView title: 'Finished'
+	^ self new
+		  initializeWithToDoNoteLists: aToDoNoteLists
 ]
 
 { #category : #'initialization - private' }
-ColumnListsView >> initialize [
+ColumnListsView >> initializeWithToDoNoteLists: aToDoNoteLists [
 
-	leftColumnToDoList := self createLeftColumnToDoList.
-	middleColumnToDoList := self createMiddleColumnToDoList.
-	rightColumnToDoList := self createRightColumnToDoList
+	toDoListColumnViews := aToDoNoteLists collect: [ :toDoNoteList | 
+			(ToDoListColumnView withToDoNoteList: toDoNoteList) ]
 ]
 
 { #category : #rendering }
 ColumnListsView >> renderContentOn: aRenderer [
-
-	aRenderer render: leftColumnToDoList.
-	aRenderer render: middleColumnToDoList.
-	aRenderer render: rightColumnToDoList.
-	
+	toDoListColumnViews do: [ :columnToDoListView | 
+		aRenderer render: columnToDoListView ]
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : #ToDoNoteBuilder,
+	#name : #ToDoBuilder,
 	#superclass : #Object,
 	#instVars : [
 		'category',
@@ -12,30 +12,30 @@ Class {
 }
 
 { #category : #'instance creation' }
-ToDoNoteBuilder class >> withNumericalIdentifier: aNumericalIdentifier withDescription: aDescription [
+ToDoBuilder class >> withNumericalIdentifier: aNumericalIdentifier withDescription: aDescription [
 
 	AssertionChecker
 		enforce: aNumericalIdentifier isNumber
 		because: 'An identifier must be numerical'
-		raising: ToDoNoteException.
+		raising: ToDoException.
 	AssertionChecker
 		enforce: (aDescription className sameAs: 'ByteString')
 		because: 'A description must be a ByteString'
-		raising: ToDoNoteException.
+		raising: ToDoException.
 	AssertionChecker
 		enforce: aDescription isNotEmpty
 		because: 'A description musnt be empty'
-		raising: ToDoNoteException.
+		raising: ToDoException.
 	^ self new
 		  initializeWithNumericalIdentifier: aNumericalIdentifier
 		  withDescription: aDescription
 ]
 
 { #category : #building }
-ToDoNoteBuilder >> build [
+ToDoBuilder >> build [
 
-	^ ToDoNote
-		  identifiedBy: identifier
+	^ ToDo
+		  identifiedByANumericalIdentifier: identifier
 		  described: description
 		  categorized: category
 		  endingOn: completionDate
@@ -43,37 +43,37 @@ ToDoNoteBuilder >> build [
 ]
 
 { #category : #configuring }
-ToDoNoteBuilder >> configuringAssignedEmployee: anAssignedEmployee [
+ToDoBuilder >> configuringAssignedEmployee: anAssignedEmployee [
 
 	assignedEmployee := Optional containing: anAssignedEmployee
 ]
 
 { #category : #configuring }
-ToDoNoteBuilder >> configuringCategory: aCategory [
+ToDoBuilder >> configuringCategory: aCategory [
 
 	category := Optional containing: aCategory
 ]
 
 { #category : #configuring }
-ToDoNoteBuilder >> configuringCompletionDate: aCompletionDate [
+ToDoBuilder >> configuringCompletionDate: aCompletionDate [
 
 	completionDate := Optional containing: aCompletionDate
 ]
 
 { #category : #configuring }
-ToDoNoteBuilder >> configuringWithoutCategory [
+ToDoBuilder >> configuringWithoutCategory [
 	
 	category := Optional unusedBecause: 'Unassigned Category' 
 ]
 
 { #category : #configuring }
-ToDoNoteBuilder >> configuringWithoutCompletionDate [
+ToDoBuilder >> configuringWithoutCompletionDate [
 
 	completionDate := Optional unusedBecause: 'Unassigned Completion Date'
 ]
 
 { #category : #'initialization - private' }
-ToDoNoteBuilder >> initializeWithNumericalIdentifier: aNumericalIdentifier withDescription: aDescription [
+ToDoBuilder >> initializeWithNumericalIdentifier: aNumericalIdentifier withDescription: aDescription [
 
 	category := Optional unusedBecause: 'Unassigned Category'.
 	description := aDescription.

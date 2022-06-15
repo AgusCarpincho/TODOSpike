@@ -2,8 +2,9 @@ Class {
 	#name : #TODOSpikeApplication,
 	#superclass : #WillowApplication,
 	#instVars : [
-		'subjectField',
-		'messageField'
+		'openedToDoNoteList',
+		'inProgressToDoNoteList',
+		'finishedToDoNoteList'
 	],
 	#category : #'TODOSpike-Application'
 }
@@ -17,6 +18,12 @@ TODOSpikeApplication class >> applicationTitle [
 TODOSpikeApplication class >> handlerName [
 
 	^ 'home'
+]
+
+{ #category : #accessing }
+TODOSpikeApplication class >> sessionClass [
+
+	^ TODOSpikeSession
 ]
 
 { #category : #'server operations' }
@@ -49,6 +56,12 @@ TODOSpikeApplication >> contentView [
 		  renderSendingReportBoxOn: aMainView ]
 ]
 
+{ #category : #hooks }
+TODOSpikeApplication >> initialRequest: request [
+
+	super initialRequest: request
+]
+
 { #category : #accessing }
 TODOSpikeApplication >> jQueryLibrary [
   ^ JQuery3OnlineLibrary default
@@ -57,9 +70,16 @@ TODOSpikeApplication >> jQueryLibrary [
 { #category : #rendering }
 TODOSpikeApplication >> renderPrincipalContentOn: aMainView [
 
-	| principalContent |
+	| principalContent aColumnListsView toDoNoteLists |
+	toDoNoteLists := OrderedCollection new.
+	toDoNoteLists add: (Repository named: 'Open').
+	toDoNoteLists add: (Repository named: 'In Progress').
+	toDoNoteLists add: (Repository named: 'Finished').
+
+	aColumnListsView := ColumnListsView withToDoNoteLists: toDoNoteLists.
+
 	principalContent := ContainerWebView
-		                    wrapping: ColumnListsView new
+		                    wrapping: aColumnListsView
 		                    intoElementBuiltUsing: [ :canvas | canvas div ]
 		                    applying: [ :theContainer | 
 			                    theContainer addClass willow.
@@ -83,12 +103,14 @@ TODOSpikeApplication >> renderPrincipalContentOn: aMainView [
 TODOSpikeApplication >> renderSendingReportBoxOn: aMainView [
 
 	| sendingReportBox |
-	aMainView render: (ToDoNoteView with: (ToDoNote
+	"aMainView render: (ToDoNoteView with: (ToDoNote
 				  identifiedBy: 1
 				  described: 'Description'
 				  categorized: 'Test'
 				  endingOn: '25/09/2022'
 				  assignedTo: 'Agustin')).
+	"
+	sendingReportBox := nil.
 	aMainView render: sendingReportBox
 ]
 

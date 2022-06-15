@@ -2,16 +2,31 @@ Class {
 	#name : #ToDoListColumnView,
 	#superclass : #WAPainter,
 	#instVars : [
-		'title',
-		'toDoListColumnView'
+		'toDoListColumnView',
+		'toDoNoteList'
 	],
 	#category : #'TODOSpike-Views'
 }
 
 { #category : #configuring }
-ToDoListColumnView class >> title: aTitle [
+ToDoListColumnView class >> withToDoNoteList: aToDoNoteList [
 
-	^ self new initializeWith: aTitle
+	^ self new initializeWithToDoNoteList: aToDoNoteList
+]
+
+{ #category : #'initialization - private' }
+ToDoListColumnView >> createAToDoNoteViewWith: aToDoNote [
+
+	^ HeadingWebView
+		  displaying: aToDoNote
+		  withLevel: 4
+		  applying: [ :canvas | 
+			  canvas setStyleTo: [ :style | 
+				  style
+					  color: #black;
+					  fontFamily: #Roboto;
+					  margin: 20 px;
+					  marginTop: 30 px ] ]
 ]
 
 { #category : #'initialization - private' }
@@ -30,12 +45,17 @@ ToDoListColumnView >> createHeadingWebViewWith: aTitle [
 ]
 
 { #category : #'initialization - private' }
-ToDoListColumnView >> initializeWith: aTitle [
+ToDoListColumnView >> initializeWithToDoNoteList: aToDoNoteList [
 
-	title := self createHeadingWebViewWith: aTitle.
+	toDoNoteList := aToDoNoteList.
 
 	toDoListColumnView := ContainerWebView
-		                      wrapping: title
+		                      wrapping: [ :canvas | 
+			                      canvas render:
+				                      (self createHeadingWebViewWith:
+					                       aToDoNoteList listName).
+			                      toDoNoteList toDos do: [ :toDoNote | 
+				                      self createAToDoNoteViewWith: toDoNote ] ]
 		                      intoElementBuiltUsing: [ :canvas | canvas div ]
 		                      applying: [ :theContainer | 
 			                      theContainer addClass willow.
@@ -48,6 +68,7 @@ ToDoListColumnView >> initializeWith: aTitle [
 					                      borderRadius: 10 px;
 					                      padding: 20 px;
 					                      height: 500 px;
+					                      display: 'table';
 					                      fontSize: 20 px;
 					                      width: 400 px;
 					                      margin: 20 px ] ]
@@ -56,5 +77,5 @@ ToDoListColumnView >> initializeWith: aTitle [
 { #category : #rendering }
 ToDoListColumnView >> renderContentOn: aRenderer [
 
-	aRenderer render: toDoListColumnView
+	aRenderer render: toDoListColumnView.
 ]
