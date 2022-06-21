@@ -11,7 +11,9 @@ Class {
 }
 
 { #category : #'CRUD operations' }
-Repository >> addNewToDo: aToDo(self [ existsToDoIdentified: aToDo identifier) ifTrue: [ 
+Repository >> addNewToDo: aToDo [
+
+	(self existsToDoIdentified: aToDo identifier) ifTrue: [ 
 		ToDoException signal:
 			'A ToDo with the same identifier already exists in the repository' ].
 
@@ -42,13 +44,13 @@ Repository >> existsToDoIdentified: anIdentifier [
 { #category : #'CRUD operations' }
 Repository >> finishedToDos [
 
-	^ toDos select: [ :toDo | toDo identifier isFinished ]
+	^ toDos select: [ :toDo | toDo isFinished ]
 ]
 
 { #category : #'CRUD operations' }
 Repository >> inProgressToDos [
 
-	^ toDos select: [ :toDo | toDo identifier isInProgress ]
+	^ toDos select: [ :toDo | toDo isInProgress ]
 ]
 
 { #category : #'initialization - private' }
@@ -110,7 +112,7 @@ Repository >> numberOfToDos [
 { #category : #'CRUD operations' }
 Repository >> openedToDos [
 
-	^ toDos select: [ :toDo | toDo identifier isOpen ]
+	^ toDos select: [ :toDo | toDo isOpen ]
 ]
 
 { #category : #'CRUD operations' }

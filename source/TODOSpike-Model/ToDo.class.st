@@ -43,12 +43,6 @@ ToDo >> assignTo: aNameEmployee [
 	completionStatus assignTo: aNameEmployee
 ]
 
-{ #category : #'private - state protocol' }
-ToDo >> beAddedThroughTheStateTo: aRepository [
-
-	completionStatus addToDoTo: aRepository
-]
-
 { #category : #accessing }
 ToDo >> category [
 
@@ -63,6 +57,7 @@ ToDo >> completionDate [
 
 { #category : #accessing }
 ToDo >> description [
+
 	^ description
 ]
 
@@ -90,7 +85,7 @@ ToDo >> initializeIdentifiedBy: aNumericalIdentifier described: aDescription cat
 	optionalEmployeeName := anOptionalEmployeeName
 ]
 
-{ #category : #testing }
+{ #category : #asserter }
 ToDo >> isAssigned [
 	
 	^ (optionalEmployeeName equalsTo: (Optional unusedBecause: 'Unassigned Employee')) not
@@ -98,6 +93,7 @@ ToDo >> isAssigned [
 
 { #category : #asserter }
 ToDo >> isFinished [
+
 	^ completionStatus isFinished
 ]
 
@@ -137,7 +133,7 @@ ToDo >> setCompletionStatusToOpen [
 ToDo >> throughStateAssignNewCompletionDate: aCompletionDate [
 
 	| updatedToDo |
-	updatedToDo := ToDo
+	updatedToDo := self class
 		               identifiedByANumericalIdentifier: identifier
 		               described: description
 		               categorized: optionalCategory
@@ -152,7 +148,7 @@ ToDo >> throughStateAssignNewCompletionDate: aCompletionDate [
 ToDo >> throughStateAssignTo: aNameEmployee [
 
 	| updatedToDo |
-	updatedToDo := ToDo
+	updatedToDo := self class
 		               identifiedByANumericalIdentifier: identifier
 		               described: description
 		               categorized: optionalCategory

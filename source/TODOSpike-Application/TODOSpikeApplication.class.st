@@ -2,9 +2,13 @@ Class {
 	#name : #TODOSpikeApplication,
 	#superclass : #WillowApplication,
 	#instVars : [
-		'openedToDoNoteList',
-		'inProgressToDoNoteList',
-		'finishedToDoNoteList'
+		'repositorySystem',
+		'principalContentView',
+		'contentInformationWebAndAddFormView',
+		'toDoAddFormView',
+		'contentInformationWebView',
+		'principalContentContainerWebView',
+		'sendingReportBoxView'
 	],
 	#category : #'TODOSpike-Application'
 }
@@ -51,8 +55,8 @@ TODOSpikeApplication >> contentView [
 
 	^ [ :aMainView | 
 	  self
+			renderPrincipalContentOn: aMainView;
 		  renderWebAppInstructionsAndAddFormOn: aMainView;
-		  renderPrincipalContentOn: aMainView;
 		  renderSendingReportBoxOn: aMainView ]
 ]
 
@@ -62,66 +66,51 @@ TODOSpikeApplication >> initialRequest: request [
 	super initialRequest: request
 ]
 
-{ #category : #accessing }
-TODOSpikeApplication >> jQueryLibrary [
-  ^ JQuery3OnlineLibrary default
-]
+{ #category : #initialization }
+TODOSpikeApplication >> initialize [
 
-{ #category : #rendering }
-TODOSpikeApplication >> renderPrincipalContentOn: aMainView [
+	super initialize.
+	"Model"
+	repositorySystem := RepositorySystem new.
 
-	| principalContent aColumnListsView toDoNoteLists |
-	toDoNoteLists := OrderedCollection new.
-	toDoNoteLists add: (Repository named: 'Open').
-	toDoNoteLists add: (Repository named: 'In Progress').
-	toDoNoteLists add: (Repository named: 'Finished').
+	"Views"
+	principalContentView := PrincipalContentView withRepositorySystem:
+		                        repositorySystem.
 
-	aColumnListsView := ColumnListsView withToDoNoteLists: toDoNoteLists.
+	principalContentContainerWebView := ContainerWebView
+		                                    wrapping: principalContentView
+		                                    intoElementBuiltUsing: [ 
+		                                    :theContainer | 
+		                                    theContainer div ]
+		                                    applying: [ :theContainer | 
+			                                    theContainer addClass willow.
+			                                    theContainer setStyleTo: [ 
+				                                    :style | 
+				                                    style
+					                                    backgroundColor: '#	F3F3F3';
+					                                    boxShadow:
+						                                    '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
+					                                    color: '#EE8625';
+					                                    borderRadius: 10 px;
+					                                    padding: 20 px;
+					                                    display: 'inline-flex';
+					                                    height: 'max-content';
+					                                    fontSize: 20 px;
+					                                    width: 'max-content';
+					                                    margin: 20 px ] ].
 
-	principalContent := ContainerWebView
-		                    wrapping: aColumnListsView
-		                    intoElementBuiltUsing: [ :canvas | canvas div ]
-		                    applying: [ :theContainer | 
-			                    theContainer addClass willow.
-			                    theContainer setStyleTo: [ :style | 
-				                    style
-					                    backgroundColor: '#	F3F3F3';
-					                    boxShadow:
-						                    '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
-					                    color: '#EE8625';
-					                    borderRadius: 10 px;
-					                    padding: 20 px;
-					                    display: 'inline-flex';
-					                    height: 'max-content';
-					                    fontSize: 20 px;
-					                    width: 'max-content';
-					                    margin: 20 px ] ].
-	aMainView render: principalContent
-]
+	toDoAddFormView := ToDoAddFormView
+		                   with: repositorySystem
+		                   rendering: principalContentContainerWebView. "Or principalContentView ?"
 
-{ #category : #rendering }
-TODOSpikeApplication >> renderSendingReportBoxOn: aMainView [
+	contentInformationWebView := ContentInformationWebView new.
 
-	| sendingReportBox |
-	"aMainView render: (ToDoNoteView with: (ToDoNote
-				  identifiedBy: 1
-				  described: 'Description'
-				  categorized: 'Test'
-				  endingOn: '25/09/2022'
-				  assignedTo: 'Agustin')).
-	"
-	sendingReportBox := nil.
-	aMainView render: sendingReportBox
-]
-
-{ #category : #rendering }
-TODOSpikeApplication >> renderWebAppInstructionsAndAddFormOn: aMainView [
-
-	| contentInformationWebAndAddFormView |
 	contentInformationWebAndAddFormView := ContainerWebView
-		                                       wrapping:
-		                                       ContentInformationWebAndAddFormView
-			                                       new
+		                                       wrapping: [ :canvas | 
+			                                       canvas render:
+				                                       toDoAddFormView.
+			                                       canvas render:
+				                                       contentInformationWebView ]
 		                                       intoElementBuiltUsing: [ 
 		                                       :canvas | canvas div ]
 		                                       applying: [ :theContainer | 
@@ -141,5 +130,28 @@ TODOSpikeApplication >> renderWebAppInstructionsAndAddFormOn: aMainView [
 					                                       fontSize: 20 px;
 					                                       width: 1360 px;
 					                                       margin: 20 px ] ].
+	sendingReportBoxView := SendingReportBoxView new
+]
+
+{ #category : #accessing }
+TODOSpikeApplication >> jQueryLibrary [
+  ^ JQuery3OnlineLibrary default
+]
+
+{ #category : #rendering }
+TODOSpikeApplication >> renderPrincipalContentOn: aMainView [
+
+	aMainView render: principalContentContainerWebView
+]
+
+{ #category : #rendering }
+TODOSpikeApplication >> renderSendingReportBoxOn: aMainView [
+
+	aMainView render: sendingReportBoxView
+]
+
+{ #category : #rendering }
+TODOSpikeApplication >> renderWebAppInstructionsAndAddFormOn: aMainView [
+
 	aMainView render: contentInformationWebAndAddFormView
 ]

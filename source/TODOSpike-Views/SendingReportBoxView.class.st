@@ -6,4 +6,6 @@ Class {
 
 { #category : #rendering }
 SendingReportBoxView >> renderContentOn: aRenderer [
+
+	aRenderer render: 'SendingReportBoxView will be here'
 ]

@@ -10,12 +10,21 @@ Class {
 		'descriptionField',
 		'addToDoButton',
 		'contentOfCategoryField',
-		'contentOfDescriptionField'
+		'contentOfDescriptionField',
+		'repositorySystem',
+		'principalContent'
 	],
 	#category : #'TODOSpike-Views'
 }
 
-{ #category : #'creating - private' }
+{ #category : #'instance creation' }
+ToDoAddFormView class >> with: aRepositorySystem rendering: aPrincipalContent [
+
+	^ self new initializeWith: aRepositorySystem rendering: aPrincipalContent
+
+]
+
+{ #category : #'private - creating' }
 ToDoAddFormView >> createAddToDoButton [
 
 	addToDoButton := AsynchronicButtonWebView
@@ -29,31 +38,33 @@ ToDoAddFormView >> createAddToDoButton [
 					                 fontWeight: #bold;
 					                 fontSize: 25 px;
 					                 borderRadius: 10 px ] ].
+
 	addToDoButton on trigger serverDo: [ 
-		| toDoNoteBuilder |
-		toDoNoteBuilder := ToDoBuilder
-			                   withNumericalIdentifier: 1
-			                   withDescription: contentOfDescriptionField.	
-		toDoNoteBuilder configuringCategory: contentOfCategoryField.	
-		toDoNoteBuilder build inspect ]
+		repositorySystem
+			addToDoDescribedBy: contentOfDescriptionField
+			categorizedBy: contentOfCategoryField ] ; render: principalContent
 ]
 
-{ #category : #'creating - private' }
+{ #category : #'private - creating' }
 ToDoAddFormView >> createCategoryField [
 
 	categoryField := TextFieldWebView singleLineApplying: [ :canvas | 
-		                  canvas setStyleTo: [ :style | 
-			                  style
-				                  margin: 20 px;
-				                  marginTop: 10 px;
-				                  borderRadius: 10 px ] ].
+		                 canvas setStyleTo: [ :style | 
+			                 style
+				                 margin: 20 px;
+				                 marginTop: 10 px;
+				                 borderRadius: 10 px ] ].
 
 	categoryField on trigger serverDo: [ 
-		contentOfCategoryField := Optional containing: categoryField model ].
-
+		contentOfCategoryField := categoryField model isEmpty
+			                          ifTrue: [ 
+			                          Optional unusedBecause:
+				                          'Unassigned Category' ]
+			                          ifFalse: [ 
+			                          Optional containing: categoryField model ] ]
 ]
 
-{ #category : #'creating - private' }
+{ #category : #'private - creating' }
 ToDoAddFormView >> createCategoryLabel [
 
 	categoryLabel := HeadingWebView
@@ -69,7 +80,7 @@ ToDoAddFormView >> createCategoryLabel [
 					  marginTop: 10 px ] ]
 ]
 
-{ #category : #'creating - private' }
+{ #category : #'private - creating' }
 ToDoAddFormView >> createDescriptionField [
 
 	descriptionField := TextFieldWebView singleLineApplying: [ :canvas | 
@@ -84,7 +95,7 @@ ToDoAddFormView >> createDescriptionField [
 		contentOfDescriptionField := descriptionField model ].
 ]
 
-{ #category : #'creating - private' }
+{ #category : #'private - creating' }
 ToDoAddFormView >> createDescriptionLabel [
 
 	descriptionLabel := HeadingWebView
@@ -100,7 +111,7 @@ ToDoAddFormView >> createDescriptionLabel [
 					  marginTop: 10 px ] ]
 ]
 
-{ #category : #'creating - private' }
+{ #category : #'private - creating' }
 ToDoAddFormView >> createTitle [
 
 	title := HeadingWebView
@@ -115,7 +126,7 @@ ToDoAddFormView >> createTitle [
 					  marginTop: 30 px ] ]
 ]
 
-{ #category : #'creating - private' }
+{ #category : #'private - creating' }
 ToDoAddFormView >> createToDoAddFormWrapping [
 
 	toDoAddForm:= ContainerWebView
@@ -145,14 +156,17 @@ ToDoAddFormView >> createToDoAddFormWrapping [
 					  margin: 20 px ] ]
 ]
 
-{ #category : #'initialization - private' }
-ToDoAddFormView >> initialize [
+{ #category : #initialization }
+ToDoAddFormView >> initializeWith: aRepositorySystem rendering: aPrincipalContent [
+
+	repositorySystem := aRepositorySystem.
+	principalContent := aPrincipalContent.
 
 	self createTitle.
-self createCategoryLabel.
+	self createCategoryLabel.
 	self createCategoryField.
 	contentOfCategoryField := Optional unusedBecause:
-		                          'The user must add a category in the form'.
+		                          'Unassigned Category'.
 
 	self createDescriptionLabel.
 	self createDescriptionField.

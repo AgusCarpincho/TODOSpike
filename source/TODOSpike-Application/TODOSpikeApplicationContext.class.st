@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'currentWebView',
-		'principalWebView'
+		'principalWebView',
+		'repository'
 	],
 	#category : #'TODOSpike-Application'
 }
@@ -17,7 +18,7 @@ TODOSpikeApplicationContext >> createPrincipalWebView [
 { #category : #accessing }
 TODOSpikeApplicationContext >> createRepositories [
 	
-	self shouldBeImplemented
+	repository := Repository new.
 ]
 
 { #category : #accessing }

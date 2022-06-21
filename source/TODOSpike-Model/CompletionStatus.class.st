@@ -34,19 +34,19 @@ CompletionStatus >> initializeIsStateOf: aRepository [
 	self subclassResponsibility
 ]
 
-{ #category : #adding }
+{ #category : #asserter }
 CompletionStatus >> isFinished [
 
 	^ false
 ]
 
-{ #category : #adding }
+{ #category : #asserter }
 CompletionStatus >> isInProgress [
 
 	^ false
 ]
 
-{ #category : #adding }
+{ #category : #asserter }
 CompletionStatus >> isOpen [
 
 	^ false

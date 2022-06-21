@@ -51,19 +51,14 @@ ToDoBuilder >> configuringAssignedEmployee: anAssignedEmployee [
 { #category : #configuring }
 ToDoBuilder >> configuringCategory: aCategory [
 
-	category := Optional containing: aCategory
+	(aCategory withContentDo: [ :categoryContent | (categoryContent isEmpty) ifFalse: [
+	category := Optional containing: aCategory ]]) 
 ]
 
 { #category : #configuring }
 ToDoBuilder >> configuringCompletionDate: aCompletionDate [
 
 	completionDate := Optional containing: aCompletionDate
-]
-
-{ #category : #configuring }
-ToDoBuilder >> configuringWithoutCategory [
-	
-	category := Optional unusedBecause: 'Unassigned Category' 
 ]
 
 { #category : #configuring }

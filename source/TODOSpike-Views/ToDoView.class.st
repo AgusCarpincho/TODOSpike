@@ -1,24 +1,24 @@
 Class {
-	#name : #ToDoNoteView,
+	#name : #ToDoView,
 	#superclass : #WAPainter,
 	#instVars : [
 		'modelToRepresent',
-		'toDoNoteView',
 		'lookDescriptionButton',
 		'modifyListSelection',
-		'deleteToDoNoteButton'
+		'toDoView',
+		'deleteToDoButton'
 	],
 	#category : #'TODOSpike-Views'
 }
 
 { #category : #initialization }
-ToDoNoteView class >> with: aToDoNote [
+ToDoView class >> with: aToDoNote [
 
 	^ self new initializeWith: aToDoNote
 ]
 
-{ #category : #creating }
-ToDoNoteView >> createDeleteToDoNoteButton [
+{ #category : #'private - creating' }
+ToDoView >> createDeleteToDoButton [
 
 	^ AsynchronicButtonWebView labeled: 'X' applying: [ :canvas | 
 		  canvas setStyleTo: [ :style | 
@@ -34,8 +34,8 @@ ToDoNoteView >> createDeleteToDoNoteButton [
 				  borderRadius: 10 px ] ]
 ]
 
-{ #category : #creating }
-ToDoNoteView >> createLookDescriptionButton [
+{ #category : #'private - creating' }
+ToDoView >> createLookDescriptionButton [
 
 	^ AsynchronicButtonWebView labeled: 'i' applying: [ :canvas | 
 		  canvas setStyleTo: [ :style | 
@@ -50,8 +50,8 @@ ToDoNoteView >> createLookDescriptionButton [
 				  borderRadius: 10 px ] ]
 ]
 
-{ #category : #creating }
-ToDoNoteView >> createModifyListSelection [
+{ #category : #'private - creating' }
+ToDoView >> createModifyListSelection [
 
 	^ AsynchronicButtonWebView labeled: 'Edit' applying: [ :canvas | 
 		  canvas setStyleTo: [ :style | 
@@ -67,22 +67,22 @@ ToDoNoteView >> createModifyListSelection [
 ]
 
 { #category : #'initialization - private' }
-ToDoNoteView >> initializeWith: aToDoNote [
+ToDoView >> initializeWith: aToDo [
 
-	modelToRepresent := aToDoNote.
+	modelToRepresent := aToDo.
 	lookDescriptionButton := self createLookDescriptionButton.
 	modifyListSelection := self createModifyListSelection.
-	deleteToDoNoteButton := self createDeleteToDoNoteButton.
+	deleteToDoButton := self createDeleteToDoButton.
 
-	toDoNoteView := ContainerWebView
+	toDoView := ContainerWebView
 		                wrapping: [ :canvas | 
 			                canvas render:
-				                '#' , aToDoNote identifier greaseString , ' '.
+				                '#' , aToDo identifier greaseString , ' '.
 			                canvas render:
-				                aToDoNote category greaseString , ' '.
+				                aToDo category greaseString , ' '.
 			                canvas render: lookDescriptionButton.
 			                canvas render: modifyListSelection.
-			                canvas render: deleteToDoNoteButton ]
+			                canvas render: deleteToDoButton ]
 		                intoElementBuiltUsing: [ :canvas | canvas div ]
 		                applying: [ :theContainer | 
 			                theContainer addClass willow.
@@ -102,7 +102,7 @@ ToDoNoteView >> initializeWith: aToDoNote [
 ]
 
 { #category : #rendering }
-ToDoNoteView >> renderContentOn: aRenderer [
+ToDoView >> renderContentOn: aRenderer [
 
-	aRenderer render: toDoNoteView
+	aRenderer render: toDoView
 ]
