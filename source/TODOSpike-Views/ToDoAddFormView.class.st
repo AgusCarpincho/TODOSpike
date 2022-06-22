@@ -11,17 +11,15 @@ Class {
 		'addToDoButton',
 		'contentOfCategoryField',
 		'contentOfDescriptionField',
-		'repositorySystem',
-		'principalContent'
+		'repositorySystem'
 	],
 	#category : #'TODOSpike-Views'
 }
 
 { #category : #'instance creation' }
-ToDoAddFormView class >> with: aRepositorySystem rendering: aPrincipalContent [
+ToDoAddFormView class >> with: aRepositorySystem [
 
-	^ self new initializeWith: aRepositorySystem rendering: aPrincipalContent
-
+	^ self new initializeWith: aRepositorySystem
 ]
 
 { #category : #'private - creating' }
@@ -39,10 +37,11 @@ ToDoAddFormView >> createAddToDoButton [
 					                 fontSize: 25 px;
 					                 borderRadius: 10 px ] ].
 
-	addToDoButton on trigger serverDo: [ 
-		repositorySystem
-			addToDoDescribedBy: contentOfDescriptionField
-			categorizedBy: contentOfCategoryField ] ; render: principalContent
+	addToDoButton on trigger
+		serverDo: [ 
+			repositorySystem
+				addToDoDescribedBy: contentOfDescriptionField
+				categorizedBy: contentOfCategoryField ]
 ]
 
 { #category : #'private - creating' }
@@ -157,10 +156,9 @@ ToDoAddFormView >> createToDoAddFormWrapping [
 ]
 
 { #category : #initialization }
-ToDoAddFormView >> initializeWith: aRepositorySystem rendering: aPrincipalContent [
+ToDoAddFormView >> initializeWith: aRepositorySystem [
 
 	repositorySystem := aRepositorySystem.
-	principalContent := aPrincipalContent.
 
 	self createTitle.
 	self createCategoryLabel.
