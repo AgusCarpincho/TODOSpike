@@ -10,27 +10,30 @@ Class {
 		'descriptionField',
 		'addToDoButton',
 		'contentOfCategoryField',
-		'contentOfDescriptionField',
-		'repositorySystem'
+		'contentOfDescriptionField'
 	],
 	#category : #'TODOSpike-Views'
 }
 
-{ #category : #'instance creation' }
-ToDoAddFormView class >> withRepositorySystem: aRepositorySystem [
+{ #category : #configuring }
+ToDoAddFormView >> configuringTrigger [
 
-	^ self new initializeWith: aRepositorySystem
+	addToDoButton on trigger serverDo: [ 
+		self session applicationContext repositorySystem
+			addToDoDescribedBy: contentOfDescriptionField
+			categorizedBy: contentOfCategoryField.
+		self session applicationContext configuringCurrentWebViewTo:
+			ToDosWebView new ]; render: self session applicationContext identifiedCurrentWebView
 ]
 
 { #category : #'private - creating' }
 ToDoAddFormView >> createAddToDoButton [
 
-	| tmp1 |
 	addToDoButton := self componentSupplier
 		                 asynchronicButtonLabeled: 'Add'
-		                 applying: [ :arg1 | 
-			                 arg1 setStyleTo: [ :arg2 | 
-				                 arg2
+		                 applying: [ :canvas | 
+			                 canvas setStyleTo: [ :button | 
+				                 button
 					                 height: 50 px;
 					                 width: 170 px;
 					                 marginRight: 10 px;
@@ -41,13 +44,6 @@ ToDoAddFormView >> createAddToDoButton [
 					                 borderColor: 'grey';
 					                 borderWidth: 2 px;
 					                 borderRadius: 10 px ] ].
-	tmp1 := addToDoButton on trigger.
-	tmp1
-		serverDo: [ 
-			self session applicationContext repositorySystem
-				addToDoDescribedBy: contentOfDescriptionField
-				categorizedBy: contentOfCategoryField ];
-		render: self session applicationContext identifiedCurrentWebView
 ]
 
 { #category : #'private - creating' }
@@ -162,7 +158,7 @@ ToDoAddFormView >> createToDoAddFormWrapping [
 ]
 
 { #category : #initialization }
-ToDoAddFormView >> initializeWith: aRepositorySystem [
+ToDoAddFormView >> initialize [
 
 	self createTitle.
 	self createCategoryLabel.
@@ -182,5 +178,6 @@ ToDoAddFormView >> initializeWith: aRepositorySystem [
 { #category : #rendering }
 ToDoAddFormView >> renderContentOn: aRenderer [
 
+	self configuringTrigger .
 	aRenderer render: toDoAddForm
 ]

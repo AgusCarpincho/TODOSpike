@@ -19,50 +19,26 @@ ToDoView class >> with: aToDoNote [
 { #category : #'private - creating' }
 ToDoView >> createDeleteToDoButton [
 
-	^ AsynchronicButtonWebView labeled: 'X' applying: [ :canvas | 
-		  canvas setStyleTo: [ :style | 
-			  style
-				  color: #white;
-				  backgroundColor: '#C41010';
-				  height: 50 px;
-				  width: 50 px;
-				margin: 5 px;
-				  fontFamily: 'Roboto';
-				  fontWeight: #bold;
-				  fontSize: 30 px;
-				  borderRadius: 10 px ] ]
+	^ self componentSupplier
+		  asynchronicButtonLabeled: 'X'
+		  applying: [ :button |
+			  button addClass bootstrap3 buttonDanger ]
 ]
 
 { #category : #'private - creating' }
 ToDoView >> createLookDescriptionButton [
 
-	^ AsynchronicButtonWebView labeled: 'i' applying: [ :canvas | 
-		  canvas setStyleTo: [ :style | 
-			  style
-				  color: #white;
-				  backgroundColor: '#14BAD8';
-				  height: 50 px;
-				  width: 50 px;margin: 5 px;
-				  fontFamily: 'Roboto';
-				  fontWeight: #bold;
-				  fontSize: 30 px;
-				  borderRadius: 10 px ] ]
+	^ self componentSupplier
+		  asynchronicButtonLabeled: 'i'
+		  applying: [ :button | button addClass bootstrap3 buttonPrimary ]
 ]
 
 { #category : #'private - creating' }
 ToDoView >> createModifyListSelection [
 
-	^ AsynchronicButtonWebView labeled: 'Edit' applying: [ :canvas | 
-		  canvas setStyleTo: [ :style | 
-			  style
-				  color: #white;
-				  backgroundColor: '#EE8625';
-				  height: 50 px;
-				  width: 80 px;margin: 5 px;
-				  fontFamily: 'Roboto';
-				  fontWeight: #bold;
-				  fontSize: 30 px;
-				  borderRadius: 10 px ] ]
+	^ self componentSupplier
+		  asynchronicButtonLabeled: 'Edit'
+		 applying: [ :button | button addClass bootstrap3 buttonPrimary ]
 ]
 
 { #category : #'initialization - private' }
@@ -88,14 +64,14 @@ ToDoView >> initializeWith: aToDo [
 					            backgroundColor: '#	F3F3F3';
 					            boxShadow:
 						            '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
-					            color: '#EE8625';
+					            color: '#black';
 					            borderRadius: 10 px;
-					            padding: 20 px;
+					            padding: 10 px;
 					            display: 'inline-block';
-					            height: 80 px;
-					            fontSize: 30 px;
+					            height: 60 px;
+					            fontSize: 20 px;
 					            width: 370 px;
-					            margin: 10 px ] ]
+					            margin: 5 px ] ]
 ]
 
 { #category : #rendering }

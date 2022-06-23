@@ -4,10 +4,28 @@ Class {
 	#instVars : [
 		'currentWebView',
 		'repositorySystem',
-		'principalWebView'
+		'mainWebView'
 	],
 	#category : #'TODOSpike-Application'
 }
+
+{ #category : #configuring }
+TODOSpikeApplicationContext >> configuringCurrentWebViewTo: aCurrentWebView [
+
+	currentWebView := aCurrentWebView
+]
+
+{ #category : #configuring }
+TODOSpikeApplicationContext >> configuringMainWebView [
+
+	mainWebView := MainWebView new
+]
+
+{ #category : #configuring }
+TODOSpikeApplicationContext >> configuringNewRepositorySystem [
+
+	repositorySystem := RepositorySystem new
+]
 
 { #category : #accessing }
 TODOSpikeApplicationContext >> currentWebView [
@@ -18,7 +36,7 @@ TODOSpikeApplicationContext >> currentWebView [
 { #category : #accessing }
 TODOSpikeApplicationContext >> identifiedCurrentWebView [
 
-	^ principalWebView identifiedCurrentWebView
+	^ mainWebView identifiedCurrentWebView
 ]
 
 { #category : #initialization }
@@ -26,40 +44,19 @@ TODOSpikeApplicationContext >> initialize [
 
 	super initialize.
 	self
-		settingNewRepositorySystem;
-		settingCurrentWebViewTo: ContentInformationWebView new;
-		settingNavBarWebView
+		configuringNewRepositorySystem;
+		configuringCurrentWebViewTo: InstructionsWebView new;
+		configuringMainWebView
 ]
 
 { #category : #accessing }
-TODOSpikeApplicationContext >> principalWebView [
+TODOSpikeApplicationContext >> mainWebView [
 
-	^ principalWebView
+	^ mainWebView
 ]
 
 { #category : #accessing }
 TODOSpikeApplicationContext >> repositorySystem [
 
 	^ repositorySystem
-]
-
-{ #category : #setting }
-TODOSpikeApplicationContext >> settingCurrentWebViewTo: aCurrentWebView [
-
-	currentWebView := aCurrentWebView
-]
-
-{ #category : #setting }
-TODOSpikeApplicationContext >> settingNavBarWebView [
-
-	"principalWebView := PrincipalContentView withRepositorySystem:
-		                    repositorySystem"
-
-	principalWebView := PrincipalWebView new
-]
-
-{ #category : #setting }
-TODOSpikeApplicationContext >> settingNewRepositorySystem [
-
-	repositorySystem := RepositorySystem new
 ]

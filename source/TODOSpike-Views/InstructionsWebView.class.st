@@ -1,15 +1,15 @@
 Class {
-	#name : #ContentInformationWebView,
+	#name : #InstructionsWebView,
 	#superclass : #WAPainter,
 	#instVars : [
 		'title',
-		'contentInformation'
+		'contentInstructions'
 	],
 	#category : #'TODOSpike-Views'
 }
 
 { #category : #initialization }
-ContentInformationWebView >> initialize [
+InstructionsWebView >> initialize [
 
 	title := HeadingWebView
 		         displaying: 'TODOSpike Instructions'
@@ -21,7 +21,7 @@ ContentInformationWebView >> initialize [
 					         fontFamily: #Roboto;
 					         margin: 20 px;
 					         marginTop: 20 px ] ].
-	contentInformation := HeadingWebView
+	contentInstructions := HeadingWebView
 		                      displaying:
 		                      'Welcome to TODOSpike, this is a web app using Willow with Pharo 10. If you want to add some ToDo you need to do it using the Add ToDo	 button. The ToDos will have appear in the page when click on Show ToDos button. Thanks for using TODOSpike !'
 		                      withLevel: 2
@@ -34,13 +34,13 @@ ContentInformationWebView >> initialize [
 ]
 
 { #category : #rendering }
-ContentInformationWebView >> renderContentOn: aRenderer [
+InstructionsWebView >> renderContentOn: aRenderer [
 
 	| containerInformation |
 	containerInformation := ContainerWebView
 		                        wrapping: [ :canvas | 
 			                        canvas render: title.
-			                        canvas render: contentInformation ]
+			                        canvas render: contentInstructions ]
 		                        intoElementBuiltUsing: [ :canvas | 
 		                        canvas div ]
 		                        applying: [ :theContainer | 

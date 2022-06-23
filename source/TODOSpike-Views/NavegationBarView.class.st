@@ -1,5 +1,5 @@
 Class {
-	#name : #NavBarView,
+	#name : #NavegationBarView,
 	#superclass : #WAPainter,
 	#instVars : [
 		'navbar',
@@ -10,8 +10,8 @@ Class {
 	#category : #'TODOSpike-Views'
 }
 
-{ #category : #'as yet unclassified' }
-NavBarView >> buttonLabeled: aLabel [
+{ #category : #configuring }
+NavegationBarView >> buttonLabeled: aLabel [
 
 	^ self componentSupplier
 		  asynchronicButtonLabeled: aLabel
@@ -30,30 +30,28 @@ NavBarView >> buttonLabeled: aLabel [
 					  borderRadius: 10 px ] ]
 ]
 
-{ #category : #'as yet unclassified' }
-NavBarView >> configureTriggerOf: aButtonWebView toRender: aWebView [
+{ #category : #configuring }
+NavegationBarView >> configureTriggerOf: aButtonWebView toRender: aWebView [
 
 	aButtonWebView on trigger
-		serverDo: [ self session applicationContext settingCurrentWebViewTo: aWebView ];
+		serverDo: [ 
+			self session applicationContext configuringCurrentWebViewTo: aWebView.
+			 ];
 		render: self session applicationContext identifiedCurrentWebView
 ]
 
-{ #category : #'as yet unclassified' }
-NavBarView >> configureTriggers [
+{ #category : #configuring }
+NavegationBarView >> configureTriggers [
 
 	self
 		configureTriggerOf: informationButton
-		toRender: ContentInformationWebView new;		
-		configureTriggerOf: showToDosButton
-		toRender: (PrincipalContentView withRepositorySystem:
-					 self session applicationContext repositorySystem);		
-		configureTriggerOf: addToDoButton
-		toRender: (ToDoAddFormView withRepositorySystem:
-					 self session applicationContext repositorySystem)
+		toRender: InstructionsWebView new;
+		configureTriggerOf: showToDosButton toRender: ToDosWebView new;
+		configureTriggerOf: addToDoButton toRender: ToDoAddFormView new
 ]
 
 { #category : #initialization }
-NavBarView >> initialize [
+NavegationBarView >> initialize [
 
 	informationButton := self buttonLabeled: 'Info'.
 	showToDosButton := self buttonLabeled: 'Show ToDos'.
@@ -63,7 +61,7 @@ NavBarView >> initialize [
 
 	navbar := ContainerWebView
 		          wrapping: [ :canvas | 
-			canvas render: informationButton.
+			          canvas render: informationButton.
 			          canvas render: showToDosButton.
 			          canvas render: addToDoButton ]
 		          intoElementBuiltUsing: [ :canvas | canvas div ]
@@ -85,8 +83,9 @@ NavBarView >> initialize [
 ]
 
 { #category : #rendering }
-NavBarView >> renderContentOn: aRenderer [
+NavegationBarView >> renderContentOn: aRenderer [
 
 	self configureTriggers.
-	aRenderer render: navbar
+	aRenderer
+		render: navbar
 ]

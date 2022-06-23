@@ -13,7 +13,7 @@ TODOSpikeSession >> applicationContext [
 	^ applicationContext
 ]
 
-{ #category : #accessing }
+{ #category : #Controlling }
 TODOSpikeSession >> startUpApplicationContextFor: aWillowApplication [
 
 	super startUpApplicationContextFor: aWillowApplication.

@@ -44,7 +44,7 @@ TODOSpikeApplication >> componentSupplierForApplication [
 { #category : #accessing }
 TODOSpikeApplication >> contentView [
 
-	^ self session applicationContext principalWebView
+	^ self session applicationContext mainWebView
 ]
 
 { #category : #hooks }
