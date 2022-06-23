@@ -11,38 +11,43 @@ Class {
 		'addToDoButton',
 		'contentOfCategoryField',
 		'contentOfDescriptionField',
-		'repositorySystem',
-		'principalContent'
+		'repositorySystem'
 	],
 	#category : #'TODOSpike-Views'
 }
 
 { #category : #'instance creation' }
-ToDoAddFormView class >> with: aRepositorySystem rendering: aPrincipalContent [
+ToDoAddFormView class >> withRepositorySystem: aRepositorySystem [
 
-	^ self new initializeWith: aRepositorySystem rendering: aPrincipalContent
-
+	^ self new initializeWith: aRepositorySystem
 ]
 
 { #category : #'private - creating' }
 ToDoAddFormView >> createAddToDoButton [
 
-	addToDoButton := AsynchronicButtonWebView
-		                 labeled: 'Add'
-		                 applying: [ :canvas | 
-			                 canvas setStyleTo: [ :style | 
-				                 style
+	| tmp1 |
+	addToDoButton := self componentSupplier
+		                 asynchronicButtonLabeled: 'Add'
+		                 applying: [ :arg1 | 
+			                 arg1 setStyleTo: [ :arg2 | 
+				                 arg2
 					                 height: 50 px;
-					                 width: 100 px;
+					                 width: 170 px;
+					                 marginRight: 10 px;
 					                 fontFamily: 'Roboto';
 					                 fontWeight: #bold;
 					                 fontSize: 25 px;
+					                 border: 'solid';
+					                 borderColor: 'grey';
+					                 borderWidth: 2 px;
 					                 borderRadius: 10 px ] ].
-
-	addToDoButton on trigger serverDo: [ 
-		repositorySystem
-			addToDoDescribedBy: contentOfDescriptionField
-			categorizedBy: contentOfCategoryField ] ; render: principalContent
+	tmp1 := addToDoButton on trigger.
+	tmp1
+		serverDo: [ 
+			self session applicationContext repositorySystem
+				addToDoDescribedBy: contentOfDescriptionField
+				categorizedBy: contentOfCategoryField ];
+		render: self session applicationContext identifiedCurrentWebView
 ]
 
 { #category : #'private - creating' }
@@ -157,10 +162,7 @@ ToDoAddFormView >> createToDoAddFormWrapping [
 ]
 
 { #category : #initialization }
-ToDoAddFormView >> initializeWith: aRepositorySystem rendering: aPrincipalContent [
-
-	repositorySystem := aRepositorySystem.
-	principalContent := aPrincipalContent.
+ToDoAddFormView >> initializeWith: aRepositorySystem [
 
 	self createTitle.
 	self createCategoryLabel.

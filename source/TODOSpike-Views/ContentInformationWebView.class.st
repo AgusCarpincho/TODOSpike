@@ -8,7 +8,7 @@ Class {
 	#category : #'TODOSpike-Views'
 }
 
-{ #category : #'initialization - private' }
+{ #category : #initialization }
 ContentInformationWebView >> initialize [
 
 	title := HeadingWebView
@@ -23,7 +23,7 @@ ContentInformationWebView >> initialize [
 					         marginTop: 20 px ] ].
 	contentInformation := HeadingWebView
 		                      displaying:
-		                      'Welcome to TODOSpike, this is a web app using Willow with Pharo 10. If you want to add some ToDo you need to do it using the left form. The ToDos will have appear in the correct upper column. Thanks for using TODOSpike !'
+		                      'Welcome to TODOSpike, this is a web app using Willow with Pharo 10. If you want to add some ToDo you need to do it using the Add ToDo	 button. The ToDos will have appear in the page when click on Show ToDos button. Thanks for using TODOSpike !'
 		                      withLevel: 2
 		                      applying: [ :canvas | 
 			                      canvas setStyleTo: [ :style | 

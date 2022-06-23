@@ -5,7 +5,8 @@ Class {
 		'openedToDosColumnView',
 		'inProgressToDosColumnView',
 		'finishedToDoListView',
-		'repositorySystem'
+		'repositorySystem',
+		'principalContentContainerView'
 	],
 	#category : #'TODOSpike-Views'
 }
@@ -14,7 +15,7 @@ Class {
 PrincipalContentView class >> withRepositorySystem: aRepository [
 
 	^ self new
-		  initializeWithRepository: aRepository
+		  initializeWithRepositorySystem: aRepository
 ]
 
 { #category : #configuring }
@@ -24,18 +25,45 @@ PrincipalContentView >> beIdentifiable [
 ]
 
 { #category : #'initialization - private' }
-PrincipalContentView >> initializeWithRepository: aRepositorySystem [
+PrincipalContentView >> initializeWithRepositorySystem: aRepositorySystem [
 
 	repositorySystem := aRepositorySystem.
-	openedToDosColumnView := ToDosColumnView withToDos: repositorySystem openedToDos named: 'Open'.
-	inProgressToDosColumnView := ToDosColumnView withToDos: repositorySystem inProgressToDos named: 'In Progress'.
-	finishedToDoListView := ToDosColumnView withToDos: repositorySystem finishedToDos named: 'Finished'.
+	openedToDosColumnView := ToDosColumnView
+		                         withToDos: repositorySystem openedToDos
+		                         named: 'Open'.
+	inProgressToDosColumnView := ToDosColumnView
+		                             withToDos:
+		                             repositorySystem inProgressToDos
+		                             named: 'In Progress'.
+	finishedToDoListView := ToDosColumnView
+		                        withToDos: repositorySystem finishedToDos
+		                        named: 'Finished'.
+		
+	principalContentContainerView := ContainerWebView
+			 wrapping: [ :canvas | 
+				 canvas render: openedToDosColumnView.
+				 canvas render: inProgressToDosColumnView.
+				 canvas render: finishedToDoListView ]
+			 intoElementBuiltUsing: [ :theContainer | theContainer div ]
+			 applying: [ :theContainer | 
+				 theContainer addClass willow.
+				 theContainer setStyleTo: [ :style | 
+					 style
+						 backgroundColor: '#	F3F3F3';
+						 boxShadow:
+							 '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
+						 color: '#EE8625';
+						 borderRadius: 10 px;
+						 padding: 20 px;
+						 display: 'inline-flex';
+						 height: 'max-content';
+						 fontSize: 20 px;
+						 width: 'max-content';
+						 margin: 20 px ] ]
 ]
 
 { #category : #rendering }
 PrincipalContentView >> renderContentOn: aRenderer [
 
-		aRenderer render: openedToDosColumnView.
-		aRenderer render: inProgressToDosColumnView.
-		aRenderer render: finishedToDoListView.
+	aRenderer render: principalContentContainerView
 ]

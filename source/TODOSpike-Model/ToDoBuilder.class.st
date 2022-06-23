@@ -51,8 +51,7 @@ ToDoBuilder >> configuringAssignedEmployee: anAssignedEmployee [
 { #category : #configuring }
 ToDoBuilder >> configuringCategory: aCategory [
 
-	(aCategory withContentDo: [ :categoryContent | (categoryContent isEmpty) ifFalse: [
-	category := Optional containing: aCategory ]]) 
+	category := Optional containing: aCategory
 ]
 
 { #category : #configuring }

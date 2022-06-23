@@ -3,23 +3,11 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'currentWebView',
-		'principalWebView',
-		'repository'
+		'repositorySystem',
+		'principalWebView'
 	],
 	#category : #'TODOSpike-Application'
 }
-
-{ #category : #accessing }
-TODOSpikeApplicationContext >> createPrincipalWebView [
-
-	principalWebView := PrincipalWebView new
-]
-
-{ #category : #accessing }
-TODOSpikeApplicationContext >> createRepositories [
-	
-	repository := Repository new.
-]
 
 { #category : #accessing }
 TODOSpikeApplicationContext >> currentWebView [
@@ -33,13 +21,14 @@ TODOSpikeApplicationContext >> identifiedCurrentWebView [
 	^ principalWebView identifiedCurrentWebView
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TODOSpikeApplicationContext >> initialize [
 
 	super initialize.
 	self
-		setCurrentWebViewTo: InstructionsWebView new;
-		createRepositories ;createPrincipalWebView
+		settingNewRepositorySystem;
+		settingCurrentWebViewTo: ContentInformationWebView new;
+		settingNavBarWebView
 ]
 
 { #category : #accessing }
@@ -49,7 +38,28 @@ TODOSpikeApplicationContext >> principalWebView [
 ]
 
 { #category : #accessing }
-TODOSpikeApplicationContext >> setCurrentWebViewTo: aCurrentWebView [
+TODOSpikeApplicationContext >> repositorySystem [
+
+	^ repositorySystem
+]
+
+{ #category : #setting }
+TODOSpikeApplicationContext >> settingCurrentWebViewTo: aCurrentWebView [
 
 	currentWebView := aCurrentWebView
+]
+
+{ #category : #setting }
+TODOSpikeApplicationContext >> settingNavBarWebView [
+
+	"principalWebView := PrincipalContentView withRepositorySystem:
+		                    repositorySystem"
+
+	principalWebView := PrincipalWebView new
+]
+
+{ #category : #setting }
+TODOSpikeApplicationContext >> settingNewRepositorySystem [
+
+	repositorySystem := RepositorySystem new
 ]

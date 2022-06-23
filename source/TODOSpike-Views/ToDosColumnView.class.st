@@ -16,16 +16,8 @@ ToDosColumnView class >> withToDos: aToDos named: aName [
 { #category : #'private - creating' }
 ToDosColumnView >> createAToDoViewWith: aToDo [
 
-	^ HeadingWebView
-		  displaying: aToDo
-		  withLevel: 4
-		  applying: [ :canvas | 
-			  canvas setStyleTo: [ :style | 
-				  style
-					  color: #black;
-					  fontFamily: #Roboto;
-					  margin: 20 px;
-					  marginTop: 30 px ] ]
+	^ ToDoView
+		  with: aToDo
 ]
 
 { #category : #'private - creating' }

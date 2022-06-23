@@ -83,7 +83,6 @@ RepositoryTest >> test02ARepositoryCanAddANewToDoNoteWithoutCompletionDateAndThe
 RepositoryTest >> test03ARepositoryCanAddANewToDoWithoutCompletionDateAndCategoryAndTheNumberOfTodosIsOneInTheRepository [
 
 	toDoBuilder configuringWithoutCompletionDate.
-	toDoBuilder configuringWithoutCategory.
 	aRepositoryOfToDosEmpty addNewToDo: toDoBuilder build.
 	self assert: aRepositoryOfToDosEmpty numberOfToDos equals: 1
 ]

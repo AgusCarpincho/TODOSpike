@@ -1,9 +1,6 @@
 Class {
 	#name : #InProgressCompletionStatus,
 	#superclass : #CompletionStatus,
-	#instVars : [
-		'toDo'
-	],
 	#category : #'TODOSpike-Model'
 }
 

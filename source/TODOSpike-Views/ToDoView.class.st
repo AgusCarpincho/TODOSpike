@@ -2,7 +2,6 @@ Class {
 	#name : #ToDoView,
 	#superclass : #WAPainter,
 	#instVars : [
-		'modelToRepresent',
 		'lookDescriptionButton',
 		'modifyListSelection',
 		'toDoView',
@@ -69,36 +68,34 @@ ToDoView >> createModifyListSelection [
 { #category : #'initialization - private' }
 ToDoView >> initializeWith: aToDo [
 
-	modelToRepresent := aToDo.
 	lookDescriptionButton := self createLookDescriptionButton.
 	modifyListSelection := self createModifyListSelection.
 	deleteToDoButton := self createDeleteToDoButton.
 
 	toDoView := ContainerWebView
-		                wrapping: [ :canvas | 
-			                canvas render:
-				                '#' , aToDo identifier greaseString , ' '.
-			                canvas render:
-				                aToDo category greaseString , ' '.
-			                canvas render: lookDescriptionButton.
-			                canvas render: modifyListSelection.
-			                canvas render: deleteToDoButton ]
-		                intoElementBuiltUsing: [ :canvas | canvas div ]
-		                applying: [ :theContainer | 
-			                theContainer addClass willow.
-			                theContainer setStyleTo: [ :style | 
-				                style
-					                backgroundColor: '#	F3F3F3';
-					                boxShadow:
-						                '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
-					                color: '#EE8625';
-					                borderRadius: 10 px;
-					                padding: 20 px;
-					                display: 'inline-block';
-					                height: 100 px;
-					                fontSize: 30 px;	
-					                width: 370 px;
-					                margin: 10 px ] ]
+		            wrapping: [ :canvas | 
+			            canvas render:
+				            '#' , aToDo identifier greaseString , ' '.
+			            canvas render: aToDo category greaseString , ' '.
+			            canvas render: lookDescriptionButton.
+			            canvas render: modifyListSelection.
+			            canvas render: deleteToDoButton ]
+		            intoElementBuiltUsing: [ :canvas | canvas div ]
+		            applying: [ :theContainer | 
+			            theContainer addClass willow.
+			            theContainer setStyleTo: [ :style | 
+				            style
+					            backgroundColor: '#	F3F3F3';
+					            boxShadow:
+						            '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
+					            color: '#EE8625';
+					            borderRadius: 10 px;
+					            padding: 20 px;
+					            display: 'inline-block';
+					            height: 80 px;
+					            fontSize: 30 px;
+					            width: 370 px;
+					            margin: 10 px ] ]
 ]
 
 { #category : #rendering }
