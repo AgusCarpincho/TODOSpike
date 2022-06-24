@@ -22,11 +22,17 @@ ToDoView >> configureTriggers [
 
 	deleteToDoButton on trigger
 		serverDo: [ 
-			self session applicationContext repositorySystem deleteToDoIdentified: toDo identifier.
-			self session applicationContext
-				configuringCurrentWebViewTo: ToDosWebView new.
-				];
-		render: self session applicationContext identifiedCurrentWebView
+			self session applicationContext repositorySystem 
+				deleteToDoIdentified: toDo identifier.
+			self session applicationContext configuringCurrentWebViewTo:
+					ToDosWebView new ];
+		render: self session applicationContext identifiedCurrentWebView.
+
+	lookDescriptionButton on trigger
+		serverDo: [ 
+			self session applicationContext configuringCurrentWebViewTo:
+					(CompleteDescriptionOfToDoView withInformationOf: toDo) ];
+		render: self session applicationContext identifiedCurrentWebView.
 ]
 
 { #category : #'private - creating' }
