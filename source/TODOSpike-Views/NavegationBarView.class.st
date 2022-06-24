@@ -34,10 +34,10 @@ NavegationBarView >> buttonLabeled: aLabel [
 NavegationBarView >> configureTriggerOf: aButtonWebView toRender: aWebView [
 
 	aButtonWebView on trigger
+		
 		serverDo: [ 
-			self session applicationContext configuringCurrentWebViewTo: aWebView.
-			 ];
-		render: self session applicationContext identifiedCurrentWebView
+			self session applicationContext configuringCurrentWebViewTo:
+					aWebView ];render: self session applicationContext identifiedCurrentWebView
 ]
 
 { #category : #configuring }
@@ -47,7 +47,14 @@ NavegationBarView >> configureTriggers [
 		configureTriggerOf: informationButton
 		toRender: InstructionsWebView new;
 		configureTriggerOf: showToDosButton toRender: ToDosWebView new;
-		configureTriggerOf: addToDoButton toRender: ToDoAddFormView new
+		configureTriggerOf: addToDoButton toRender: ToDoAddFormView new.
+
+	showToDosButton on trigger serverDo: [
+		self session applicationContext configuringCurrentWebViewTo:
+			ToDosWebView new ].
+	addToDoButton on trigger serverDo: [ 
+		self session applicationContext configuringCurrentWebViewTo:
+			ToDoAddFormView new ]
 ]
 
 { #category : #initialization }
