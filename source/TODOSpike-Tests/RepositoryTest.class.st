@@ -256,3 +256,46 @@ RepositoryTest >> test16ARepositoryStartsWithZeroToDos [
 
 	self assert: Repository new numberOfToDos equals: 0
 ]
+
+{ #category : #creation }
+RepositoryTest >> test17DoesntExistsAToDoWithAParticularIdentifierInARepositoryWithZeroToDos [
+
+	self deny: (Repository new existsToDoIdentified: 1).
+	self assert:
+		(aRepositoryOfToDosWithAToDoOpen existsToDoIdentified: 1)
+]
+
+{ #category : #creation }
+RepositoryTest >> test18ExistsAToDoWithAParticularIdentifierInARepositoryWithAToDo [
+
+	self assert:
+		(aRepositoryOfToDosWithAToDoOpen existsToDoIdentified: 1)
+]
+
+{ #category : #creation }
+RepositoryTest >> test19SelectToDosFinishedFromARepositoryWithOneToDoFinishedThrowsOneResult [
+
+	self
+		assert: aRepositoryOfToDosWithAToDoFinished finishedToDos size
+		equals: 1.
+	self assert: aRepositoryOfToDosWithAToDoFinished finishedToDos first isFinished
+]
+
+{ #category : #creation }
+RepositoryTest >> test20SelectOpenToDosFromARepositoryWithOneToDoOpenThrowsOneResult [
+
+	self
+		assert: aRepositoryOfToDosWithAToDoOpen openedToDos size
+		equals: 1.
+	self assert:
+		aRepositoryOfToDosWithAToDoOpen openedToDos first isOpen
+]
+
+{ #category : #creation }
+RepositoryTest >> test21SelectInProgressToDosFromARepositoryWithOneToDoInProgressThrowsOneResult [
+
+	self
+		assert: aRepositoryOfToDosWithAToDoInProgress inProgressToDos size
+		equals: 1.
+	self assert: aRepositoryOfToDosWithAToDoInProgress inProgressToDos first isInProgress
+]
