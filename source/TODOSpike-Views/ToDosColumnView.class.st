@@ -42,7 +42,8 @@ ToDosColumnView >> initializeWithToDos: aToDos named: aName [
 		                   wrapping: [ :canvas | 
 			                   canvas render:
 				                   (self createHeadingWebViewWith: aName).
-			                   aToDos do: [ :toDo | canvas render: (self createAToDoViewWith: toDo) ] ]
+			                   aToDos do: [ :toDo | 
+				                   canvas render: (self createAToDoViewWith: toDo) ] ]
 		                   intoElementBuiltUsing: [ :canvas | canvas div ]
 		                   applying: [ :theContainer | 
 			                   theContainer addClass willow.
@@ -57,7 +58,7 @@ ToDosColumnView >> initializeWithToDos: aToDos named: aName [
 					                   height: 500 px;
 					                   display: 'table';
 					                   fontSize: 20 px;
-					                   width: 400 px;
+					                   width: 430 px;
 					                   margin: 20 px ] ]
 ]
 

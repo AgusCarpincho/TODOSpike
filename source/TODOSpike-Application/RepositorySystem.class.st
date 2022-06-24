@@ -19,6 +19,12 @@ RepositorySystem >> addToDoDescribedBy: contentOfDescriptionField categorizedBy:
 	repository addNewToDo: toDoBuilder build
 ]
 
+{ #category : #adding }
+RepositorySystem >> deleteToDoIdentified: anIdentifier [
+	
+	repository deleteToDoIdentified: anIdentifier
+]
+
 { #category : #'CRUD operations' }
 RepositorySystem >> finishedToDos [
 	^ repository finishedToDos 

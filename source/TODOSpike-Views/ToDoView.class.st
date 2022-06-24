@@ -5,7 +5,8 @@ Class {
 		'lookDescriptionButton',
 		'modifyListSelection',
 		'toDoView',
-		'deleteToDoButton'
+		'deleteToDoButton',
+		'toDo'
 	],
 	#category : #'TODOSpike-Views'
 }
@@ -14,6 +15,18 @@ Class {
 ToDoView class >> with: aToDoNote [
 
 	^ self new initializeWith: aToDoNote
+]
+
+{ #category : #rendering }
+ToDoView >> configureTriggers [
+
+	deleteToDoButton on trigger
+		serverDo: [ 
+			self session applicationContext repositorySystem deleteToDoIdentified: toDo identifier.
+			self session applicationContext
+				configuringCurrentWebViewTo: ToDosWebView new.
+				];
+		render: self session applicationContext identifiedCurrentWebView
 ]
 
 { #category : #'private - creating' }
@@ -47,7 +60,7 @@ ToDoView >> initializeWith: aToDo [
 	lookDescriptionButton := self createLookDescriptionButton.
 	modifyListSelection := self createModifyListSelection.
 	deleteToDoButton := self createDeleteToDoButton.
-
+	toDo := aToDo.
 	toDoView := ContainerWebView
 		            wrapping: [ :canvas | 
 			            canvas render:
@@ -77,5 +90,6 @@ ToDoView >> initializeWith: aToDo [
 { #category : #rendering }
 ToDoView >> renderContentOn: aRenderer [
 
+	self configureTriggers.
 	aRenderer render: toDoView
 ]
