@@ -21,7 +21,7 @@ ToDosColumnView >> createAToDoViewWith: aToDo [
 ]
 
 { #category : #'private - creating' }
-ToDosColumnView >> createHeadingWebViewWith: aTitle [
+ToDosColumnView >> createHeadingWebViewLabeled: aTitle [
 
 	^ HeadingWebView
 		  displaying: aTitle
@@ -41,7 +41,7 @@ ToDosColumnView >> initializeWithToDos: aToDos named: aName [
 	toDosColumnView := ContainerWebView
 		                   wrapping: [ :canvas | 
 			                   canvas render:
-				                   (self createHeadingWebViewWith: aName).
+				                   (self createHeadingWebViewLabeled: aName).
 			                   aToDos do: [ :toDo | 
 				                   canvas render: (self createAToDoViewWith: toDo) ] ]
 		                   intoElementBuiltUsing: [ :canvas | canvas div ]

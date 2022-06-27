@@ -5,7 +5,8 @@ Class {
 		'navbar',
 		'showToDosButton',
 		'addToDoButton',
-		'informationButton'
+		'informationButton',
+		'addEmployeeButton'
 	],
 	#category : #'TODOSpike-Views'
 }
@@ -19,12 +20,12 @@ NavegationBarView >> buttonLabeled: aLabel [
 			  theButton setStyleTo: [ :style | 
 				  style
 					  height: 50 px;
-					  width: 170 px;
+					  width: 190 px;
 					  marginRight: 10 px;
 					  fontFamily: 'Roboto';
 					  fontWeight: #bold;
 					  fontSize: 25 px;
-					  border: 'solid';		
+					  border: 'solid';
 					  borderColor: 'grey';
 					  borderWidth: 2 px;
 					  borderRadius: 10 px ] ]
@@ -47,14 +48,19 @@ NavegationBarView >> configureTriggers [
 		configureTriggerOf: informationButton
 		toRender: InstructionsWebView new;
 		configureTriggerOf: showToDosButton toRender: ToDosWebView new;
-		configureTriggerOf: addToDoButton toRender: ToDoAddFormView new.
+		configureTriggerOf: addToDoButton toRender: ToDoAddFormView new;
+		configureTriggerOf: addEmployeeButton toRender: EmployeeAddFormView new.
+		
 
-	showToDosButton on trigger serverDo: [
+	showToDosButton on trigger serverDo: [ 
 		self session applicationContext configuringCurrentWebViewTo:
 			ToDosWebView new ].
 	addToDoButton on trigger serverDo: [ 
 		self session applicationContext configuringCurrentWebViewTo:
-			ToDoAddFormView new ]
+			ToDoAddFormView new ].
+	addEmployeeButton on trigger serverDo: [ 
+		self session applicationContext configuringCurrentWebViewTo:
+			EmployeeAddFormView new ].
 ]
 
 { #category : #initialization }
@@ -63,14 +69,14 @@ NavegationBarView >> initialize [
 	informationButton := self buttonLabeled: 'Info'.
 	showToDosButton := self buttonLabeled: 'Show ToDos'.
 	addToDoButton := self buttonLabeled: 'Add ToDo'.
-
-
+	addEmployeeButton := self buttonLabeled: 'Add Employee'.
 
 	navbar := ContainerWebView
 		          wrapping: [ :canvas | 
 			          canvas render: informationButton.
 			          canvas render: showToDosButton.
-			          canvas render: addToDoButton ]
+			          canvas render: addToDoButton.
+			canvas render: addEmployeeButton ]
 		          intoElementBuiltUsing: [ :canvas | canvas div ]
 		          applying: [ :theContainer | 
 			          theContainer addClass willow.
