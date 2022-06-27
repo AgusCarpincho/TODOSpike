@@ -3,10 +3,10 @@ Class {
 	#superclass : #WAPainter,
 	#instVars : [
 		'lookDescriptionButton',
-		'modifyListSelection',
 		'toDoView',
 		'deleteToDoButton',
-		'toDo'
+		'toDo',
+		'assignEmployeeSelectionButton'
 	],
 	#category : #'TODOSpike-Views'
 }
@@ -33,6 +33,31 @@ ToDoView >> configureTriggers [
 			self session applicationContext configuringCurrentWebViewTo:
 					(CompleteDescriptionOfToDoView withInformationOf: toDo) ];
 		render: self session applicationContext identifiedCurrentWebView.
+
+	assignEmployeeSelectionButton on trigger
+		serverDo: [ 
+			assignEmployeeSelectionButton withCurrentSelectionDo: [
+					:employeeName | 
+					self session applicationContext repositorySystem
+						assignEmployee: employeeName
+						toTheToDoIdentified: toDo identifier ].
+			self session applicationContext configuringCurrentWebViewTo:
+					ToDosWebView new ];
+		render: self session applicationContext identifiedCurrentWebView
+]
+
+{ #category : #'private - creating' }
+ToDoView >> createAssignEmployeeSelectionButton [
+
+	assignEmployeeSelectionButton := SingleSelectionWebView
+		                                 dropDownListApplying: [ :dropdown | 
+		                                 dropdown addClass willow ]
+		                                 applyingToOptions: [ :option :item | 
+			                               ].
+	assignEmployeeSelectionButton allowAnyOf:
+		self session applicationContext repositorySystem employeeNames.
+
+	^ assignEmployeeSelectionButton
 ]
 
 { #category : #'private - creating' }
@@ -52,19 +77,11 @@ ToDoView >> createLookDescriptionButton [
 		  applying: [ :button | button addClass bootstrap3 buttonPrimary ]
 ]
 
-{ #category : #'private - creating' }
-ToDoView >> createModifyListSelection [
-
-	^ self componentSupplier
-		  asynchronicButtonLabeled: 'Edit'
-		 applying: [ :button | button addClass bootstrap3 buttonPrimary ]
-]
-
 { #category : #'initialization - private' }
 ToDoView >> initializeWith: aToDo [
 
 	lookDescriptionButton := self createLookDescriptionButton.
-	modifyListSelection := self createModifyListSelection.
+	assignEmployeeSelectionButton := self createAssignEmployeeSelectionButton.
 	deleteToDoButton := self createDeleteToDoButton.
 	toDo := aToDo.
 	toDoView := ContainerWebView
@@ -73,7 +90,7 @@ ToDoView >> initializeWith: aToDo [
 				            '#' , aToDo identifier greaseString , ' '.
 			            canvas render: aToDo category greaseString , ' '.
 			            canvas render: lookDescriptionButton.
-			            canvas render: modifyListSelection.
+			            canvas render: assignEmployeeSelectionButton.
 			            canvas render: deleteToDoButton ]
 		            intoElementBuiltUsing: [ :canvas | canvas div ]
 		            applying: [ :theContainer | 

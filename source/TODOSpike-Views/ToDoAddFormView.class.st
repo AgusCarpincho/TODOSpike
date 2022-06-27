@@ -130,31 +130,31 @@ ToDoAddFormView >> createTitle [
 { #category : #'private - creating' }
 ToDoAddFormView >> createToDoAddFormWrapping [
 
-	toDoAddForm:= ContainerWebView
-		  wrapping: [ :canvas | 
-			  canvas
-				  render: title;
-				  render: categoryLabel;
-				  render: categoryField;
-				  render: descriptionLabel;
-				  render: descriptionField;
-				  render: addToDoButton ]
-		  intoElementBuiltUsing: [ :canvas | canvas div ]
-		  applying: [ :theContainer | 
-			  theContainer addClass willow.
-			  theContainer setStyleTo: [ :style | 
-				  style
-					  backgroundColor: '#	F3F3F3';
-					  boxShadow:
-						  '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
-					  color: '#EE8625';
-					  borderRadius: 10 px;
-					  padding: 0 px;
-					  display: 'inline-block';
-					  height: 340 px;
-					  fontSize: 20 px;
-					  width: 1300 px;
-					  margin: 20 px ] ]
+	toDoAddForm := ContainerWebView
+		               wrapping: [ :canvas | 
+			               canvas
+				               render: title;
+				               render: categoryLabel;
+				               render: categoryField;
+				               render: descriptionLabel;
+				               render: descriptionField;
+				               render: addToDoButton ]
+		               intoElementBuiltUsing: [ :canvas | canvas div ]
+		               applying: [ :theContainer | 
+			               theContainer addClass willow.
+			               theContainer setStyleTo: [ :style | 
+				               style
+					               backgroundColor: '#	F3F3F3';
+					               boxShadow:
+						               '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
+					               color: '#EE8625';
+					               borderRadius: 10 px;	
+					               padding: 0 px;
+					               display: 'inline-block';
+					               height: 340 px;
+					               fontSize: 20 px;
+					               width: 700 px;
+					               margin: 20 px ] ]
 ]
 
 { #category : #initialization }

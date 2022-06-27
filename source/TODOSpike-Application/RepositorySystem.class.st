@@ -26,6 +26,12 @@ RepositorySystem >> addToDoDescribedBy: contentOfDescriptionField categorizedBy:
 	toDosRepository addNewToDo: toDoBuilder build
 ]
 
+{ #category : #initialization }
+RepositorySystem >> assignEmployee: nameEmployee toTheToDoIdentified: anIdentifier [
+
+	toDosRepository assignEmployee: nameEmployee toTheToDoIdentified: anIdentifier
+]
+
 { #category : #adding }
 RepositorySystem >> deleteToDoIdentified: anIdentifier [
 	
