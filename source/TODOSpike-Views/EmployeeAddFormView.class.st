@@ -31,7 +31,7 @@ EmployeeAddFormView >> configureTriggers [
 EmployeeAddFormView >> createAddEmployeeForm [
 
 	^ ContainerWebView
-		  wrapping: [ :canvas |
+		  wrapping: [ :canvas | 
 			  canvas
 				  render: title;
 				  render: employeeDescriptionLabel;
@@ -51,7 +51,7 @@ EmployeeAddFormView >> createAddEmployeeForm [
 					  display: 'inline-block';
 					  height: 340 px;
 					  fontSize: 20 px;
-					  width: 1300 px;
+					  width: 700 px;
 					  margin: 20 px ] ]
 ]
 
