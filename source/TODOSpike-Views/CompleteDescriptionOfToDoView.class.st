@@ -69,12 +69,12 @@ CompleteDescriptionOfToDoView >> createDescriptionText [
 		  withLevel: 2
 		  applying: [ :descriptionText | 
 			  descriptionText setStyleTo: [ :style | 
-				                    style
-					                    color: #black;
-					                    fontFamily: #Roboto;
-					                    margin: 20 px;
-					                    height: 20 px;
-					                    marginTop: 10 px ] ]
+				  style
+					  color: #black;
+					  fontFamily: #Roboto;
+					  margin: 20 px;
+					  height: 20 px;
+					  marginTop: 10 px ] ]
 ]
 
 { #category : #'private - creating' }

@@ -2,46 +2,60 @@ Class {
 	#name : #RepositorySystem,
 	#superclass : #Object,
 	#instVars : [
-		'repository'
+		'toDosRepository',
+		'employeeNames'
 	],
 	#category : #'TODOSpike-Application'
 }
+
+{ #category : #initialization }
+RepositorySystem >> addEmployeeName: anEmployeeName [
+
+	employeeNames add: anEmployeeName
+]
 
 { #category : #adding }
 RepositorySystem >> addToDoDescribedBy: contentOfDescriptionField categorizedBy: contentOfCategoryField [
 
 	| toDoBuilder |
 	
-	toDoBuilder := ToDoBuilder withNumericalIdentifier: (repository numberOfToDos + 1) withDescription: contentOfDescriptionField.
+	toDoBuilder := ToDoBuilder withNumericalIdentifier: (toDosRepository numberOfToDos + 1) withDescription: contentOfDescriptionField.
 	
 	toDoBuilder configuringCategory: contentOfCategoryField.
 	
-	repository addNewToDo: toDoBuilder build
+	toDosRepository addNewToDo: toDoBuilder build
 ]
 
 { #category : #adding }
 RepositorySystem >> deleteToDoIdentified: anIdentifier [
 	
-	repository deleteToDoIdentified: anIdentifier
+	toDosRepository deleteToDoIdentified: anIdentifier
+]
+
+{ #category : #initialization }
+RepositorySystem >> employeeNames [
+
+	^ employeeNames
 ]
 
 { #category : #'CRUD operations' }
 RepositorySystem >> finishedToDos [
-	^ repository finishedToDos 
+	^ toDosRepository finishedToDos 
 ]
 
 { #category : #'CRUD operations' }
 RepositorySystem >> inProgressToDos [
-	^ repository inProgressToDos 
+	^ toDosRepository inProgressToDos 
 ]
 
 { #category : #initialization }
 RepositorySystem >> initialize [
 
-	repository := Repository new.
+	toDosRepository := Repository new.
+	employeeNames := OrderedCollection new.
 ]
 
 { #category : #'CRUD operations' }
 RepositorySystem >> openedToDos [ 
-	^ repository openedToDos
+	^ toDosRepository openedToDos
 ]

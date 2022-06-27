@@ -97,7 +97,7 @@ ToDoAddFormView >> createDescriptionField [
 ]
 
 { #category : #'private - creating' }
-ToDoAddFormView >> createDescriptionLabel [
+ToDoAddFormView >> createEmployeeDescriptionLabel [
 
 	descriptionLabel := HeadingWebView
 		  displaying: 'Description'
@@ -166,7 +166,7 @@ ToDoAddFormView >> initialize [
 	contentOfCategoryField := Optional unusedBecause:
 		                          'Unassigned Category'.
 
-	self createDescriptionLabel.
+	self createEmployeeDescriptionLabel.
 	self createDescriptionField.
 	contentOfDescriptionField := Optional unusedBecause:
 		                             'The user must add a description in the form'.
