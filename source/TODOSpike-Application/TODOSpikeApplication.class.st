@@ -43,7 +43,6 @@ TODOSpikeApplication >> componentSupplierForApplication [
 
 { #category : #accessing }
 TODOSpikeApplication >> contentView [
-
 	^ self session applicationContext mainWebView
 ]
 

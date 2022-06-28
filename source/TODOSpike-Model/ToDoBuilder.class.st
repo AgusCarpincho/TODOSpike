@@ -19,10 +19,6 @@ ToDoBuilder class >> withNumericalIdentifier: aNumericalIdentifier withDescripti
 		because: 'An identifier must be numerical'
 		raising: ToDoException.
 	AssertionChecker
-		enforce: (aDescription className sameAs: 'ByteString')
-		because: 'A description must be a ByteString'
-		raising: ToDoException.
-	AssertionChecker
 		enforce: aDescription isNotEmpty
 		because: 'A description musnt be empty'
 		raising: ToDoException.
@@ -45,7 +41,8 @@ ToDoBuilder >> build [
 { #category : #configuring }
 ToDoBuilder >> configuringAssignedEmployee: anAssignedEmployee [
 
-	assignedEmployee := Optional containing: anAssignedEmployee
+	(anAssignedEmployee isNotNil) ifTrue: [
+	assignedEmployee := Optional containing: anAssignedEmployee]
 ]
 
 { #category : #configuring }

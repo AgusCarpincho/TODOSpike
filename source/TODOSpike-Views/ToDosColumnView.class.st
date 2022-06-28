@@ -58,7 +58,7 @@ ToDosColumnView >> initializeWithToDos: aToDos named: aName [
 					                   height: 500 px;
 					                   display: 'table';
 					                   fontSize: 20 px;
-					                   width: 430 px;
+					                   width: 500 px;
 					                   margin: 20 px ] ]
 ]
 

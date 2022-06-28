@@ -14,14 +14,17 @@ RepositorySystem >> addEmployeeName: anEmployeeName [
 	employeeNames add: anEmployeeName
 ]
 
-{ #category : #adding }
-RepositorySystem >> addToDoDescribedBy: contentOfDescriptionField categorizedBy: contentOfCategoryField [
+{ #category : #'CRUD operations' }
+RepositorySystem >> addToDoDescribedBy: contentOfDescriptionField categorizedBy: contentOfCategoryField assignedTo: anEmployeeName [
 
 	| toDoBuilder |
-	
-	toDoBuilder := ToDoBuilder withNumericalIdentifier: (toDosRepository numberOfToDos + 1) withDescription: contentOfDescriptionField.
-	
+	toDoBuilder := ToDoBuilder
+		               withNumericalIdentifier:
+		               toDosRepository numberOfToDos + 1
+		               withDescription: contentOfDescriptionField.
+
 	toDoBuilder configuringCategory: contentOfCategoryField.
+	toDoBuilder configuringAssignedEmployee: anEmployeeName.
 	
 	toDosRepository addNewToDo: toDoBuilder build
 ]
@@ -32,7 +35,7 @@ RepositorySystem >> assignEmployee: nameEmployee toTheToDoIdentified: anIdentifi
 	toDosRepository assignEmployee: nameEmployee toTheToDoIdentified: anIdentifier
 ]
 
-{ #category : #adding }
+{ #category : #'CRUD operations' }
 RepositorySystem >> deleteToDoIdentified: anIdentifier [
 	
 	toDosRepository deleteToDoIdentified: anIdentifier
@@ -59,6 +62,32 @@ RepositorySystem >> initialize [
 
 	toDosRepository := Repository new.
 	employeeNames := OrderedCollection new.
+]
+
+{ #category : #'CRUD operations' }
+RepositorySystem >> modifyCompletionStatusToFinishedTheToDoIdentified: anIdentifier [
+
+	toDosRepository modifyCompletionStatusToFinishedTheToDoIdentified:
+		anIdentifier
+]
+
+{ #category : #'CRUD operations' }
+RepositorySystem >> modifyCompletionStatusToInProgressTheToDoIdentified: anIdentifier [
+
+	toDosRepository modifyCompletionStatusToInProgressTheToDoIdentified: anIdentifier
+]
+
+{ #category : #'CRUD operations' }
+RepositorySystem >> modifyCompletionStatusToOpenTheToDoIdentified: anIdentifier [
+
+	toDosRepository modifyCompletionStatusToOpenTheToDoIdentified:
+		anIdentifier
+]
+
+{ #category : #'CRUD operations' }
+RepositorySystem >> modifyTheToDoIdentified: anIdentifier withTheNewCompletionDate: aCompletionDate [
+
+	toDosRepository modifyTheToDoIdentified: anIdentifier withTheNewCompletionDate: aCompletionDate
 ]
 
 { #category : #'CRUD operations' }

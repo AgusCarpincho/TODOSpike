@@ -12,26 +12,6 @@ Class {
 }
 
 { #category : #configuring }
-NavegationBarView >> buttonLabeled: aLabel [
-
-	^ self componentSupplier
-		  asynchronicButtonLabeled: aLabel
-		  applying: [ :theButton | 
-			  theButton setStyleTo: [ :style | 
-				  style
-					  height: 50 px;
-					  width: 190 px;
-					  marginRight: 10 px;
-					  fontFamily: 'Roboto';
-					  fontWeight: #bold;
-					  fontSize: 25 px;
-					  border: 'solid';
-					  borderColor: 'grey';
-					  borderWidth: 2 px;
-					  borderRadius: 10 px ] ]
-]
-
-{ #category : #configuring }
 NavegationBarView >> configureTriggerOf: aButtonWebView toRender: aWebView [
 
 	aButtonWebView on trigger
@@ -63,13 +43,33 @@ NavegationBarView >> configureTriggers [
 			EmployeeAddFormView new ].
 ]
 
+{ #category : #'private - creating' }
+NavegationBarView >> createButtonLabeled: aLabel [
+
+	^ self componentSupplier
+		  asynchronicButtonLabeled: aLabel
+		  applying: [ :theButton | 
+			  theButton setStyleTo: [ :style | 
+				  style
+					  height: 50 px;
+					  width: 190 px;
+					  marginRight: 10 px;
+					  fontFamily: 'Roboto';
+					  fontWeight: #bold;
+					  fontSize: 25 px;
+					  border: 'None';
+					  borderColor: 'grey';
+					  borderWidth: 2 px;
+					  borderRadius: 10 px ] ]
+]
+
 { #category : #initialization }
 NavegationBarView >> initialize [
 
-	informationButton := self buttonLabeled: 'Info'.
-	showToDosButton := self buttonLabeled: 'Show ToDos'.
-	addToDoButton := self buttonLabeled: 'Add ToDo'.
-	addEmployeeButton := self buttonLabeled: 'Add Employee'.
+	informationButton := self createButtonLabeled: 'Info'.
+	showToDosButton := self createButtonLabeled: 'Show ToDos'.
+	addToDoButton := self createButtonLabeled: 'Add ToDo'.
+	addEmployeeButton := self createButtonLabeled: 'Add Employee'.
 
 	navbar := ContainerWebView
 		          wrapping: [ :canvas | 
