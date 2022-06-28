@@ -6,7 +6,7 @@ Class {
 		'toDoView',
 		'deleteToDoButton',
 		'toDo',
-		'assignEmployeeSelectionButton'
+		'setCompletionStatusSelectionButton'
 	],
 	#category : #'TODOSpike-Views'
 }
@@ -17,71 +17,100 @@ ToDoView class >> with: aToDoNote [
 	^ self new initializeWith: aToDoNote
 ]
 
-{ #category : #rendering }
-ToDoView >> configureTriggers [
+{ #category : #configuring }
+ToDoView >> configureTriggerForDeleteToDoButton [
 
 	deleteToDoButton on trigger
 		serverDo: [ 
-			self session applicationContext repositorySystem 
-				deleteToDoIdentified: toDo identifier.
+			toDo isOpen ifTrue: [ 
+					self session applicationContext repositorySystem 
+						deleteToDoIdentified: toDo identifier ].
 			self session applicationContext configuringCurrentWebViewTo:
 					ToDosWebView new ];
 		render: self session applicationContext identifiedCurrentWebView.
+
+]
+
+{ #category : #configuring }
+ToDoView >> configureTriggerForLookDescriptionButton [
 
 	lookDescriptionButton on trigger
 		serverDo: [ 
 			self session applicationContext configuringCurrentWebViewTo:
 					(CompleteDescriptionOfToDoView withInformationOf: toDo) ];
-		render: self session applicationContext identifiedCurrentWebView.
+		render: self session applicationContext identifiedCurrentWebView
+]
 
-	assignEmployeeSelectionButton on trigger
+{ #category : #configuring }
+ToDoView >> configureTriggerForSetCompletionStatusSelectionButton [
+
+	setCompletionStatusSelectionButton on trigger
 		serverDo: [ 
-			assignEmployeeSelectionButton withCurrentSelectionDo: [
-					:employeeName | 
-					self session applicationContext repositorySystem
-						assignEmployee: employeeName
-						toTheToDoIdentified: toDo identifier ].
+			setCompletionStatusSelectionButton withCurrentSelectionDo: [ 
+					:completionStatus | 
+					(completionStatus sameAs: 'Open') ifTrue: [ 
+							self session applicationContext repositorySystem 
+								modifyCompletionStatusToOpenTheToDoIdentified: toDo identifier ].
+					(completionStatus sameAs: 'In Progress') ifTrue: [ 
+							self session applicationContext repositorySystem 
+								modifyCompletionStatusToInProgressTheToDoIdentified:
+									toDo identifier ].
+					(completionStatus sameAs: 'Finished') ifTrue: [ 
+							self session applicationContext repositorySystem 
+								modifyCompletionStatusToFinishedTheToDoIdentified:
+									toDo identifier ] ].
 			self session applicationContext configuringCurrentWebViewTo:
 					ToDosWebView new ];
 		render: self session applicationContext identifiedCurrentWebView
 ]
 
-{ #category : #'private - creating' }
-ToDoView >> createAssignEmployeeSelectionButton [
+{ #category : #configuring }
+ToDoView >> configureTriggers [
 
-	assignEmployeeSelectionButton := SingleSelectionWebView
-		                                 dropDownListApplying: [ :dropdown | 
-		                                 dropdown addClass willow ]
-		                                 applyingToOptions: [ :option :item | 
-			                               ].
-	assignEmployeeSelectionButton allowAnyOf:
-		self session applicationContext repositorySystem employeeNames.
-
-	^ assignEmployeeSelectionButton
+	self configureTriggerForDeleteToDoButton.
+	self configureTriggerForLookDescriptionButton.
+	self configureTriggerForSetCompletionStatusSelectionButton
 ]
 
 { #category : #'private - creating' }
 ToDoView >> createDeleteToDoButton [
 
 	^ self componentSupplier
-		  asynchronicButtonLabeled: 'X'
-		  applying: [ :button |
-			  button addClass bootstrap3 buttonDanger ]
+		  asynchronicButtonLabeled: 'Delete'
+		  applying: [ :button | button addClass bootstrap3 buttonDanger ]
 ]
 
 { #category : #'private - creating' }
 ToDoView >> createLookDescriptionButton [
 
 	^ self componentSupplier
-		  asynchronicButtonLabeled: 'i'
+		  asynchronicButtonLabeled: 'info'
 		  applying: [ :button | button addClass bootstrap3 buttonPrimary ]
 ]
 
-{ #category : #'initialization - private' }
+{ #category : #'private - creating' }
+ToDoView >> createSetCompletionStatusSelectionButton [
+
+	setCompletionStatusSelectionButton := SingleSelectionWebView
+		                                      dropDownListApplying: [ 
+		                                      :dropdown | 
+		                                      dropdown addClass willow ]
+		                                      applyingToOptions: [ 
+		                                      :option 
+		                                      :item |  ].
+
+	setCompletionStatusSelectionButton allowAnyOf:
+		#( 'Open' 'In Progress' 'Finished' ).
+		
+	^ setCompletionStatusSelectionButton
+]
+
+{ #category : #initialization }
 ToDoView >> initializeWith: aToDo [
 
 	lookDescriptionButton := self createLookDescriptionButton.
-	assignEmployeeSelectionButton := self createAssignEmployeeSelectionButton.
+	setCompletionStatusSelectionButton := self
+		                                      createSetCompletionStatusSelectionButton.
 	deleteToDoButton := self createDeleteToDoButton.
 	toDo := aToDo.
 	toDoView := ContainerWebView
@@ -89,9 +118,9 @@ ToDoView >> initializeWith: aToDo [
 			            canvas render:
 				            '#' , aToDo identifier greaseString , ' '.
 			            canvas render: aToDo category greaseString , ' '.
+			            canvas render: setCompletionStatusSelectionButton.
 			            canvas render: lookDescriptionButton.
-			            canvas render: assignEmployeeSelectionButton.
-			            canvas render: deleteToDoButton ]
+			            toDo isOpen ifTrue: [ canvas render: deleteToDoButton ] ]
 		            intoElementBuiltUsing: [ :canvas | canvas div ]
 		            applying: [ :theContainer | 
 			            theContainer addClass willow.
@@ -106,7 +135,7 @@ ToDoView >> initializeWith: aToDo [
 					            display: 'inline-block';
 					            height: 60 px;
 					            fontSize: 20 px;
-					            width: 370 px;
+					            width: 450 px;
 					            margin: 5 px ] ]
 ]
 

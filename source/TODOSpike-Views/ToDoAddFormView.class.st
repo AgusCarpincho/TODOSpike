@@ -10,7 +10,10 @@ Class {
 		'descriptionField',
 		'addToDoButton',
 		'contentOfCategoryField',
-		'contentOfDescriptionField'
+		'contentOfDescriptionField',
+		'assignEmployeeLabel',
+		'assignEmployeeSelectionButton',
+		'assignEmployeeContainer'
 	],
 	#category : #'TODOSpike-Views'
 }
@@ -18,12 +21,20 @@ Class {
 { #category : #configuring }
 ToDoAddFormView >> configuringTrigger [
 
-	addToDoButton on trigger serverDo: [ 
-		self session applicationContext repositorySystem
-			addToDoDescribedBy: contentOfDescriptionField
-			categorizedBy: contentOfCategoryField.
-		self session applicationContext configuringCurrentWebViewTo:
-			ToDosWebView new ]; render: self session applicationContext identifiedCurrentWebView
+	addToDoButton on trigger
+		serverDo: [ 
+			self session applicationContext repositorySystem
+				addToDoDescribedBy: contentOfDescriptionField
+				categorizedBy: contentOfCategoryField
+				assignedTo: (assignEmployeeSelectionButton withCurrentSelectionDo: [ :employeeName | employeeName ]).
+			self session applicationContext configuringCurrentWebViewTo:
+					ToDosWebView new ];
+		render: self session applicationContext identifiedCurrentWebView.
+
+
+	assignEmployeeSelectionButton on trigger serverDo: [ 
+		assignEmployeeSelectionButton withCurrentSelectionDo: [ 
+			:employeeName |  ] ]
 ]
 
 { #category : #'private - creating' }
@@ -36,14 +47,67 @@ ToDoAddFormView >> createAddToDoButton [
 				                 button
 					                 height: 50 px;
 					                 width: 170 px;
-					                 marginRight: 10 px;
+					                 marginLeft: 20 px;
 					                 fontFamily: 'Roboto';
 					                 fontWeight: #bold;
 					                 fontSize: 25 px;
-					                 border: 'solid';
+					                 border: 'None';
 					                 borderColor: 'grey';
 					                 borderWidth: 2 px;
-					                 borderRadius: 10 px ] ].
+					                 borderRadius: 10 px ] ]
+]
+
+{ #category : #'private - creating' }
+ToDoAddFormView >> createAssignEmployeeContainer [
+
+	self createAssignEmployeeLabel.
+	self createAssignEmployeeSelectionButton.
+
+	assignEmployeeContainer := ContainerWebView
+		                           wrapping: [ :canvas | 
+			                           canvas render: assignEmployeeLabel.
+			                           canvas render:
+				                           assignEmployeeSelectionButton ]
+		                           intoElementBuiltUsing: [ :canvas | 
+		                           canvas div ]
+		                           applying: [ :theContainer | 
+			                           theContainer addClass willow.
+			                           theContainer setStyleTo: [ :style | 
+				                           style
+					                           display: 'inline-flex'] ]
+]
+
+{ #category : #'private - creating' }
+ToDoAddFormView >> createAssignEmployeeLabel [
+
+	assignEmployeeLabel := HeadingWebView
+		                 displaying: 'Assigned to:'
+		                 withLevel: 3
+		                 applying: [ :canvas | 
+			                 canvas setStyleTo: [ :style | 
+				                 style
+					                 color: #black;
+					                 fontFamily: #Roboto;
+					                 margin: 20 px;
+					                 height: 20 px;
+					                 marginTop: 10 px ] ]
+]
+
+{ #category : #'private - creating' }
+ToDoAddFormView >> createAssignEmployeeSelectionButton [
+
+	assignEmployeeSelectionButton := SingleSelectionWebView
+		                                 dropDownListApplying: [ :dropdown | 
+			                                 dropdown addClass willow.
+			                                 dropdown setStyleTo: [ :style | 
+				                                 style
+					                                 width: 120 px;
+					                                 height: 30 px;
+					                                 margin: 5 px ] ]
+		                                 applyingToOptions: [ :option :item | 
+		                                  ].
+	assignEmployeeSelectionButton allowAnyOf:
+		self session applicationContext repositorySystem employeeNames
 ]
 
 { #category : #'private - creating' }
@@ -138,6 +202,7 @@ ToDoAddFormView >> createToDoAddFormWrapping [
 				               render: categoryField;
 				               render: descriptionLabel;
 				               render: descriptionField;
+				               render: assignEmployeeContainer;
 				               render: addToDoButton ]
 		               intoElementBuiltUsing: [ :canvas | canvas div ]
 		               applying: [ :theContainer | 
@@ -148,12 +213,12 @@ ToDoAddFormView >> createToDoAddFormWrapping [
 					               boxShadow:
 						               '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
 					               color: '#EE8625';
-					               borderRadius: 10 px;	
+					               borderRadius: 10 px;
 					               padding: 0 px;
 					               display: 'inline-block';
-					               height: 340 px;
+					               height: 500 px;
 					               fontSize: 20 px;
-					               width: 700 px;
+					               width: 400	 px;
 					               margin: 20 px ] ]
 ]
 
@@ -170,6 +235,8 @@ ToDoAddFormView >> initialize [
 	self createDescriptionField.
 	contentOfDescriptionField := Optional unusedBecause:
 		                             'The user must add a description in the form'.
+
+	self createAssignEmployeeContainer.
 
 	self createAddToDoButton.
 	self createToDoAddFormWrapping

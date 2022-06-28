@@ -49,9 +49,9 @@ EmployeeAddFormView >> createAddEmployeeForm [
 					  borderRadius: 10 px;
 					  padding: 0 px;
 					  display: 'inline-block';
-					  height: 340 px;
+					  height: 300 px;
 					  fontSize: 20 px;
-					  width: 700 px;
+					  width: 400 px;
 					  margin: 20 px ] ]
 ]
 
@@ -59,20 +59,20 @@ EmployeeAddFormView >> createAddEmployeeForm [
 EmployeeAddFormView >> createAddEmployeeFormButton [
 
 	^ self componentSupplier
-		                 asynchronicButtonLabeled: 'Add'
-		                 applying: [ :canvas | 
-			                 canvas setStyleTo: [ :button | 
-				                 button
-					                 height: 50 px;
-					                 width: 170 px;
-					                 marginRight: 10 px;
-					                 fontFamily: 'Roboto';
-					                 fontWeight: #bold;
-					                 fontSize: 25 px;
-					                 border: 'solid';
-					                 borderColor: 'grey';
-					                 borderWidth: 2 px;
-					                 borderRadius: 10 px ] ]
+		  asynchronicButtonLabeled: 'Add'
+		  applying: [ :canvas | 
+			  canvas setStyleTo: [ :button | 
+				  button
+					  height: 50 px;
+					  width: 170 px;
+					  marginLeft: 20 px;
+					  fontFamily: 'Roboto';
+					  fontWeight: #bold;
+					  fontSize: 25 px;
+					  border: 'None';
+					  borderColor: 'grey';
+					  borderWidth: 2 px;
+					  borderRadius: 10 px ] ]
 ]
 
 { #category : #'private - creating' }
