@@ -84,17 +84,14 @@ ToDoBuilderTest >> test05AToDoNoteBuilderWithAllNecessaryConfigurationBuildsAToD
 ToDoBuilderTest >> test07AToDoNoteBuilderMustBeInstantiatedWithAByteStringDescriptionAndMusntBeEmpty [
 
 	self
-		should: [ 
-		ToDoBuilder withNumericalIdentifier: 1 withDescription: '' ]
-		raise: ToDoException.
-	self
-		should: [ 
-		ToDoBuilder withNumericalIdentifier: 1 withDescription: 1 ]
-		raise: ToDoException.
-	self
 		shouldnt: [ 
 			ToDoBuilder
 				withNumericalIdentifier: 1
 				withDescription: 'A good description' ]
+		raise: ToDoException.
+
+	self
+		should: [
+		ToDoBuilder withNumericalIdentifier: 1 withDescription: 2 ]
 		raise: ToDoException
 ]

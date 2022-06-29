@@ -26,7 +26,7 @@ MainWebView >> initialize [
 	self initializeIdentifiedCurrentWebView
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 MainWebView >> initializeIdentifiedCurrentWebView [
 
 	identifiedCurrentWebView := self componentSupplier
@@ -45,7 +45,7 @@ MainWebView >> renderContentOn: aRenderer [
 	aRenderer render: navBar; render: identifiedCurrentWebView .
 ]
 
-{ #category : #initialization }
+{ #category : #updaters }
 MainWebView >> updateNavBar [
 	"super initialize."
 
