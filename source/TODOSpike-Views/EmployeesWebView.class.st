@@ -7,7 +7,7 @@ Class {
 	#category : #'TODOSpike-Views'
 }
 
-{ #category : #rendering }
+{ #category : #'private - creating' }
 EmployeesWebView >> createColumnOfEmployees [
 
 	^ ContainerWebView
@@ -35,7 +35,7 @@ EmployeesWebView >> createColumnOfEmployees [
 					  margin: 20 px ] ]
 ]
 
-{ #category : #rendering }
+{ #category : #'private - creating' }
 EmployeesWebView >> createEmployeeItemViewWithEmployee: aNameEmployee [
 
 	^ ContainerWebView
@@ -58,7 +58,7 @@ EmployeesWebView >> createEmployeeItemViewWithEmployee: aNameEmployee [
 					  margin: 5 px ] ]
 ]
 
-{ #category : #rendering }
+{ #category : #'private - creating' }
 EmployeesWebView >> createHeadingWebViewLabeled: aLabel [
 
 	^ HeadingWebView
@@ -73,7 +73,7 @@ EmployeesWebView >> createHeadingWebViewLabeled: aLabel [
 					  marginTop: 30 px ] ]
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 EmployeesWebView >> initialize [
 
 	employees := self createColumnOfEmployees

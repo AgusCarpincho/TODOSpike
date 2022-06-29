@@ -18,9 +18,10 @@ ToDoBuilder class >> withNumericalIdentifier: aNumericalIdentifier withDescripti
 		enforce: aNumericalIdentifier isNumber
 		because: 'An identifier must be numerical'
 		raising: ToDoException.
+
 	AssertionChecker
-		enforce: aDescription isNotEmpty
-		because: 'A description musnt be empty'
+		enforce: aDescription isNumber not
+		because: 'A description must be a ByteString'
 		raising: ToDoException.
 	^ self new
 		  initializeWithNumericalIdentifier: aNumericalIdentifier
