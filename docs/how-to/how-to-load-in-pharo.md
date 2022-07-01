@@ -28,7 +28,7 @@
 7. Select the repository in the main Iceberg window
 8. Open the contextual menu and select
   *Metacello -> Install baseline of TODOSpike ...*
-9. Type `Development` and click *Ok*
+9. Open a playgroud and evaluate *TODOSpikeApplication startAsDevelopment* and you will start the application as development
 
 > After Iceberg cloned a repository, it will be checked-out at the default
 > branch (in this case `release-candidate`). If you want to work on a different
