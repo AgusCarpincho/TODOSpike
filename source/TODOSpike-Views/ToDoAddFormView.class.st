@@ -216,9 +216,9 @@ ToDoAddFormView >> createToDoAddFormWrapping [
 					               borderRadius: 10 px;
 					               padding: 0 px;
 					               display: 'inline-block';
-					               height: 500 px;
+					               height: 430 px;
 					               fontSize: 20 px;
-					               width: 400	 px;
+					               width: 400 px;
 					               margin: 20 px ] ]
 ]
 

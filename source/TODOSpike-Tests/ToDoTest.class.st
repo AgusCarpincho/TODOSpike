@@ -13,9 +13,9 @@ ToDoTest >> test01AToDoNoteCanBeAssignedToAnEmployee [
 		             described: 'A good description of the ToDo'
 		             categorized: 'Production'
 		             endingOn: '25/09/2022'
-		             assignedTo: 'Agustin'.
+		             assignedTo: (Optional containing: 'Agustin').
 
-	self assert: aToDoNote designatedEmployee equals: 'Agustin'
+	self assert: aToDoNote designatedEmployee equals: (Optional containing: 'Agustin')
 ]
 
 { #category : #creation }
@@ -28,7 +28,7 @@ ToDoTest >> test01AToDoNoteHasADescription [
 		             described: aDescription
 		             categorized: 'Development'
 		             endingOn: '25/09/2022'
-		             assignedTo: 'Agus'.
+		             assignedTo: (Optional containing: 'Agus').
 
 	self assert: aToDoNote description equals: aDescription
 ]
@@ -61,11 +61,9 @@ ToDoTest >> test02AToDoNoteCantBeAssignedToAnEmployeWhenTheToDoIsInProgress [
 		             described: 'A good description of the ToDo'
 		             categorized: 'Production'
 		             endingOn: '25/09/2022'
-		             assignedTo: 'Tomas'.
-		aToDoNote setCompletionStatusToInProgress .
-	self
-		should: [ aToDoNote assignTo: 'Tomas' ]
-		raise: ToDoException
+		             assignedTo: (Optional containing: 'Tomas').
+	aToDoNote setCompletionStatusToInProgress.
+	self should: [ aToDoNote assignTo: 'Tomas' ] raise: ToDoException
 ]
 
 { #category : #creation }
@@ -77,7 +75,7 @@ ToDoTest >> test02AToDoNoteHasACategoryAndADescription [
 		             described: 'A good description'
 		             categorized: 'ANiceCategory'
 		             endingOn: '25/09/2022'
-		             assignedTo: 'Agus'.
+		             assignedTo: (Optional containing: 'Agus').
 
 
 	self assert: aToDoNote category equals: 'ANiceCategory'
@@ -92,10 +90,11 @@ ToDoTest >> test02AToDoNoteWithACompletionDateCanBeReassignedWithANewCompletionD
 		             described: 'A good description'
 		             categorized: 'Development'
 		             endingOn: '25/12/2022'
-		             assignedTo: 'Agus'.
+		             assignedTo: (Optional containing: 'Agus').
 
 	aToDoNote assignCompletionDate: '25/12/2023'.
-	aToDoNote completionDate withContentDo: [ :completionDate | self assert: completionDate equals: '25/12/2023']
+	aToDoNote completionDate withContentDo: [ :completionDate | 
+		self assert: completionDate equals: '25/12/2023' ]
 ]
 
 { #category : #'employee assignments' }
@@ -107,11 +106,9 @@ ToDoTest >> test03AToDoNoteCantBeAssignedToAnEmployeWhenTheToDoIsFinished [
 		             described: 'A good description of the ToDo'
 		             categorized: 'Production'
 		             endingOn: '25/09/2022'
-		             assignedTo: 'Agustin'.
-		aToDoNote setCompletionStatusToFinished.
-	self
-		should: [ aToDoNote assignTo: 'Tomas' ]
-		raise: ToDoException
+		             assignedTo: (Optional containing: 'Agustin').
+	aToDoNote setCompletionStatusToFinished.
+	self should: [ aToDoNote assignTo: 'Tomas' ] raise: ToDoException
 ]
 
 { #category : #creation }
@@ -123,7 +120,7 @@ ToDoTest >> test03AToDoNoteHasAFinishDateAndADescription [
 		             described: 'Some description'
 		             categorized: 'Development'
 		             endingOn: '5/6/2022'
-		             assignedTo: 'Agus'.
+		             assignedTo: (Optional containing: 'Agus').
 
 
 	self assert: aToDoNote description equals: 'Some description'.
@@ -139,7 +136,7 @@ ToDoTest >> test04AToDoNoteHasAFinishDateAndADescriptionAndACategory [
 		             described: 'Some description'
 		             categorized: 'AGoodCategory'
 		             endingOn: '5/6/2022'
-		             assignedTo: 'Unassigned Employee'.
+		             assignedTo: (Optional unusedBecause: 'Unassigned Employee').
 
 	self assert: aToDoNote description equals: 'Some description'.
 	self assert: aToDoNote completionDate equals: '5/6/2022'.
@@ -156,7 +153,7 @@ ToDoTest >> test05AToDoNoteRaiseAnExceptionIfTheDescriptionIsEmpty [
 				described: ''
 				categorized: 'AGoodCategory'
 				endingOn: '5/6/2022'
-				assignedTo: 'Unassigned Employee' ]
+				assignedTo: (Optional unusedBecause: 'Unassigned Employee') ]
 		raise: ToDoException
 ]
 
@@ -169,8 +166,8 @@ ToDoTest >> test06AToDoNoteStartsWithoutAnAssignedEmployee [
 				 described: 'A good description'
 				 categorized: 'A good category'
 				 endingOn: '25/09/2022'
-				 assignedTo: 'Unassigned employee') designatedEmployee
-		equals: 'Unassigned employee'
+				 assignedTo: (Optional unusedBecause: 'Unassigned employee')) designatedEmployee
+		equals: (Optional unusedBecause: 'Unassigned employee')
 ]
 
 { #category : #creation }
@@ -182,6 +179,6 @@ ToDoTest >> test07AToDoNoteStartsWithAnIdentifier [
 				 described: 'A good description'
 				 categorized: 'Make Tests'
 				 endingOn: '25/12/22'
-				 assignedTo: 'Unassigned Employee') identifier
+				 assignedTo: (Optional unusedBecause: 'Unassigned employee')) identifier
 		equals: 1
 ]

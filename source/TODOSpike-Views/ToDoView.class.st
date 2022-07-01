@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'lookDescriptionButton',
 		'toDoView',
-		'deleteToDoButton',
 		'toDo',
-		'setCompletionStatusSelectionButton'
+		'setCompletionStatusSelectionButton',
+		'optionalDeleteToDoButton'
 	],
 	#category : #'TODOSpike-Views'
 }
@@ -20,15 +20,14 @@ ToDoView class >> with: aToDoNote [
 { #category : #configuring }
 ToDoView >> configureTriggerForDeleteToDoButton [
 
-	deleteToDoButton on trigger
-		serverDo: [ 
-			toDo isOpen ifTrue: [ 
-					self session applicationContext repositorySystem 
-						deleteToDoIdentified: toDo identifier ].
-			self session applicationContext configuringCurrentWebViewTo:
-					ToDosWebView new ];
-		render: self session applicationContext identifiedCurrentWebView.
-
+	optionalDeleteToDoButton withContentDo: [ :optionalDeleteToDo | 
+		optionalDeleteToDo on trigger
+			serverDo: [ 
+				self session applicationContext repositorySystem 	
+					deleteToDoIdentified: toDo identifier.
+				self session applicationContext configuringCurrentWebViewTo:
+						ToDosWebView new ];
+			render: self session applicationContext identifiedCurrentWebView ]
 ]
 
 { #category : #configuring }
@@ -108,19 +107,24 @@ ToDoView >> createSetCompletionStatusSelectionButton [
 { #category : #initialization }
 ToDoView >> initializeWith: aToDo [
 
+	toDo := aToDo.
 	lookDescriptionButton := self createLookDescriptionButton.
 	setCompletionStatusSelectionButton := self
 		                                      createSetCompletionStatusSelectionButton.
-	deleteToDoButton := self createDeleteToDoButton.
-	toDo := aToDo.
+	optionalDeleteToDoButton := Optional unused.
+	toDo isOpen ifTrue: [ 
+		optionalDeleteToDoButton := Optional containing:
+			                            self createDeleteToDoButton ].
 	toDoView := ContainerWebView
 		            wrapping: [ :canvas | 
-			            canvas render:
-				            '#' , aToDo identifier greaseString , ' '.
-			            canvas render: aToDo category greaseString , ' '.
-			            canvas render: setCompletionStatusSelectionButton.
-			            canvas render: lookDescriptionButton.
-			            toDo isOpen ifTrue: [ canvas render: deleteToDoButton ] ]
+			            canvas
+				            render: '#' , aToDo identifier greaseString , ' ';
+				            render: aToDo category greaseString , ' ';
+				            render: 'Set to: ';
+				            render: setCompletionStatusSelectionButton;
+				            render: lookDescriptionButton.
+			            optionalDeleteToDoButton withContentDo: [
+				            :deleteToDoButton | canvas render: deleteToDoButton ] ]
 		            intoElementBuiltUsing: [ :canvas | canvas div ]
 		            applying: [ :theContainer | 
 			            theContainer addClass willow.

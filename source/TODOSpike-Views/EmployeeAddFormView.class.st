@@ -49,7 +49,7 @@ EmployeeAddFormView >> createAddEmployeeForm [
 					  borderRadius: 10 px;
 					  padding: 0 px;
 					  display: 'inline-block';
-					  height: 300 px;
+					  height: 255 px;
 					  fontSize: 20 px;
 					  width: 400 px;
 					  margin: 20 px ] ]

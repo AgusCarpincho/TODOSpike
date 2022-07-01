@@ -1,3 +1,20 @@
+"
+This is a visual component that allow the user interact with the content of the web app
+switching between parts of the web app through the buttons
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	addEmployeeButton:		<Object>
+	addToDoButton:		<Object>
+	informationButton:		<Object>
+	navbar:		<Object>
+	showEmployeesButton:		<Object>
+	showToDosButton:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #NavegationBarView,
 	#superclass : #WAPainter,
@@ -6,7 +23,8 @@ Class {
 		'showToDosButton',
 		'addToDoButton',
 		'informationButton',
-		'addEmployeeButton'
+		'addEmployeeButton',
+		'showEmployeesButton'
 	],
 	#category : #'TODOSpike-Views'
 }
@@ -29,8 +47,10 @@ NavegationBarView >> configureTriggers [
 		toRender: InstructionsWebView new;
 		configureTriggerOf: showToDosButton toRender: ToDosWebView new;
 		configureTriggerOf: addToDoButton toRender: ToDoAddFormView new;
-		configureTriggerOf: addEmployeeButton toRender: EmployeeAddFormView new.
-		
+		configureTriggerOf: addEmployeeButton
+		toRender: EmployeeAddFormView new;configureTriggerOf: showEmployeesButton
+		toRender: EmployeesWebView new.
+
 
 	showToDosButton on trigger serverDo: [ 
 		self session applicationContext configuringCurrentWebViewTo:
@@ -40,7 +60,7 @@ NavegationBarView >> configureTriggers [
 			ToDoAddFormView new ].
 	addEmployeeButton on trigger serverDo: [ 
 		self session applicationContext configuringCurrentWebViewTo:
-			EmployeeAddFormView new ].
+			EmployeeAddFormView new ]
 ]
 
 { #category : #'private - creating' }
@@ -70,13 +90,11 @@ NavegationBarView >> initialize [
 	showToDosButton := self createButtonLabeled: 'Show ToDos'.
 	addToDoButton := self createButtonLabeled: 'Add ToDo'.
 	addEmployeeButton := self createButtonLabeled: 'Add Employee'.
+	showEmployeesButton := self createButtonLabeled: 'Show Employees'.
 
 	navbar := ContainerWebView
 		          wrapping: [ :canvas | 
-			          canvas render: informationButton.
-			          canvas render: showToDosButton.
-			          canvas render: addToDoButton.
-			canvas render: addEmployeeButton ]
+			          canvas render: informationButton;render: showToDosButton;render: addToDoButton;render: addEmployeeButton;render: showEmployeesButton ]
 		          intoElementBuiltUsing: [ :canvas | canvas div ]
 		          applying: [ :theContainer | 
 			          theContainer addClass willow.
