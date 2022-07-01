@@ -22,6 +22,49 @@ EditOptionsOfToDoView class >> forTheToDo: aToDo [
 	^ self new initializeForTheToDo: aToDo
 ]
 
+{ #category : #configuring }
+EditOptionsOfToDoView >> configureTriggers [
+
+	dateFieldWebView on trigger serverDo: [  ].
+
+	updateCompletionDateButton on trigger
+		serverDo: [ 
+			[ 
+			self session applicationContext repositorySystem
+				modifyTheToDoIdentified: toDo identifier
+				withTheNewCompletionDate: dateFieldWebView date.
+
+			self session applicationContext configuringCurrentWebViewTo:
+					(CompleteDescriptionOfToDoView withInformationOf: toDo) ]
+				on: Error
+				do: [ :err | 
+					self session applicationContext configuringCurrentWebViewTo:
+							(ErrorView withErrorMessage:
+									 'Cant be possible to update the completion date if a date isnt picked') ] ];
+		render: self session applicationContext identifiedCurrentWebView.
+
+	assignEmployeeSelectionButton on trigger serverDo: [ 
+		assignEmployeeSelectionButton withCurrentSelectionDo: [ 
+			:employeeName |  ] ].
+
+	updateAssignedEmployeeButton on trigger
+		serverDo: [ 
+			[ 
+			self session applicationContext repositorySystem
+				assignEmployee:
+					(assignEmployeeSelectionButton withCurrentSelectionDo: [ 
+							 :employeeName | employeeName ])
+				toTheToDoIdentified: toDo identifier.
+			self session applicationContext configuringCurrentWebViewTo:
+					(CompleteDescriptionOfToDoView withInformationOf: toDo) ]
+				on: ToDoException
+				do: [ :err | 
+					self session applicationContext configuringCurrentWebViewTo:
+							(ErrorView withErrorMessage:
+									 'Cant be possible to update the assigned employee if it isnt picked from the dropdown menu') ] ];
+		render: self session applicationContext identifiedCurrentWebView
+]
+
 { #category : #'private - creating' }
 EditOptionsOfToDoView >> createAssignEmployeeSelectionButton [
 

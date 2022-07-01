@@ -18,10 +18,16 @@ Class {
 { #category : #'instance creation' }
 ToDo class >> identifiedByANumericalIdentifier: aNumericalIdentifier described: aDescription categorized: anOptionalCategory endingOn: anOptionalCompletionDate assignedTo: anOptionalNameEmployee [
 
+	anOptionalNameEmployee withContentDo: [ :employee |
+		AssertionChecker
+			enforce: employee isNotNil
+			because: 'The employee name argument cannot be nil'
+			raising: ToDoInvalidArgument ].
+
 	AssertionChecker
 		enforce: aDescription isNotEmpty
 		because: 'The description cannot be a empty string'
-		raising: ToDoException.
+		raising: ToDoInvalidArgument.
 
 	^ self new
 		  initializeIdentifiedBy: aNumericalIdentifier
