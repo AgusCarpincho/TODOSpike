@@ -38,7 +38,10 @@ BaselineOfTODOSpike >> setUpDependenciesIn: spec [
 BaselineOfTODOSpike >> setUpGroupsIn: spec [
 
 	spec
-		group: 'Deployment' with: #( 'TODOSpike-Model' 'TODOSpike-Application' 'TODOSpike-Views');
+		group: 'Deployment'
+		with:
+			#( 'TODOSpike-Model' 'TODOSpike-Application'
+			   'TODOSpike-Views' 'TODOSpike-System-Model');
 		group: 'Tests' with: #( 'TODOSpike-Tests' );
 		group: 'CI' with: 'Tests';
 		group: 'Tools' with: #(  );
