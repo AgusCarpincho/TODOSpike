@@ -30,7 +30,9 @@
   *Metacello -> Install baseline of TODOSpike ...*
 9. Open a playgroud and evaluate:
  
- ```TODOSpikeApplication startAsDevelopment```
+ ```smalltalk
+ TODOSpikeApplication startAsDevelopment
+ ```
  
  and you will start the application as development (Its the only current mode now).
  
