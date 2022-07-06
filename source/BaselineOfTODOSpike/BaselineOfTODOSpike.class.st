@@ -41,7 +41,7 @@ BaselineOfTODOSpike >> setUpGroupsIn: spec [
 		group: 'Deployment'
 		with:
 			#( 'TODOSpike-Model' 'TODOSpike-Application'
-			   'TODOSpike-Views' 'TODOSpike-System-Model');
+			   'TODOSpike-Views' );
 		group: 'Tests' with: #( 'TODOSpike-Tests' );
 		group: 'CI' with: 'Tests';
 		group: 'Tools' with: #(  );
@@ -55,7 +55,8 @@ BaselineOfTODOSpike >> setUpPackagesIn: spec [
 	spec
 		package: 'TODOSpike-Model' with: [ spec requires: #( 'Buoy' ) ];
 		package: 'TODOSpike-Tests'
-		with: [ spec requires: #('TODOSpike-Model' 'TODOSpike-System-Model') ];
+		with: [ 
+			spec requires: #( 'TODOSpike-Model') ];
 		package: 'TODOSpike-Views'
 		with: [ spec requires: #( 'TODOSpike-Application' ) ]
 ]
