@@ -262,3 +262,30 @@ RepositorySystemTest >> test14AnInProgressToDoIsTransitionedToOpen [
 
 	self assert: repositorySystem openedToDos first isOpen
 ]
+
+{ #category : #tests }
+RepositorySystemTest >> test15AToDoWithoutCompletionDateIsAssignedWithANewOne [
+
+	| identifier exptectedCompletionDate |
+	repositorySystem addEmployeeNamed: 'Tomas'.
+
+	repositorySystem
+		addToDoDescribedBy: 'Reify'
+		categorizedBy: 'Develop'
+		assignedTo: 'Tomas'.
+
+	identifier := repositorySystem openedToDos first identifier.
+	exptectedCompletionDate := Optional containing: '20 July 2022'.
+
+	self
+		assert: repositorySystem openedToDos first completionDate
+		equals: (Optional unusedBecause: 'Unassigned Completion Date').
+
+	repositorySystem
+		modifyTheToDoIdentified: identifier
+		withTheNewCompletionDate: '20 July 2022'.
+
+	self
+		assert: repositorySystem openedToDos first completionDate
+		equals: exptectedCompletionDate
+]
