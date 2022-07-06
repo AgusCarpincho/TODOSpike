@@ -54,9 +54,7 @@ BaselineOfTODOSpike >> setUpPackagesIn: spec [
 
 	spec
 		package: 'TODOSpike-Model' with: [ spec requires: #( 'Buoy' ) ];
-		package: 'TODOSpike-Tests'
-		with: [ 
-			spec requires: #( 'TODOSpike-Model') ];
-		package: 'TODOSpike-Views'
-		with: [ spec requires: #( 'TODOSpike-Application' ) ]
+		package: 'TODOSpike-Tests' with: [ spec requires: 'TODOSpike-Model' ];	
+		package: 'TODOSpike-Application' with: [ spec requires: #('TODOSpike-Model') ];
+		package: 'TODOSpike-Views' with: [ spec requires: 'TODOSpike-Model' ]
 ]
