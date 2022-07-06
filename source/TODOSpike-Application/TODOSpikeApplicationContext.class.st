@@ -45,7 +45,7 @@ TODOSpikeApplicationContext >> initialize [
 	super initialize.
 	self
 		configuringNewRepositorySystem;
-		configuringCurrentWebViewTo: InstructionsWebView new;
+		configuringCurrentWebViewTo: WelcomeWebView new;
 		configuringMainWebView
 ]
 

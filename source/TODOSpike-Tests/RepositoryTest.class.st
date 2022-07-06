@@ -21,10 +21,10 @@ RepositoryTest >> setUp [
 
 	"Creation of repositories"
 
-	aRepositoryOfToDosEmpty := Repository new.
-	aRepositoryOfToDosWithAToDoOpen := Repository new.
-	aRepositoryOfToDosWithAToDoInProgress := Repository new.
-	aRepositoryOfToDosWithAToDoFinished := Repository new.
+	aRepositoryOfToDosEmpty := RepositoryOfToDos new.
+	aRepositoryOfToDosWithAToDoOpen := RepositoryOfToDos new.
+	aRepositoryOfToDosWithAToDoInProgress := RepositoryOfToDos new.
+	aRepositoryOfToDosWithAToDoFinished := RepositoryOfToDos new.
 
 
 	"Creation of ToDoBuilder"
@@ -65,7 +65,7 @@ RepositoryTest >> test01AToDoIsAddedToANewRepositoryAndTheNumberOfToDosInTheRepo
 	| newToDo aNewRepository |
 	
 	newToDo := toDoBuilder build.
-	aNewRepository := Repository new.
+	aNewRepository := RepositoryOfToDos new.
 	aNewRepository addNewToDo: newToDo.
 
 	self assert: aNewRepository numberOfToDos equals: 1
@@ -254,13 +254,13 @@ RepositoryTest >> test15AToDoCompletionStatusCanBeSettedToFinishedCompletionStat
 { #category : #creation }
 RepositoryTest >> test16ARepositoryStartsWithZeroToDos [
 
-	self assert: Repository new numberOfToDos equals: 0
+	self assert: RepositoryOfToDos new numberOfToDos equals: 0
 ]
 
 { #category : #creation }
 RepositoryTest >> test17DoesntExistsAToDoWithAParticularIdentifierInARepositoryWithZeroToDos [
 
-	self deny: (Repository new existsToDoIdentified: 1).
+	self deny: (RepositoryOfToDos new existsToDoIdentified: 1).
 	self assert:
 		(aRepositoryOfToDosWithAToDoOpen existsToDoIdentified: 1)
 ]

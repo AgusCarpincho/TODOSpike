@@ -82,7 +82,7 @@ ToDoView >> createDeleteToDoButton [
 { #category : #'private - creating' }
 ToDoView >> createLookDescriptionButton [
 
-	^ self componentSupplier
+	lookDescriptionButton := self componentSupplier
 		  asynchronicButtonLabeled: 'info'
 		  applying: [ :button | button addClass bootstrap3 buttonPrimary ]
 ]
@@ -100,17 +100,15 @@ ToDoView >> createSetCompletionStatusSelectionButton [
 
 	setCompletionStatusSelectionButton allowAnyOf:
 		#( 'Open' 'In Progress' 'Finished' ).
-		
-	^ setCompletionStatusSelectionButton
 ]
 
 { #category : #initialization }
 ToDoView >> initializeWith: aToDo [
 
 	toDo := aToDo.
-	lookDescriptionButton := self createLookDescriptionButton.
-	setCompletionStatusSelectionButton := self
-		                                      createSetCompletionStatusSelectionButton.
+	self createLookDescriptionButton.
+	self createSetCompletionStatusSelectionButton.
+	
 	optionalDeleteToDoButton := Optional unused.
 	toDo isOpen ifTrue: [ 
 		optionalDeleteToDoButton := Optional containing:

@@ -44,7 +44,7 @@ NavegationBarView >> configureTriggers [
 
 	self
 		configureTriggerOf: informationButton
-		toRender: InstructionsWebView new;
+		toRender: WelcomeWebView new;
 		configureTriggerOf: showToDosButton toRender: ToDosWebView new;
 		configureTriggerOf: addToDoButton toRender: ToDoAddFormView new;
 		configureTriggerOf: addEmployeeButton
@@ -72,7 +72,7 @@ NavegationBarView >> createButtonLabeled: aLabel [
 			  theButton setStyleTo: [ :style | 
 				  style
 					  height: 50 px;
-					  width: 190 px;
+					  width: 210 px;
 					  marginRight: 10 px;
 					  fontFamily: 'Roboto';
 					  fontWeight: #bold;
@@ -86,7 +86,7 @@ NavegationBarView >> createButtonLabeled: aLabel [
 { #category : #initialization }
 NavegationBarView >> initialize [
 
-	informationButton := self createButtonLabeled: 'Info'.
+	informationButton := self createButtonLabeled: 'Home'.
 	showToDosButton := self createButtonLabeled: 'Show ToDos'.
 	addToDoButton := self createButtonLabeled: 'Add ToDo'.
 	addEmployeeButton := self createButtonLabeled: 'Add Employee'.
@@ -94,7 +94,12 @@ NavegationBarView >> initialize [
 
 	navbar := ContainerWebView
 		          wrapping: [ :canvas | 
-			          canvas render: informationButton;render: showToDosButton;render: addToDoButton;render: addEmployeeButton;render: showEmployeesButton ]
+			          canvas
+				          render: informationButton;
+				          render: showToDosButton;
+				          render: showEmployeesButton;
+				          render: addToDoButton;
+				          render: addEmployeeButton ]
 		          intoElementBuiltUsing: [ :canvas | canvas div ]
 		          applying: [ :theContainer | 
 			          theContainer addClass willow.

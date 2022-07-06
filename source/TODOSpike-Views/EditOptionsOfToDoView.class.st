@@ -5,12 +5,11 @@ Class {
 		'editOptionsOfToDo',
 		'toDo',
 		'dateFieldWebView',
-		'updateCompletionDateButton',
 		'editOptionsTitle',
 		'dateFieldLabel',
 		'assignEmployeeSelectionButtonLabel',
 		'assignEmployeeSelectionButton',
-		'updateAssignedEmployeeButton'
+		'updateToDoButton'
 	],
 	#category : #'TODOSpike-Views'
 }
@@ -25,44 +24,18 @@ EditOptionsOfToDoView class >> forTheToDo: aToDo [
 { #category : #configuring }
 EditOptionsOfToDoView >> configureTriggers [
 
-	dateFieldWebView on trigger serverDo: [  ].
 
-	updateCompletionDateButton on trigger
+	updateToDoButton on trigger
 		serverDo: [ 
-			[ 
-			self session applicationContext repositorySystem
-				modifyTheToDoIdentified: toDo identifier
-				withTheNewCompletionDate: dateFieldWebView date.
-
-			self session applicationContext configuringCurrentWebViewTo:
-					(CompleteDescriptionOfToDoView withInformationOf: toDo) ]
-				on: Error
-				do: [ :err | 
-					self session applicationContext configuringCurrentWebViewTo:
-							(ErrorView withErrorMessage:
-									 'Cant be possible to update the completion date if a date isnt picked') ] ];
+			self updateTheDate.
+			self updateEmployee ];
 		render: self session applicationContext identifiedCurrentWebView.
+		
+	dateFieldWebView on trigger serverDo: [  ].
 
 	assignEmployeeSelectionButton on trigger serverDo: [ 
 		assignEmployeeSelectionButton withCurrentSelectionDo: [ 
 			:employeeName |  ] ].
-
-	updateAssignedEmployeeButton on trigger
-		serverDo: [ 
-			[ 
-			self session applicationContext repositorySystem
-				assignEmployee:
-					(assignEmployeeSelectionButton withCurrentSelectionDo: [ 
-							 :employeeName | employeeName ])
-				toTheToDoIdentified: toDo identifier.
-			self session applicationContext configuringCurrentWebViewTo:
-					(CompleteDescriptionOfToDoView withInformationOf: toDo) ]
-				on: ToDoException
-				do: [ :err | 
-					self session applicationContext configuringCurrentWebViewTo:
-							(ErrorView withErrorMessage:
-									 'Cant be possible to update the assigned employee if it isnt picked from the dropdown menu') ] ];
-		render: self session applicationContext identifiedCurrentWebView
 ]
 
 { #category : #'private - creating' }
@@ -129,20 +102,18 @@ EditOptionsOfToDoView >> createEditSectionView [
 	self createTitle.
 	self createDateFieldWebView.
 	self createDateFieldLabel.
-	self createUpdateCompletionDateButton.
 	self createAssignEmployeeSelectionButtonLabel.
 	self createAssignEmployeeSelectionButton.
-	self createUpdateAssignedEmployeeButton.
+	self createUpdateToDoButton.
 	^ ContainerWebView
 		  wrapping: [ :canvas | 
 			  canvas
 				  render: editOptionsTitle;
 				  render: dateFieldLabel;
 				  render: dateFieldWebView;
-				  render: updateCompletionDateButton;
 				  render: assignEmployeeSelectionButtonLabel;
 				  render: assignEmployeeSelectionButton;
-				  render: updateAssignedEmployeeButton ]
+				  render: updateToDoButton ]
 		  intoElementBuiltUsing: [ :theContainer | theContainer div ]
 		  applying: [ :theContainer | 
 			  theContainer addClass willow.
@@ -155,7 +126,7 @@ EditOptionsOfToDoView >> createEditSectionView [
 					  borderRadius: 10 px;
 					  padding: 20 px;
 					  height: 280 px;
-					  display: 'inline-block';
+					  display: 'inline-table';
 					  fontSize: 20 px;
 					  width: 850 px;
 					  margin: 5 px ] ]
@@ -178,29 +149,9 @@ EditOptionsOfToDoView >> createTitle [
 ]
 
 { #category : #'private - creating' }
-EditOptionsOfToDoView >> createUpdateAssignedEmployeeButton [
-
-	updateAssignedEmployeeButton := self componentSupplier
-		                                asynchronicButtonLabeled: 'Update'
-		                                applying: [ :canvas | 
-			                                canvas setStyleTo: [ :button | 
-				                                button
-					                                height: 40 px;
-					                                width: 100 px;
-					                                marginRight: 10 px;
-					                                fontFamily: 'Roboto';
-					                                fontWeight: #bold;
-					                                fontSize: 20 px;
-					                                border: 'None';
-					                                borderColor: 'grey';
-					                                borderWidth: 2 px;
-					                                borderRadius: 10 px ] ]
-]
-
-{ #category : #'private - creating' }
 EditOptionsOfToDoView >> createUpdateCompletionDateButton [
 
-	updateCompletionDateButton :=  self componentSupplier
+	updateToDoButton :=  self componentSupplier
 		  asynchronicButtonLabeled: 'Update'
 		  applying: [ :canvas | 
 			  canvas setStyleTo: [ :button | 
@@ -217,6 +168,26 @@ EditOptionsOfToDoView >> createUpdateCompletionDateButton [
 					  borderRadius: 10 px ] ]
 ]
 
+{ #category : #'private - creating' }
+EditOptionsOfToDoView >> createUpdateToDoButton [
+
+	updateToDoButton := self componentSupplier
+		                                asynchronicButtonLabeled: 'Update'
+		                                applying: [ :canvas | 
+			                                canvas setStyleTo: [ :button | 
+				                                button
+					                                height: 40 px;
+					                                width: 100 px;
+					                                marginRight: 10 px;
+					                                fontFamily: 'Roboto';
+					                                fontWeight: #bold;
+					                                fontSize: 20 px;
+					                                border: 'None';
+					                                borderColor: 'grey';
+					                                borderWidth: 2 px;
+					                                borderRadius: 10 px ] ]
+]
+
 { #category : #initialization }
 EditOptionsOfToDoView >> initializeForTheToDo: aToDo [
 
@@ -229,4 +200,42 @@ EditOptionsOfToDoView >> renderContentOn: aRenderer [
 
 	self configureTriggers.
 	aRenderer render: editOptionsOfToDo
+]
+
+{ #category : #operations }
+EditOptionsOfToDoView >> updateEmployee [
+
+	[ 
+	self session applicationContext repositorySystem
+		assignEmployee:
+			(assignEmployeeSelectionButton withCurrentSelectionDo: [ 
+				 :employeeName | employeeName ])
+		toTheToDoIdentified: toDo identifier.
+	self session applicationContext configuringCurrentWebViewTo:
+		(CompleteDescriptionOfToDoView withInformationOf: toDo) ]
+		on: ToDoException
+		do: [ :exp | 
+			Transcript
+				show: exp;
+				cr.
+			Transcript
+				show:
+					'The assigned employee wasnt assigned because it wasnt picked from the dropdown menu';
+				cr ]
+]
+
+{ #category : #operations }
+EditOptionsOfToDoView >> updateTheDate [
+
+	[ 
+	self session applicationContext repositorySystem
+		modifyTheToDoIdentified: toDo identifier
+		withTheNewCompletionDate: dateFieldWebView date.
+
+	self session applicationContext configuringCurrentWebViewTo:
+		(CompleteDescriptionOfToDoView withInformationOf: toDo) ]
+		on: Error
+		do: [ :exp |
+					Transcript show: exp ; cr.
+					Transcript show: 'The date didnt changed because it wasnt picked';cr ]
 ]

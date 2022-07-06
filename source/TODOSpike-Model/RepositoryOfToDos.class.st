@@ -2,7 +2,7 @@
 ToDoNoteList is an object that fulfills the function of storing the ToDoNotes as if it were a real life list
 "
 Class {
-	#name : #Repository,
+	#name : #RepositoryOfToDos,
 	#superclass : #Object,
 	#instVars : [
 		'toDos'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'CRUD operations' }
-Repository >> addNewToDo: aToDo [
+RepositoryOfToDos >> addNewToDo: aToDo [
 
 	(self existsToDoIdentified: aToDo identifier) ifTrue: [ 
 		ToDoException signal:
@@ -21,13 +21,13 @@ Repository >> addNewToDo: aToDo [
 ]
 
 { #category : #'CRUD operations' }
-Repository >> assignEmployee: nameEmployee toTheToDoIdentified: anIdentifier [
+RepositoryOfToDos >> assignEmployee: nameEmployee toTheToDoIdentified: anIdentifier [
 
 	(self selectToDoWith: anIdentifier) assignTo: nameEmployee
 ]
 
 { #category : #'CRUD operations' }
-Repository >> deleteToDoIdentified: anIdentifier [
+RepositoryOfToDos >> deleteToDoIdentified: anIdentifier [
 
 	(self selectToDoWith: anIdentifier).
 	
@@ -36,87 +36,87 @@ Repository >> deleteToDoIdentified: anIdentifier [
 ]
 
 { #category : #'private - asserting' }
-Repository >> existsToDoIdentified: anIdentifier [
+RepositoryOfToDos >> existsToDoIdentified: anIdentifier [
 
 	^ toDos anySatisfy: [ :toDo | toDo identifier = anIdentifier ]
 ]
 
 { #category : #'CRUD operations' }
-Repository >> finishedToDos [
+RepositoryOfToDos >> finishedToDos [
 
 	^ toDos select: [ :toDo | toDo isFinished ]
 ]
 
 { #category : #'CRUD operations' }
-Repository >> inProgressToDos [
+RepositoryOfToDos >> inProgressToDos [
 
 	^ toDos select: [ :toDo | toDo isInProgress ]
 ]
 
 { #category : #'initialization - private' }
-Repository >> initialize [
+RepositoryOfToDos >> initialize [
 
 	toDos := OrderedCollection new.
 	
 ]
 
 { #category : #'CRUD operations' }
-Repository >> modifyCompletionStatusToFinishedTheToDoIdentified: anIdentifier [
+RepositoryOfToDos >> modifyCompletionStatusToFinishedTheToDoIdentified: anIdentifier [
 
 	(self selectToDoWith: anIdentifier) setCompletionStatusToFinished
 
 ]
 
 { #category : #'CRUD operations' }
-Repository >> modifyCompletionStatusToInProgressTheToDoIdentified: anIdentifier [
+RepositoryOfToDos >> modifyCompletionStatusToInProgressTheToDoIdentified: anIdentifier [
 
 	(self selectToDoWith: anIdentifier) setCompletionStatusToInProgress
 ]
 
 { #category : #'CRUD operations' }
-Repository >> modifyCompletionStatusToOpenTheToDoIdentified: anIdentifier [
+RepositoryOfToDos >> modifyCompletionStatusToOpenTheToDoIdentified: anIdentifier [
 
 	(self selectToDoWith: anIdentifier) setCompletionStatusToOpen
 ]
 
 { #category : #'CRUD operations' }
-Repository >> modifyTheToDoIdentified: anIdentifier withTheNewCompletionDate: aCompletionDate [
+RepositoryOfToDos >> modifyTheToDoIdentified: anIdentifier withTheNewCompletionDate: aCompletionDate [
 
 	(self selectToDoWith: anIdentifier) assignCompletionDate: aCompletionDate
 ]
 
 { #category : #accessing }
-Repository >> numberOfFinishedToDos [
+RepositoryOfToDos >> numberOfFinishedToDos [
 
 	^ (toDos select: [ :toDo | toDo isFinished ]) size
 ]
 
 { #category : #accessing }
-Repository >> numberOfInProgressToDos [
+RepositoryOfToDos >> numberOfInProgressToDos [
 
 	^ (toDos select: [ :toDo | toDo isInProgress ]) size
 ]
 
 { #category : #accessing }
-Repository >> numberOfOpenToDos [
+RepositoryOfToDos >> numberOfOpenToDos [
 
 	^ (toDos select: [ :toDo | toDo isOpen ]) size
 ]
 
 { #category : #accessing }
-Repository >> numberOfToDos [
+RepositoryOfToDos >> numberOfToDos [
 
 	^ toDos size
 ]
 
 { #category : #'CRUD operations' }
-Repository >> openedToDos [
+RepositoryOfToDos >> openedToDos [
 
 	^ toDos select: [ :toDo | toDo isOpen ]
 ]
 
 { #category : #'CRUD operations' }
-Repository >> selectToDoWith: anIdentifier [
+RepositoryOfToDos >> selectToDoWith: anIdentifier [
 
 	| collectionOfToDos |
 	

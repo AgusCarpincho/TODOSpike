@@ -11,6 +11,26 @@ Class {
 }
 
 { #category : #'private - creating' }
+ToDosWebView >> createColums [
+
+	openedToDosColumnView := ToDosColumnView
+		                         withToDos:
+		                         self session applicationContext
+			                         repositorySystem openedToDos
+		                         named: 'Open'.
+	inProgressToDosColumnView := ToDosColumnView
+		                         withToDos:
+		                         self session applicationContext
+			                         repositorySystem inProgressToDos
+		                         named: 'In Progress'.
+	finishedToDoListView := ToDosColumnView
+		                         withToDos:
+		                         self session applicationContext
+			                         repositorySystem finishedToDos
+		                         named: 'Finished'.
+]
+
+{ #category : #'private - creating' }
 ToDosWebView >> createContainerForColumns [
 
 	^ ContainerWebView
@@ -36,39 +56,10 @@ ToDosWebView >> createContainerForColumns [
 					  margin: 20 px ] ]
 ]
 
-{ #category : #'private - creating' }
-ToDosWebView >> createFinishedToDosColumn [
-
-	^ ToDosColumnView
-		  withToDos:
-		  self session applicationContext repositorySystem finishedToDos
-		  named: 'Finished'
-]
-
-{ #category : #'private - creating' }
-ToDosWebView >> createInProgressToDosColumn [
-
-	^ ToDosColumnView
-		  withToDos:
-		  self session applicationContext repositorySystem inProgressToDos
-		  named: 'In Progress'
-]
-
-{ #category : #'private - creating' }
-ToDosWebView >> createOpenedToDosColumn [
-
-	^ ToDosColumnView
-		withToDos:
-		self session applicationContext repositorySystem openedToDos
-		named: 'Open'
-]
-
 { #category : #initialization }
 ToDosWebView >> initialize [
 
-	openedToDosColumnView := self createOpenedToDosColumn.
-	inProgressToDosColumnView := self createInProgressToDosColumn.
-	finishedToDoListView := self createFinishedToDosColumn.
+	self createColums.
 
 	toDosWebView := self createContainerForColumns.
 

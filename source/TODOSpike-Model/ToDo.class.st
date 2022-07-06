@@ -18,10 +18,10 @@ Class {
 { #category : #'instance creation' }
 ToDo class >> identifiedByANumericalIdentifier: aNumericalIdentifier described: aDescription categorized: anOptionalCategory endingOn: anOptionalCompletionDate assignedTo: anOptionalNameEmployee [
 
-	anOptionalNameEmployee withContentDo: [ :employee |
+	anOptionalNameEmployee withContentDo: [ :employee | 
 		AssertionChecker
 			enforce: employee isNotNil
-			because: 'The employee name argument cannot be nil'
+			because: 'The employee name argument cannot be nil or empty'
 			raising: ToDoInvalidArgument ].
 
 	AssertionChecker

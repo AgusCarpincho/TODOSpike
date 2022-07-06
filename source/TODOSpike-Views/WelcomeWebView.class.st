@@ -1,18 +1,18 @@
 Class {
-	#name : #InstructionsWebView,
+	#name : #WelcomeWebView,
 	#superclass : #WAPainter,
 	#instVars : [
 		'title',
-		'contentInstructions'
+		'welcomeContentLabel'
 	],
 	#category : #'TODOSpike-Views'
 }
 
 { #category : #initialization }
-InstructionsWebView >> initialize [
+WelcomeWebView >> initialize [
 
 	title := HeadingWebView
-		         displaying: 'TODOSpike Instructions'
+		         displaying: 'Welcome to TODOSpike !'
 		         withLevel: 1
 		         applying: [ :canvas | 
 			         canvas setStyleTo: [ :style | 
@@ -21,9 +21,9 @@ InstructionsWebView >> initialize [
 					         fontFamily: #Roboto;
 					         margin: 20 px;
 					         marginTop: 20 px ] ].
-	contentInstructions := HeadingWebView
+	welcomeContentLabel := HeadingWebView
 		                       displaying:
-		                       'Welcome to TODOSpike, this is a web app using Willow with Pharo 10. If you want to add some ToDo you need to do it using the Add ToDo	 button. The ToDos will have appear in the page when click on Show ToDos button. Thanks for using TODOSpike !'
+		                       'This is a web app using Willow with Pharo 10. You can navigate with the upper navigation bar, feel to use it as you want. Thanks for using TODOSpike !'
 		                       withLevel: 2
 		                       applying: [ :canvas | 
 			                       canvas setStyleTo: [ :style | 
@@ -35,13 +35,13 @@ InstructionsWebView >> initialize [
 ]
 
 { #category : #rendering }
-InstructionsWebView >> renderContentOn: aRenderer [
+WelcomeWebView >> renderContentOn: aRenderer [
 
-	| containerInformation |
-	containerInformation := ContainerWebView
+	| welcomeWebView |
+	welcomeWebView := ContainerWebView
 		                        wrapping: [ :canvas | 
 			                        canvas render: title.
-			                        canvas render: contentInstructions ]
+			                        canvas render: welcomeContentLabel ]
 		                        intoElementBuiltUsing: [ :canvas | 
 		                        canvas div ]
 		                        applying: [ :theContainer | 
@@ -59,5 +59,5 @@ InstructionsWebView >> renderContentOn: aRenderer [
 					                        fontSize: 20 px;
 					                        width: 1360 px;
 					                        margin: 20 px ] ].
-	aRenderer render: containerInformation
+	aRenderer render: welcomeWebView
 ]

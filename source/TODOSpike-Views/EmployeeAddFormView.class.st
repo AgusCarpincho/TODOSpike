@@ -20,7 +20,7 @@ EmployeeAddFormView >> configureTriggers [
 	
 	addEmployeeFormButton on trigger
 		serverDo: [ 
-			self session applicationContext repositorySystem addEmployeeName:
+			self session applicationContext repositorySystem addEmployeeNamed:
 					contentOfEmployeeNameField.
 			self session applicationContext configuringCurrentWebViewTo:
 					EmployeesWebView new ];
