@@ -39,5 +39,5 @@
 10. Now if you open in your browser [local](http://localhost:8080/home) you can use it for test your application
 
 > After Iceberg cloned a repository, it will be checked-out at the default
-> branch (in this case `release-candidate`). If you want to work on a different
+> branch (in this case `development`). If you want to work on a different
 > branch or commit, perform the checkout before the baseline installation step.
