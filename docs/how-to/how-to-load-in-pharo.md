@@ -14,7 +14,8 @@
       load: 'Development'.
     ```
 
-> Change `release-candidate` to some released version if you want a pinned version
+> Change `release-candidate` to some released version if you want a pinned version, e.g .../TODOSpike:v1.0.1
+> Change `Developtment` to `Deployment` if you want a productive enviroment
 
 ## Using Iceberg
 
