@@ -29,6 +29,13 @@ TODOSpikeApplication class >> startAsDevelopment [
 ]
 
 { #category : #'server operations' }
+TODOSpikeApplication class >> startAsProduction [
+
+	(ZnZincServerAdaptor port: 8080) start.
+	self registerAsDeployedApplication
+]
+
+{ #category : #'server operations' }
 TODOSpikeApplication class >> stop [
 
 	self unregisterFromApplications.
