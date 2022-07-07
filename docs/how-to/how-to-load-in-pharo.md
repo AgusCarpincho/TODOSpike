@@ -14,7 +14,24 @@
       load: 'Development'.
     ```
 
-> Change `release-candidate` to some released version if you want a pinned version
+> Change `release-candidate` to some released version if you want a pinned version, e.g .../TODOSpike:v1.0.1
+
+> Change `Development` to `Deployment` if you want a productive enviroment
+
+And now, evaluate:
+ 
+ ```smalltalk
+ TODOSpikeApplication startAsDevelopment
+ ```
+ 
+or
+ 
+ ```smalltalk
+ TODOSpikeApplication startAsProduction
+ ```
+
+if you want a productive enviroment
+
 
 ## Using Iceberg
 
@@ -34,7 +51,7 @@
  TODOSpikeApplication startAsDevelopment
  ```
  
- and you will start the application as development (Its the only current mode now).
+ and you will start the application as development ( you cant start it as production replacing the message with startAsProduction ).
  
 10. Now if you open in your browser [local](http://localhost:8080/home) you can use it for test your application
 
